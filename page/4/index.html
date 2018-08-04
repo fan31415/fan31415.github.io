@@ -259,6 +259,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/uva11059-maximum-product/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/17/uva11059-maximum-product/" itemprop="url">Uva11059 Maximum Product</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T13:20:48+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/" itemprop="url" rel="index">
+                    <span itemprop="name">Uva</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
+                    <span itemprop="name">回溯</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Uva11059 Maximum Product</strong> Given a sequence of integers S = {S1, S2, . . . , Sn}, you should determine what is the value of the maximum positive product involving consecutive terms of S. If you cannot find a positive sequence, you should consider 0 as the value of the maximum product. <strong>Input</strong> Each test case starts with 1 ≤ N ≤ 18, the number of elements in a sequence. Each element Si is an integer such that ?10 ≤ Si ≤ 10. Next line will have N integers, representing the value of each element in the sequence. There is a blank line after each test case. The input is terminated by end of file (EOF). <strong>Output</strong> For each test case you must print the message: ‘Case #M: The maximum product is P.’, where M is the number of the test case, starting from 1, and P is the value of the maximum product. After each test case you must print a blank line. <strong>Sample Input</strong> 3 2 4 -3 5 2 5 -1 2 -1 <strong>Sample Output</strong> Case #1: The maximum product is 8. Case #2: The maximum product is 20. 题意：寻找乘积最大的连续子序列 由于只有18个整数，直接完全枚举即可。 注意输出的时候要%lld,因为绝对值不超过10且不超过18个数，则最大乘积不超过10^18，在long long 10^19的范围内，所以可用long long 储存答案并用lld输出 ac代码如下</p>
+<p>#include<cstdio><br>using namespace std;<br>int main(){<br>    int n;<br>    int s[20];<br>    int kase=0;<br>    while(~scanf(“%d”,&amp;n)){<br>        for(int i=0;i&lt;n;i++){<br>            scanf(“%d”,&amp;s[i]);<br>        }<br>        long long max=0;<br>        for(int i=0;i&lt;n;i++){<br>            long long ans=1;<br>            for(int j=i;j&lt;n;j++){<br>                ans*=s[j];<br>                if(ans&gt;max){<br>                    max=ans;<br>                }<br>            }<br>        }<br>        printf(“Case #%d: The maximum product is %lld.\n\n”,++kase,max);<br>    }<br>    return 0;<br>}</cstdio></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1319,7 +1473,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1336,6 +1490,15 @@
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
