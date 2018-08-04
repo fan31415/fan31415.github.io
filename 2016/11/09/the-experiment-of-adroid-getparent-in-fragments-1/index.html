@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Android getParent() 在嵌套fragment中的实验 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在使用requestDisallowInterceptTouchEvent()方法时，常会用到getParent()方法，那么就有一个问题，在复杂的fragment嵌套的时候，getparent的效果是怎样的呢。 源码里面是这么给的 /\*\*  \* Gets the parent of this view. Note that the parent is a  \* ViewParent an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android getParent() 在嵌套fragment中的实验">
+<meta property="og:url" content="http://yoursite.com/2016/11/09/the-experiment-of-adroid-getparent-in-fragments-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在使用requestDisallowInterceptTouchEvent()方法时，常会用到getParent()方法，那么就有一个问题，在复杂的fragment嵌套的时候，getparent的效果是怎样的呢。 源码里面是这么给的 /\*\*  \* Gets the parent of this view. Note that the parent is a  \* ViewParent an">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android getParent() 在嵌套fragment中的实验">
+<meta name="twitter:description" content="在使用requestDisallowInterceptTouchEvent()方法时，常会用到getParent()方法，那么就有一个问题，在复杂的fragment嵌套的时候，getparent的效果是怎样的呢。 源码里面是这么给的 /\*\*  \* Gets the parent of this view. Note that the parent is a  \* ViewParent an">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-the-experiment-of-adroid-getparent-in-fragments-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/09/the-experiment-of-adroid-getparent-in-fragments-1/" class="article-date">
+  <time datetime="2016-11-09T14:16:44.000Z" itemprop="datePublished">2016-11-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android getParent() 在嵌套fragment中的实验
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在使用requestDisallowInterceptTouchEvent()方法时，常会用到getParent()方法，那么就有一个问题，在复杂的fragment嵌套的时候，getparent的效果是怎样的呢。 源码里面是这么给的</p>
+<pre><code>/\*\*
+ \* Gets the parent of this view. Note that the parent is a
+ \* ViewParent and not necessarily a View.
+ \*
+ \* @return Parent of this view.
+ */
+public final ViewParent getParent() {
+    return mParent;
+}
+</code></pre><p>好像也不是很清楚，再去看api文档，也只说了一句getParent() Gets the parent of this view. 既然这样，那就做一个简单的实验吧。 这儿有一个比较复杂的嵌套例子，首先是一个main activity，layout如下</p>
+<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout\_width="match\_parent" android:id="@+id/container" android:background="@color/white" android:layout\_height="match\_parent"><br><br>    <framelayout android:id="@+id/main_fl" android:layout\_width="match\_parent" android:layout_height="0dp" android:layout_weight="1"><br>        <fragment android:id="@+id/fragment" android:name=".MainFragment" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br>    </fragment></framelayout><br></linearlayout>
+
+<p>其中的Mainfragment的layout如下</p>
+<relativelayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br>    <viewpager android:id="@+id/viewpager" android:layout\_below="@id/horizontal\_bar" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br></viewpager></relativelayout>
+
+<p>viewpager中装载的fragment的layout如下</p>
+<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br><webview android:id="@+id/webview" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br></webview></linearlayout>
+
+<p>现在，我们在这个被装载在viewpager中的frament中插入以下代码</p>
+<p>  Clog.d(“parent tree “ + webView + webView.getParent() + “ “<br>                            + webView.getParent().getParent() + “ “+ webView.getParent().getParent().getParent() + “ “ +<br>                            webView.getParent().getParent().getParent().getParent());</p>
+<p>查看其parent，可以整理结果可以看到依次为</p>
+<p>android.webkit.WebView<br>android.widget.LinearLayout<br>android.support.v4.view.ViewPager<br>android.widget.RelativeLayout<br>android.widget.FrameLayout</p>
+<p>所以我们得出结论，parent与fragment本身无关，不管是动态还是静态的fragment标签都不算是parent，在考虑parent的时候，只需要忽略掉framgent的存在，按照获取时整个屏幕真实的嵌套关系考虑即可。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/09/the-experiment-of-adroid-getparent-in-fragments-1/" data-id="cjkf4itxs001m272yn65mrzhs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/28/xcodebuild-error-scheme-xxx-is-not-currently-configured-for-the-clean-action/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          xcodebuild: error: Scheme XXX is not currently configured for the clean action
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/09/the-experiment-of-adroid-getparent-in-fragments/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android getParent() 在嵌套fragment中的实验</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

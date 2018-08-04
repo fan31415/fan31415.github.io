@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>编译原理总结 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Simple-C-Complier是一个C语言子集的编译器。编译器的实现目标是读入C语言子集的源码文件，编译生成 MIPS汇编代码。限于课堂实验要求，采用了bit-minic-compiler框架作为输入输出限定，实际不需要框架也能直接运行。 0x0 实现语言的选择对于用什么语言实现，我进行了一些考虑。首先根据框架需求，在不对框架代码进行改动的前提下，这儿有python，C，C++， 以及java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理总结">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/compile-theory-summary-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Simple-C-Complier是一个C语言子集的编译器。编译器的实现目标是读入C语言子集的源码文件，编译生成 MIPS汇编代码。限于课堂实验要求，采用了bit-minic-compiler框架作为输入输出限定，实际不需要框架也能直接运行。 0x0 实现语言的选择对于用什么语言实现，我进行了一些考虑。首先根据框架需求，在不对框架代码进行改动的前提下，这儿有python，C，C++， 以及java">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://fanyijie.net/wp-content/uploads/2017/09/编译流程-533x1024.jpg">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译原理总结">
+<meta name="twitter:description" content="Simple-C-Complier是一个C语言子集的编译器。编译器的实现目标是读入C语言子集的源码文件，编译生成 MIPS汇编代码。限于课堂实验要求，采用了bit-minic-compiler框架作为输入输出限定，实际不需要框架也能直接运行。 0x0 实现语言的选择对于用什么语言实现，我进行了一些考虑。首先根据框架需求，在不对框架代码进行改动的前提下，这儿有python，C，C++， 以及java">
+<meta name="twitter:image" content="http://fanyijie.net/wp-content/uploads/2017/09/编译流程-533x1024.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-compile-theory-summary-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/19/compile-theory-summary-1/" class="article-date">
+  <time datetime="2017-09-19T05:04:28.000Z" itemprop="datePublished">2017-09-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术分享/">技术分享</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编译原理总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Simple-C-Complier是一个C语言子集的编译器。编译器的实现目标是读入C语言子集的源码文件，编译生成 MIPS汇编代码。限于课堂实验要求，采用了bit-minic-compiler框架作为输入输出限定，实际不需要框架也能直接运行。</p>
+<h4 id="0x0-实现语言的选择"><a href="#0x0-实现语言的选择" class="headerlink" title="0x0 实现语言的选择"></a>0x0 实现语言的选择</h4><p>对于用什么语言实现，我进行了一些考虑。首先根据框架需求，在不对框架代码进行改动的前提下，这儿有python，C，C++， 以及java这四种语言可选。 下面对这四种语言的优劣进行了分析</p>
+<p>语言</p>
+<p>运行速度</p>
+<p>实现速度</p>
+<p>是否面向对象</p>
+<p>是否支持GC</p>
+<p>其他缺点</p>
+<p>其他优点</p>
+<p>C</p>
+<p>快</p>
+<p>较慢</p>
+<p>否</p>
+<p>否</p>
+<p>字符串处理较弱</p>
+<p>可以自举</p>
+<p>C++</p>
+<p>快</p>
+<p>较慢</p>
+<p>是</p>
+<p>否</p>
+<p>Python</p>
+<p>慢</p>
+<p>快</p>
+<p>是</p>
+<p>是</p>
+<p>需要额外python模块才可以运行，而且有2与3的版本问题</p>
+<p>函数丰富，实现迅速</p>
+<p>Java</p>
+<p>一般</p>
+<p>较快</p>
+<p>是</p>
+<p>是</p>
+<p>代码量较大，不够优雅</p>
+<p>函数丰富，实现较快，与框架语言一致，便于扩展</p>
+<p>那么到底选哪一种语言呢，除了语言本身特点，我们还必须考虑一点，那就是我们对语法分析器本身的需求。这里我主要的目标是在于学习实践，所以经过再三考虑，选择了java语言作为实现语言。因为这样可以快速实现，快速修改，无需担心GC的烦恼，也无需关心过多字符串的处理，文件的输入与生成等一系列外围的问题，可以专心考虑最核心的逻辑。当然还有一点就是，限定的输入输出框架已经使用java语言实现了，这里就直接统一使用java了。</p>
+<h4 id="0x1-总体架构"><a href="#0x1-总体架构" class="headerlink" title="0x1 总体架构"></a>0x1 总体架构</h4><p>这里按照框架要求，采用了分离的结构。 首先是预处理pp模块读入c文件，预处理后输出pp文件；然后词法分析scanner模块读入pp文件，输出token文件，然后语法分析parser模块读入token文件，输出tree文件；然后语义分析semantic模块读入tree文件，生成tree2文件；接着中间代码生成模块icgen读入tree2文件，生成ic文件；然后优化optimizing模块读入ic文件，生成ic2文件；然后代码生成模块codegen读取ic2文件，生成mips代码，最后调用mars模拟器运行mips汇编代码。整体流程图如下 <img src="http://fanyijie.net/wp-content/uploads/2017/09/编译流程-533x1024.jpg" alt=""></p>
+<h4 id="0x2-项目导航"><a href="#0x2-项目导航" class="headerlink" title="0x2 项目导航"></a>0x2 项目导航</h4><p>这儿限于课程时间，实现了其中最关键的四个模块，分别是词法分析，语法分析，语义分析和代码生成，其中语义分析和代码生成整合在了一起进行。项目完成后对于需求中的C语言的子集进行了测试，成功生成了对应的MIPS汇编代码。下面将分篇对这四个模块的实现分别阐述。分节链接如下： <a href="http://fanyijie.net/compile-theory-lexical-analysis" target="_blank" rel="noopener">编译原理总结-词法分析</a> <a href="http://fanyijie.net/compile-theory-syntactic-analysis" target="_blank" rel="noopener">编译原理总结-语法分析</a> <a href="http://fanyijie.net/compile-theory-semantic-analysis-and-code-generation" target="_blank" rel="noopener">编译原理总结-语义分析与代码生成</a> 具体项目代码见<a href="https://github.com/fan31415/Simple-C-Complier" target="_blank" rel="noopener">github</a>.</p>
+<h4 id="0x3-实现中的不足"><a href="#0x3-实现中的不足" class="headerlink" title="0x3 实现中的不足"></a>0x3 实现中的不足</h4><p>1） 由于采用了java语言实现，所以最后的运行速度肯定是不如可以面向底层优化的C语言的。在效率上就有差别，而且很多地方明显可以使用汇编进行进一步的优化，或者使用宏编译，虽然牺牲了可读性，但是对于效率可以有一个较好的常数级提升，如果要作为商业使用的编译器，这一点还是值得的。除此之外，还尤其体现在文件的IO，以及内存控制上。一切事物都具有两面性，在享受java便捷的IO时，也不得不承认相比更加底层的C语言IO机制，在速度上是有所欠缺的；在享受java面向对象的便捷特性时，也必须承认，对象创建的开销，是过程式语言所可以避免的；在享受java自带GC的优点时，我也不得不说，对于内存控制上，自带的GC还是不如手动释放精细节约的，这是因为java本身gc机制所带来的局限性，也是无法避免的。这也让我想到了android和ios的差别，所谓开放的越多，你越自由，控制越精细，调教的越好，但是烦恼也越多；而限制越大，你的选择更少，但是你也更轻松，更可以专注你要做的核心。这也是一种取舍吧。只能说，根据你的目标，去找到你自己的平衡吧。 2） 整个实现还是优化不足，比如有的地方为了可读性而重复了一些前进和回滚的操作，这个如果更加精细化的实现，是可以避免一部分回退的。 3） 这一点也是由于框架的局限性，对于很多地方事实上在词法分析阶段就可以做的，这里没有做。比如说对于不同的operator，事实上是可以直接将其具体类别，比如plus, minus作为其最终类型的。只需要将所有的类型进行细分，然后enum出来，就可以通过一个enum的整数很快捷的标志出其具体类型，这样可以对之后的步骤提供帮助。再比如对于一些数值型的东西，事实上可以再词法分析时，一遍过时就将其数值以Int这样的形式保存下来，并且直接传递给下一步，这样也可以节约一些时间。当然这样就不能通过xml的形式传递了，而是将词法分析和语法分析结合在了一起，直接在内存中进行传递。这样明显效率更高，当然我们这个是教学框架，所以现在这样也是可以理解。不过这样的话还有一个缺陷，就是无法真正实现C11标准，因为C11标准中涵盖的东西大于了我们要输出的token文件，比如CPP_OPTION，以及对于宽型的支持，这样的内容需要将token文件进行进一步扩展。 4）由于时间关系，尽管为错误处理预留了位置，但是目前仍是一次编译只能发现一个错误的形式，没有实现一次编译检查出多处错误，这个是之后需要改进的一个重要地方。 5） 事实上，如果把词法分析和语法分析结合起来，以及后面的语义制导整合在一起，应该会有更好的表现。因为可以直接在内存之间传递很多表和数据，大大减少了IO时间。当然这样的不足就是耦合性也更强了。 6） 由于时间关系，寄存器的分配还有很多不完善的地方，事实上寄存器分配是一个很大的部分。如果我们的程序集需要引入更多更复杂的语言规则，我觉得有必要进行一趟处理来分配寄存器并将其指派为相应的值。这里面涉及到了很多策略，包括一些图着色的算法。这个是之后需要改进的一个重要地方。 7） 这里没有单独进行语义分析，事实上是有很多欠缺的。在实现中可以明显感觉到很多信息获取不够完全，导致面对复杂代码结构时手动解析比较麻烦，整个程序不是十分清晰，而且如果要进行代码优化以及引入更多的嵌套调用以及全局调用也会更加麻烦。如果要进一步完善编译器，语义分析这一步还是不能省略，而且由于之前的步骤中对函数调用以及全局变量没有做足够的处理，这次也没有涉及到这块的内容，这个也是之后亟待增加的。 8） 同样是由于没有语义分析，其中很多可以做的事情也没有做，比如类型检查，代码优化，这个是之后可以增加的地方。</p>
+<h4 id="0x4-感想"><a href="#0x4-感想" class="headerlink" title="0x4 感想"></a>0x4 感想</h4><p>在实现编译器的过程引发我对程序语言本身以及语言设计的很多思考。比如为什么C语言结尾有分号，而Swift语言结尾不需要分号；为什么Java语言和C语言可以随意空格，而Python必须严格遵守缩进；函数式语言的lambda形式是怎么实现编译的；怎样才能实现JavaScript的递归式函数定义等等，也激发了我对编译原理研究的兴趣。这也是我第一次完成了一个小型的编译器，并在mips模拟器上成功运行。当然就向我前面所说，还有很多不足，语言的范围也很有限，希望之后有时间可以继续完善这个Simple-C-Compliler.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/19/compile-theory-summary-1/" data-id="cjkf4itx3000e272y9y56vlzx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/19/compile-theory-summary/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          编译原理总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/09/experience-of-a-full-android-project/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android项目总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

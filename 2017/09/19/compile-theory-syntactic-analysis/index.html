@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ong?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="fanyijie, technology" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="输入输出的具体处理i 输入 这里的输入实际上仅仅是一个tokens数组而已，很好处理，只需要读入xml，然后找到tokens这个XML项，然后对其子节点依次解析，将每个filed存入我们临时创建的一个token中，再对每一个子节点将这个临时token加入tokens数组容器即可，类似于反序列化的过程。具体实现可以在input函数中查看。 ii 输出 这儿我们首先明确输出对象是一颗语法分析树，所以我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理总结-语法分析">
+<meta property="og:url" content="https://fanyijie.net/2017/09/19/compile-theory-syntactic-analysis/index.html">
+<meta property="og:site_name" content="Fan&#39;s Home">
+<meta property="og:description" content="输入输出的具体处理i 输入 这里的输入实际上仅仅是一个tokens数组而已，很好处理，只需要读入xml，然后找到tokens这个XML项，然后对其子节点依次解析，将每个filed存入我们临时创建的一个token中，再对每一个子节点将这个临时token加入tokens数组容器即可，类似于反序列化的过程。具体实现可以在input函数中查看。 ii 输出 这儿我们首先明确输出对象是一颗语法分析树，所以我">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T08:38:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译原理总结-语法分析">
+<meta name="twitter:description" content="输入输出的具体处理i 输入 这里的输入实际上仅仅是一个tokens数组而已，很好处理，只需要读入xml，然后找到tokens这个XML项，然后对其子节点依次解析，将每个filed存入我们临时创建的一个token中，再对每一个子节点将这个临时token加入tokens数组容器即可，类似于反序列化的过程。具体实现可以在input函数中查看。 ii 输出 这儿我们首先明确输出对象是一颗语法分析树，所以我">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fanyijie.net/2017/09/19/compile-theory-syntactic-analysis/"/>
+
+
+
+
+
+  <title>编译原理总结-语法分析 | Fan's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fan's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/09/19/compile-theory-syntactic-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">编译原理总结-语法分析</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T13:08:18+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="输入输出的具体处理"><a href="#输入输出的具体处理" class="headerlink" title="输入输出的具体处理"></a>输入输出的具体处理</h4><p><em>i 输入</em> 这里的输入实际上仅仅是一个tokens数组而已，很好处理，只需要读入xml，然后找到tokens这个XML项，然后对其子节点依次解析，将每个filed存入我们临时创建的一个token中，再对每一个子节点将这个临时token加入tokens数组容器即可，类似于反序列化的过程。具体实现可以在input函数中查看。 <em>ii 输出</em> 这儿我们首先明确输出对象是一颗语法分析树，所以我们需要一个多叉树的数据结构来存储这个输出结果。这里由于采用了jdom库作为xml输出，其中已经有了一个Element类型可以作为多叉树的节点使用（XML文件本身就是具有多叉树形式的）， 所以我就直接借用了jdom的Element类型作为我们语法分析树的节点类型。在这里整个输出流程就被划分为了构造和真正输出两部分。 事实上这儿也有两种策略选择，一种方式是只进行简单的构造，例如将语法树的元素直接add进一个数组并做一些结构化的标记，然后在输出时再通过较为复杂的方式将结果重新组织为语法树的形式输出。也可以在构造时直接构造为一颗完整的树，输出时直接从树的根节点开始顺序输出就行了。 正如之前所说，由于我采用了jdom的Element类型作为节点类型，所以显然最简单的方式就是在我进行语法分析时同时构造一颗完整的语法树，这样最后直接将整个语法树的根节点调用jdom库的标准输出就可以了。</p>
+<h4 id="具体实现策略的选择"><a href="#具体实现策略的选择" class="headerlink" title="具体实现策略的选择"></a>具体实现策略的选择</h4><p>语法分析器一般有两种大的设计思路：自顶向下设计和自底向上设计。 自顶向下设计也被称为预测性语法分析，它从语法分析树的树根开始，系统化的向下扩展树，直至树的叶结点与词法分析器返回的已归类单词匹配。它的特点是紧凑而高效。可以用递归下降或是LL（1）（表驱动或直接编码的）来实现。并且因为在语法分析过程中的每一点，这种语法分析器都知道可以作为有效输入串中下一个符号出现的单词集，因而可以产生精确而有用的错误信息。它的主要缺点在于无法处理左递归，与右递归相比，左递归文法用一种更自然的方式建立了表达式运算符从左到右的结合性的模型。至于回溯方面，由于大多数程序语言结构都可以用无回溯语法表达，所以在这一点上对自顶向下分析的应用影响不大。 自底向上分析是指从叶结点开始构建语法树，自叶结点向根节点方向进行的分析方法。语法分析器对词法分析器返回的每个单词分别构建一个叶节点，这些叶结点形成了语法分析树的下边缘。为了构建一个推导，语法分析器需要根据语法和语法分析树完成的底部，在叶结点之上添加非终结层。它的语言适应范围比自顶向下更广，即使是左递归文法和左公因子的文法也能正确处理。通常使用表驱动的LR（1）语法分析来实现。 这里由于我们的文法较为简单，而且在设计的时候已经消除了左递归和左公因子，所以非常适合自顶向下的语法分析器。并且一个构建良好的递归下降语法分析器可以比表驱动的LR（1）语法分析器更加迅速，所以我选择了递归下降的方法来实现语法分析器。尽管LR（1）的直接编码方案可以胜过递归下降，但是考虑到自顶向下的递归下降语法分析器是最容易以手工编码的方式构建的，所以还是没有采用直接编码的LR（1）。此外，递归下降语法分析器相比LR（1）在错误处理方面更有优势，并且更容易处理语言中的二义性。 这里我们通过检查前瞻符号和First集合来消除自顶向下分析中产生式子的不确定性，这样就可以避免递归中的回溯。整个策略就是对于文法每一个非终结符，我们构建一个函数来识别与之匹配的各个产生式的右侧句型。这些过程按照设计的文法规则彼此嵌套调用，以识别对应的非终结符。终结符的识别在这里为了便于输出，通过简单的匹配函数进行。</p>
+<h4 id="非终结符识别函数的设计"><a href="#非终结符识别函数的设计" class="headerlink" title="非终结符识别函数的设计"></a>非终结符识别函数的设计</h4><p>对于递归下降函数，最关键的部分就是程序的主体———非终结符识别函数的设计了。首先要考虑的是函数返回的设计。因为在识别的过程中，尽管这里已经消除了回溯再识别的情况，但是仍然难以避免存在识别失败的情况。这时有两种解决方案，一种是直接在最底层报告错误然后结束程序，另一种是逐层上报，在适当的分析层上报告相应信息并尝试恢复或者停止分析。这里我因为一开始想检测文法是非为回溯文法，以及想进行一些错误恢复工作而选择了后者。这样的话，每个函数必须有一个布尔型的返回值来指示其解析是否成功。 除了返回值，函数的参数也是需要考虑的一个点。这里同样有两种选择方案。一种是保持为空，然后依靠输出一些结构性语句来在线性的数组中维持一个树的结构。另一种是直接传入父节点，然后如果识别成功就把在当前识别函数中新建的节点加入到父节点中。这里采用了后者来实现，因为这样先构建一颗完整的语法树再直接输出的方式更为直接，而且实现更加简洁。为了避免代码重复，这儿我把成功识别并加入父节点的逻辑和返回值的操作进行了合并，合并到了一个succ()函数中。而对于空节点和失败识别的操作也做了类似的处理，分别对应程序中的pushNull()和fail()函数。其中fail()函数中还包含了错误处理的逻辑。 此外就是整个token数组指针的移动问题，为了得到一个更清晰的逻辑，这里将指针移动都放入了识别终结符的匹配函数中，因为识别非终结符本身是不需要移动指针的，构建过程只是在上层完成，只有对叶子上终结符的识别完成，才会需要移动指针。将这个操作封装进匹配函数而不是裸露在非终结符的识别函数中，可以保持实现的简洁和逻辑的清晰，在函数中只需要按照文法依次调用即可。 对于token数组指针移动，还有一个先后问题。这里选择了只有匹配成功才移动，如果失败时不会移动。对于识别的时候也是，只有识别成功的时候才会加入父节点，不然就不会操作。这样做主要是避免了潜在的回退或者删除节点的操作，提高了效率，实现上也更加简洁。 另外，对于文法中存在“||”或的地方，我们需要对下一个token和first集进行匹配检查，以确定应该进入或的哪一项，或是匹配失败。这里我建立一组单独的检查函数来进行。它和终结符的匹配函数的区别主要在于检查函数的调用不会引起token数组指针的移动。 例如下图即为实现while语句识别的函数，为了便于修改保留了if的所有大括号。 下图是识别statement list的函数，其中可以看到提前对空集情况的first集进行了判断，从而避免了回溯。</p>
+<h4 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h4><p>根据上述思考的结果，我将语法分析器的函数分为了流程函数，控制函数，终结符匹配函数，检查函数，非终极符识别函数，输入输出函数以及一些为了代码重用而实现的辅助类函数。 流程函数类似于主函数，在其中依次调用输入函数，初始化函数，分析树根节点的识别函数，输出函数。 输入输出函数则简单的完成自己的输入输出基本逻辑即可，其中没有业务逻辑。 控制函数这里其实就是next()函数，负责取下一个token以及潜在的避免越界的限制。 终结符匹配函数是负责直接匹配终结符的，它同样以父节点为参数，如果识别成功该终结符，它将新建这个终结符的节点并把终结符的value设置进节点的text域中，再把该节点加入到父节点中，并前进一个token指针。如果识别失败，则直接返回fail()。 检查函数则是为了检查当前token和first集是否一致的，一致则返回true，不一致则返回false。它是为了在识别非终结符中避免回溯服务的。</p>
+<h4 id="文法设计"><a href="#文法设计" class="headerlink" title="文法设计"></a>文法设计</h4><p>根据前面的分析，整个语法分析器的骨架已经有了，现在给出文法设计来填充这个分析器。事实上文法设计我是第一步做的，因为语法分析器的设计本身就是基于文法的，如果没有确定文法，那么具体架构的设计也就无从得知了。 这里我设计的文法涵盖了局部变量声明，赋值语句，返回语句，if语句，if-else语句，while循环语句，更多的文法由于时间原因尚未实现，就先去除了。这里采用了ANTLRWorks的格式书写, 冒号：代表语法右部开始，竖线| 代表或，分号；代表一个文法项的结束，括号（）表示了优先级。 <code>CMPC_UNIT:FUNC_LIST; FUNC_LIST:FUNC_DEF FUNC_LIST|; FUNC_DEF:TYPE_SPEC ID &#39;(&#39;PARG_LIST&#39;)&#39; &#39;{&#39;STMT_LIST’}’; FUNC_TYPE: TYPE|’void’; TYPE_SPEC: ‘int’|’float’|’char’|’double’; PARG_LIST:(TYPE_SPEC ID (’,’PARG_LIST)|)|; STMT_LIST:(STMT STMT_LIST)|; STMT:RTN_STMT|ASSIGN_STMT|WHILE_STMT|BRANCH_STMT|DECLARE_STMT; RTN_STMT:&#39;return&#39; EXPR ‘;’; DECLARE_STMT: TYPE_SPEC ID ID_LIST ’;’; ID_LIST: (‘,’ ID ID_LIST) |; ASSIAN_STMT:TYPE_SPEC|ε ID&#39;=&#39;EXPR ‘;’; EXPR:TERM EXPR2; EXPR2:(&#39;+&#39; TERM EXPR2)|(&#39;-&#39; TERM EXPR2)|; TERM:FACTOR TERM2; TERM2:(&#39;*&#39; FACTOR TERM2)|(&#39;/&#39; FACTOR TERM2)|; FACTOR:ID|CONST|(&#39;(&#39;EXPR&#39;)&#39;); WHILE_STMT:&#39;while’’(‘JU_STMT&#39;)&#39;&#39;{&#39;STMT_LIST&#39;}&#39;; BRANCH_stmt:’if’ ‘(‘JU_STMT’)’ ‘{‘stmt list’}’ (else ‘{‘stmtList’}’ )|; JU_STMT:FACTOR (JUDGE_OP FACTOR)|; JUDEG_OP:’&lt;‘|’&gt;’|’&lt;=‘|’&gt;=‘; ID: (&#39;a&#39;..&#39;z&#39;|&#39;A&#39;..&#39;Z&#39;)+ (&#39;a&#39;..&#39;z&#39;|&#39;A&#39;..&#39;Z&#39;| &#39;0&#39;..&#39;9&#39;)* CONST:( ‘0’..’9’)*</code> 经过检查可以发现，该文法没有左递归和左公因子，可以直接用于递归下降语法分析器。</p>
+<h4 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h4><p>选用递归下降的一个原因就是用它可以方便的进行错误处理。这里对于错误处理主要由两种措施，一是报告错误，二是修正错误。这里选取第一种方式，也是更加常见的方式。此外，还有两种处理策略，一是遇到错误就停止，二是继续尝试分析。明显第二种方式更好，因为程序员编写程序过程中可能会有多个错误，通过第二种方式能够发现在一次编译中发现更多的错误。 因此我们需要建立一种机制，使得语法分析器能够从错误中恢复，转移到另一个状态，从而继续进行语法分析。这种机制通常是选择一个或多个单词作为同步词，每当遇到一个错误时，它将不断丢弃单词直到找到一个同步词，然后从这个同步词一致的状态继续开始分析。 在本程序的递归下降中，只需要遇到错误时不断丢弃token，直到遇到分号为止。此时语法分析器将控制转移到解析语句例程报告成功的位置。这里由于时间关系暂时只实现了在合适的位置报告解析错误的位置以及相应的单词的错误处理，但是已经预留了相应的接口为之后的改进做准备。毕竟如果使用一个一次编译只能发现一个错误的编译器来编译，那真的会是一个冗长而费力的过程。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/compile-theory-lexical-analysis/" rel="next" title="编译原理总结-词法分析">
+                <i class="fa fa-chevron-left"></i> 编译原理总结-词法分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/compile-theory-semantic-analysis-and-code-generation/" rel="prev" title="编译原理总结-语义分析与代码生成">
+                编译原理总结-语义分析与代码生成 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Fan Yijie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fan31415" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="fanyije@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出的具体处理"><span class="nav-number">1.</span> <span class="nav-text">输入输出的具体处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现策略的选择"><span class="nav-number">2.</span> <span class="nav-text">具体实现策略的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非终结符识别函数的设计"><span class="nav-number">3.</span> <span class="nav-text">非终结符识别函数的设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码结构"><span class="nav-number">4.</span> <span class="nav-text">代码结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文法设计"><span class="nav-number">5.</span> <span class="nav-text">文法设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误处理"><span class="nav-number">6.</span> <span class="nav-text">错误处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fan Yijie</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

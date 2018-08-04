@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hdu2553 N皇后问题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="HDU 2553 N皇后问题 Problem Description 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 Input 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 Output 共有若干行，每行一个正整数，表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hdu2553 N皇后问题">
+<meta property="og:url" content="http://yoursite.com/2016/05/17/hdu2553-n-queen-problem-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="HDU 2553 N皇后问题 Problem Description 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 Input 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 Output 共有若干行，每行一个正整数，表">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hdu2553 N皇后问题">
+<meta name="twitter:description" content="HDU 2553 N皇后问题 Problem Description 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 Input 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 Output 共有若干行，每行一个正整数，表">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hdu2553-n-queen-problem-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/hdu2553-n-queen-problem-1/" class="article-date">
+  <time datetime="2016-05-17T14:28:09.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/A题/">A题</a>►<a class="article-category-link" href="/categories/A题/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hdu2553 N皇后问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>HDU 2553 N皇后问题</strong> <strong>Problem Description</strong> 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 <strong>Input</strong> 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 <strong>Output</strong> 共有若干行，每行一个正整数，表示对应输入行的皇后的不同放置数量。 <strong>Sample Input</strong> 1 8 5 0 <strong>Sample Output</strong> 1 92 10 题目就是裸的N皇后问题，思路就是带剪枝的回溯。可以理解为对其解答树进行dfs。 首先将题目简化为每行放置一个皇后，具体皇后列位置用C数组储存。则其生成的解答树有N！个结点，与全排列的生成一样。 然后具体递归时，注意在尝试时加入对皇后是否能攻击之前以放置的皇后进行检查，和全排列时检查与已放入元素是否冲突是一致的。这里用白皮书上的方法来具体实现，即用一个二维数组vis来标记是否冲突从而避免冲突的计算。 可以观察到每个格子的x-y值标识了主对角线，y+x值标识了副对角线，又这里cur为当前行x，i为当前列y,则cur+i即标识副对角线，如果vis[1][cur+i]=1,则表明该条对角线已被占用。又因为x-y可能为负数，所以这里取cur-i+n,即可保证祝对角线的索引为正。那么当相应主对角线被占用时，有vis[2][cur-i+n]=1. 最后用vis[0][i]标识当前列被占用（因为是逐行向下递归，所以行不可能冲突)即可完成对是否冲突的判断。 另外注意dfs的时候，每次回溯记得将全局标记变量还原,以便遍历列i取值的循环下一次运行到这里时，能够继续进入相应i的子树继而再次搜索下去。 这道题还要注意数据量较大，且很多重复，所以需要将第一次算出的数据存储一下，下一次询问时直接将已算出的数据打表出来即可。好像有大神用位运算也可以过，大家有兴趣可以试一下~ ac代码：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring><br>using namespace std;<br>bool vis[3][22];<br>int C[12];<br>int n,cnt;<br>int ans[11];<br>void search(int cur){<br>    if(cur==n){<br>        cnt++;<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!vis[0][i]&amp;&amp;!vis[1][cur+i]&amp;&amp;!vis[2][cur-i+n]){<br>            C[cur]=i;;<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=1;<br>            search(cur+1);<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=0;<br>        }<br>    }<br>}<br>int main(){<br>    memset(ans,-1,sizeof(ans));<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        if(ans[n]!=-1){<br>            printf(“%d\n”,ans[n]);<br>        }<br>        else{<br>            memset(vis,0,sizeof(vis));<br>            cnt=0;<br>            search(0);<br>            ans[n]=cnt;<br>            printf(“%d\n”,cnt);<br>        }<br>    }<br>}</cstring></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/hdu2553-n-queen-problem-1/" data-id="cjkf4itxh0010272y5romtbc1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/18/hdu-4548-beautiful-prime/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hdu 4548 美素数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/17/hdu2553-n-queen-problem/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hdu2553 N皇后问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

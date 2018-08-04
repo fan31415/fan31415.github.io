@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-uva-524-prime-ring-problem" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/18/uva-524-prime-ring-problem/" class="article-date">
+  <time datetime="2016-05-18T06:10:44.000Z" itemprop="datePublished">2016-05-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>►<a class="article-category-link" href="/categories/Uva/回溯/数论/">数论</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/18/uva-524-prime-ring-problem/">Uva 524 Prime Ring Problem</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva 524 Prime Ring Problem</strong> A ring is composed of n (even number) circles as shown in diagram. Put natural numbers 1, 2, . . . , n into each circle separately, and the sum of numbers in two adjacent circles should be a prime. Note: the number of first circle should always be 1. <strong>Input</strong> n (0 &lt; n ≤ 16) <strong>Output</strong> The output format is shown as sample below. Each row represents a series of circle numbers in the ring beginning from 1 clockwisely and anticlockwisely. The order of numbers must satisfy the above requirements. You are to write a program that completes above process. <strong>Sample Input</strong> 6 8 <strong>Sample Output</strong> Case 1: 1 4 3 2 5 6 1 6 5 2 3 4 Case 2: 1 2 3 8 5 6 7 4 1 2 5 8 3 4 7 6 1 4 7 6 5 8 3 2 1 6 7 4 3 8 5 2 题意：生成一个素数环，使得相邻两个整数之和为素数，包括首尾。素数环由1~n组成，输出从1开始逆时针排列。 思路：和生成全排列的模型类似，直接递归深度优先遍历解答树，递归边界条件为cur == n且第一个数和最后一个数之和为素数，尝试取值的循环直接从2到n即可，因为要求从1开始输出，所以1每次直接加到输出数组第一个就行了。 尝试是否成功的判断条件就很简单了，一个通用的!vis[i] 和 !icp[i + A[cur-1]]，即i这个数没有被用到过且i和前一个放置的数之和为素数即可。这里素数的判定用的是先素数筛法生成素数表，然后直接用素数表判断的。 注意一下输出排列时，有一个if(i) printf(“ “)，以防止在一个排列最后同时输出空格与换行而PE. ac代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cmath></cmath></p>
+<p>#include<cstring><br>using namespace std;<br>int n,A[99];<br>bool vis[99];<br>bool isc[101];<br>void get_prime(int n){<br>    int m=sqrt(n+0.5);<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!isc[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                isc[j] = 1;<br>            }<br>        }<br>    }<br>}<br>void dfs(int cur){<br>    if(cur == n &amp;&amp; !isc[A[0] + A[n-1]]){<br>        for(int i = 0; i &lt; n; i++){<br>            if(i) printf(“ “);<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i = 2; i &lt;= n; i++){<br>        if(!vis[i] &amp;&amp; !isc[i+A[cur-1]]){<br>            A[cur] = i;<br>            vis[i] = 1;<br>            dfs(cur+1);<br>            vis[i] = 0;<br>        }<br>    }<br>}<br>int main(){<br>    get_prime(100);<br>    isc[0]=isc[1]=1;<br>    int kase = 0;<br>    while(~scanf(“%d”, &amp;n)){<br>        if(kase &gt; 0) printf(“\n”);<br>        printf(“Case %d:\n”, ++kase);<br>        memset(vis, 0, sizeof(vis));<br>        A[0] = 1;<br>        dfs(1);<br>    }<br>    return 0;<br>}</cstring></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/18/uva-524-prime-ring-problem/" data-id="cjkf4g9vt0032zp2ybhdsf2l6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-4548-beautiful-prime-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/18/hdu-4548-beautiful-prime-1/" class="article-date">
+  <time datetime="2016-05-18T05:10:14.000Z" itemprop="datePublished">2016-05-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/A题/">A题</a>►<a class="article-category-link" href="/categories/A题/数论/">数论</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/18/hdu-4548-beautiful-prime-1/">Hdu 4548 美素数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Hdu 4548 美素数</strong> <strong>Problem Description</strong> 小明对数的研究比较热爱，一谈到数，脑子里就涌现出好多数的问题，今天，小明想考考你对素数的认识。 问题是这样的：一个十进制数，如果是素数，而且它的各位数字和也是素数，则称之为“美素数”，如29，本身是素数，而且2+9 = 11也是素数，所以它是美素数。 给定一个区间，你能计算出这个区间内有多少个美素数吗？ <strong>Input</strong> 第一行输入一个正整数T，表示总共有T组数据(T &lt;= 10000)。 接下来共T行，每行输入两个整数L，R(1&lt;= L &lt;= R &lt;= 1000000)，表示区间的左值和右值。 <strong>Output</strong> 对于每组数据，先输出Case数，然后输出区间内美素数的个数（包括端点值L,R）。 每组数据占一行，具体输出格式参见样例。 <strong>Sample Input</strong> 3 1 100 2 2 3 19 <strong>Sample Output</strong> Case #1: 14 Case #2: 1 Case #3: 4 这道题我的做法是先将1~1000000的素数表打出来，用素数筛法得到，然后再遍历一遍1到1000000，得到从1到每个位置的美素数个数并将其存入arr数组中，这样每次询问只需要将arr[R]-arr[L-1]即可得到结果。素数筛法的时间复杂度是O(n*logn),遍历数组O(n),总时间复杂度近似为O(n*logn)，是有效算法。 素数筛法即对于不超过n的每个非负整数p, 删除2*p,3*p,….,当处理完所有数后，剩下的没被删的就是素数。由于每次对p进行处理时，时，(p-1)*p,(p-2)*p,…,2*p, 都已经在处理p-1,p-2,…,2时删除过了，所有就不用重复删了，直接从p*p开始删除即可，一直删到n. 由于从p*p开始，所以p也只用取到sqrt(n)就行了。由于sqrt返回double，而我们要取整，为了保险起见取到sqrt(n+0.5)。此外，由于每个数都有素因子，所以对于已经被判定是合数的数，就不用对其处理了，可以加上判断减少循环。 整个素数筛法代码如下：</p>
+<p>void get_prime(int n){<br>    int m = sqrt(n+0.5);<br>    memset(mark,0,sizeof(mark));<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!mark[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                mark[j] = 1;<br>            }<br>        }<br>    }<br>}</p>
+<p>mark[j]=1代表该数已被删除，处理完所有数后mark[j]==0的即是素数。 另外一个要用到的函数就是求数字各位和的函数，这个就很基础了，每次n%10得到当前n的个位，然后n/=10后再%10即可得到最低位被删除后的n的个位，即十位，这样循环即可得到数字各位的和。 函数代码如下：</p>
+<p>int get_sum(int n){<br>    int sum = 0;<br>    while(n){<br>        sum+=n%10;<br>        n/=10;<br>    }<br>    return sum;</p>
+<p>最后在main函数中进行简单的输入输出处理就可以了，ac代码如下：</p>
+<p>#include<iostream></iostream></p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cmath></cmath></p>
+<p>#include<cstring></cstring></p>
+<p>#define N 1000001<br>using namespace std;<br>bool mark[N];<br>int arr[N];<br>int get_sum(int n){<br>    int sum = 0;<br>    while(n){<br>        sum+=n%10;<br>        n/=10;<br>    }<br>    return sum;</p>
+<p>}<br>void get_prime(int n){<br>    int m = sqrt(n+0.5);<br>    memset(mark,0,sizeof(mark));<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!mark[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                mark[j] = 1;<br>            }<br>        }<br>    }<br>}<br>void get_arr(){<br>    int sum = 0;<br>    for(int i = 2; i &lt;= N; i++){<br>        if(!mark[i] &amp;&amp; !mark[get_sum(i)]){<br>            sum++;<br>        }<br>        arr[i] = sum;<br>    }<br>}<br>int main(){<br>    get_prime(N);<br>    get_arr();<br>    int n;<br>    cin&gt;&gt;n;<br>    int a, b, kase = 0;<br>    while(n–){<br>        scanf(“%d%d”, &amp;a, &amp;b);<br>        printf(“Case #%d: %d\n”,++kase,arr[b]-arr[a-1]);<br>    }<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/18/hdu-4548-beautiful-prime-1/" data-id="cjkf4itxg000y272y3qdfmwd8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-4548-beautiful-prime" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/18/hdu-4548-beautiful-prime/" class="article-date">
+  <time datetime="2016-05-18T05:10:14.000Z" itemprop="datePublished">2016-05-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/A题/">A题</a>►<a class="article-category-link" href="/categories/A题/数论/">数论</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/18/hdu-4548-beautiful-prime/">Hdu 4548 美素数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Hdu 4548 美素数</strong> <strong>Problem Description</strong> 小明对数的研究比较热爱，一谈到数，脑子里就涌现出好多数的问题，今天，小明想考考你对素数的认识。 问题是这样的：一个十进制数，如果是素数，而且它的各位数字和也是素数，则称之为“美素数”，如29，本身是素数，而且2+9 = 11也是素数，所以它是美素数。 给定一个区间，你能计算出这个区间内有多少个美素数吗？ <strong>Input</strong> 第一行输入一个正整数T，表示总共有T组数据(T &lt;= 10000)。 接下来共T行，每行输入两个整数L，R(1&lt;= L &lt;= R &lt;= 1000000)，表示区间的左值和右值。 <strong>Output</strong> 对于每组数据，先输出Case数，然后输出区间内美素数的个数（包括端点值L,R）。 每组数据占一行，具体输出格式参见样例。 <strong>Sample Input</strong> 3 1 100 2 2 3 19 <strong>Sample Output</strong> Case #1: 14 Case #2: 1 Case #3: 4 这道题我的做法是先将1~1000000的素数表打出来，用素数筛法得到，然后再遍历一遍1到1000000，得到从1到每个位置的美素数个数并将其存入arr数组中，这样每次询问只需要将arr[R]-arr[L-1]即可得到结果。素数筛法的时间复杂度是O(n*logn),遍历数组O(n),总时间复杂度近似为O(n*logn)，是有效算法。 素数筛法即对于不超过n的每个非负整数p, 删除2*p,3*p,….,当处理完所有数后，剩下的没被删的就是素数。由于每次对p进行处理时，时，(p-1)*p,(p-2)*p,…,2*p, 都已经在处理p-1,p-2,…,2时删除过了，所有就不用重复删了，直接从p*p开始删除即可，一直删到n. 由于从p*p开始，所以p也只用取到sqrt(n)就行了。由于sqrt返回double，而我们要取整，为了保险起见取到sqrt(n+0.5)。此外，由于每个数都有素因子，所以对于已经被判定是合数的数，就不用对其处理了，可以加上判断减少循环。 整个素数筛法代码如下：</p>
+<p>void get_prime(int n){<br>    int m = sqrt(n+0.5);<br>    memset(mark,0,sizeof(mark));<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!mark[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                mark[j] = 1;<br>            }<br>        }<br>    }<br>}</p>
+<p>mark[j]=1代表该数已被删除，处理完所有数后mark[j]==0的即是素数。 另外一个要用到的函数就是求数字各位和的函数，这个就很基础了，每次n%10得到当前n的个位，然后n/=10后再%10即可得到最低位被删除后的n的个位，即十位，这样循环即可得到数字各位的和。 函数代码如下：</p>
+<p>int get_sum(int n){<br>    int sum = 0;<br>    while(n){<br>        sum+=n%10;<br>        n/=10;<br>    }<br>    return sum;</p>
+<p>最后在main函数中进行简单的输入输出处理就可以了，ac代码如下：</p>
+<p>#include<iostream></iostream></p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cmath></cmath></p>
+<p>#include<cstring></cstring></p>
+<p>#define N 1000001<br>using namespace std;<br>bool mark[N];<br>int arr[N];<br>int get_sum(int n){<br>    int sum = 0;<br>    while(n){<br>        sum+=n%10;<br>        n/=10;<br>    }<br>    return sum;</p>
+<p>}<br>void get_prime(int n){<br>    int m = sqrt(n+0.5);<br>    memset(mark,0,sizeof(mark));<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!mark[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                mark[j] = 1;<br>            }<br>        }<br>    }<br>}<br>void get_arr(){<br>    int sum = 0;<br>    for(int i = 2; i &lt;= N; i++){<br>        if(!mark[i] &amp;&amp; !mark[get_sum(i)]){<br>            sum++;<br>        }<br>        arr[i] = sum;<br>    }<br>}<br>int main(){<br>    get_prime(N);<br>    get_arr();<br>    int n;<br>    cin&gt;&gt;n;<br>    int a, b, kase = 0;<br>    while(n–){<br>        scanf(“%d%d”, &amp;a, &amp;b);<br>        printf(“Case #%d: %d\n”,++kase,arr[b]-arr[a-1]);<br>    }<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/18/hdu-4548-beautiful-prime/" data-id="cjkf4g9uf000uzp2yfbaz7lar" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu2553-n-queen-problem-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/hdu2553-n-queen-problem-1/" class="article-date">
+  <time datetime="2016-05-17T14:28:09.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/A题/">A题</a>►<a class="article-category-link" href="/categories/A题/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/hdu2553-n-queen-problem-1/">Hdu2553 N皇后问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>HDU 2553 N皇后问题</strong> <strong>Problem Description</strong> 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 <strong>Input</strong> 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 <strong>Output</strong> 共有若干行，每行一个正整数，表示对应输入行的皇后的不同放置数量。 <strong>Sample Input</strong> 1 8 5 0 <strong>Sample Output</strong> 1 92 10 题目就是裸的N皇后问题，思路就是带剪枝的回溯。可以理解为对其解答树进行dfs。 首先将题目简化为每行放置一个皇后，具体皇后列位置用C数组储存。则其生成的解答树有N！个结点，与全排列的生成一样。 然后具体递归时，注意在尝试时加入对皇后是否能攻击之前以放置的皇后进行检查，和全排列时检查与已放入元素是否冲突是一致的。这里用白皮书上的方法来具体实现，即用一个二维数组vis来标记是否冲突从而避免冲突的计算。 可以观察到每个格子的x-y值标识了主对角线，y+x值标识了副对角线，又这里cur为当前行x，i为当前列y,则cur+i即标识副对角线，如果vis[1][cur+i]=1,则表明该条对角线已被占用。又因为x-y可能为负数，所以这里取cur-i+n,即可保证祝对角线的索引为正。那么当相应主对角线被占用时，有vis[2][cur-i+n]=1. 最后用vis[0][i]标识当前列被占用（因为是逐行向下递归，所以行不可能冲突)即可完成对是否冲突的判断。 另外注意dfs的时候，每次回溯记得将全局标记变量还原,以便遍历列i取值的循环下一次运行到这里时，能够继续进入相应i的子树继而再次搜索下去。 这道题还要注意数据量较大，且很多重复，所以需要将第一次算出的数据存储一下，下一次询问时直接将已算出的数据打表出来即可。好像有大神用位运算也可以过，大家有兴趣可以试一下~ ac代码：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring><br>using namespace std;<br>bool vis[3][22];<br>int C[12];<br>int n,cnt;<br>int ans[11];<br>void search(int cur){<br>    if(cur==n){<br>        cnt++;<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!vis[0][i]&amp;&amp;!vis[1][cur+i]&amp;&amp;!vis[2][cur-i+n]){<br>            C[cur]=i;;<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=1;<br>            search(cur+1);<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=0;<br>        }<br>    }<br>}<br>int main(){<br>    memset(ans,-1,sizeof(ans));<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        if(ans[n]!=-1){<br>            printf(“%d\n”,ans[n]);<br>        }<br>        else{<br>            memset(vis,0,sizeof(vis));<br>            cnt=0;<br>            search(0);<br>            ans[n]=cnt;<br>            printf(“%d\n”,cnt);<br>        }<br>    }<br>}</cstring></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/hdu2553-n-queen-problem-1/" data-id="cjkf4itxh0010272y5romtbc1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu2553-n-queen-problem" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/hdu2553-n-queen-problem/" class="article-date">
+  <time datetime="2016-05-17T14:28:09.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/A题/">A题</a>►<a class="article-category-link" href="/categories/A题/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/hdu2553-n-queen-problem/">Hdu2553 N皇后问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>HDU 2553 N皇后问题</strong> <strong>Problem Description</strong> 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 <strong>Input</strong> 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 <strong>Output</strong> 共有若干行，每行一个正整数，表示对应输入行的皇后的不同放置数量。 <strong>Sample Input</strong> 1 8 5 0 <strong>Sample Output</strong> 1 92 10 题目就是裸的N皇后问题，思路就是带剪枝的回溯。可以理解为对其解答树进行dfs。 首先将题目简化为每行放置一个皇后，具体皇后列位置用C数组储存。则其生成的解答树有N！个结点，与全排列的生成一样。 然后具体递归时，注意在尝试时加入对皇后是否能攻击之前以放置的皇后进行检查，和全排列时检查与已放入元素是否冲突是一致的。这里用白皮书上的方法来具体实现，即用一个二维数组vis来标记是否冲突从而避免冲突的计算。 可以观察到每个格子的x-y值标识了主对角线，y+x值标识了副对角线，又这里cur为当前行x，i为当前列y,则cur+i即标识副对角线，如果vis[1][cur+i]=1,则表明该条对角线已被占用。又因为x-y可能为负数，所以这里取cur-i+n,即可保证祝对角线的索引为正。那么当相应主对角线被占用时，有vis[2][cur-i+n]=1. 最后用vis[0][i]标识当前列被占用（因为是逐行向下递归，所以行不可能冲突)即可完成对是否冲突的判断。 另外注意dfs的时候，每次回溯记得将全局标记变量还原,以便遍历列i取值的循环下一次运行到这里时，能够继续进入相应i的子树继而再次搜索下去。 这道题还要注意数据量较大，且很多重复，所以需要将第一次算出的数据存储一下，下一次询问时直接将已算出的数据打表出来即可。好像有大神用位运算也可以过，大家有兴趣可以试一下~ ac代码：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring><br>using namespace std;<br>bool vis[3][22];<br>int C[12];<br>int n,cnt;<br>int ans[11];<br>void search(int cur){<br>    if(cur==n){<br>        cnt++;<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!vis[0][i]&amp;&amp;!vis[1][cur+i]&amp;&amp;!vis[2][cur-i+n]){<br>            C[cur]=i;;<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=1;<br>            search(cur+1);<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=0;<br>        }<br>    }<br>}<br>int main(){<br>    memset(ans,-1,sizeof(ans));<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        if(ans[n]!=-1){<br>            printf(“%d\n”,ans[n]);<br>        }<br>        else{<br>            memset(vis,0,sizeof(vis));<br>            cnt=0;<br>            search(0);<br>            ans[n]=cnt;<br>            printf(“%d\n”,cnt);<br>        }<br>    }<br>}</cstring></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/hdu2553-n-queen-problem/" data-id="cjkf4g9uc000rzp2y4ed2gcbm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-generate-permutation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/generate-permutation/" class="article-date">
+  <time datetime="2016-05-17T06:52:47.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/回溯/">回溯</a>►<a class="article-category-link" href="/categories/回溯/算法学习/">算法学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/generate-permutation/">生成全排列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1. <strong>按字典序生成1~n的全排列</strong> 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下：</p>
+<p>#include<cstdio><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=1;i&lt;=n;i++){<br>        int ok=1;<br>        for(int j=0;j&lt;cur;j++){<br>            if(A[j]==i) ok=0;<br>        }<br>        if(ok){<br>            A[cur]=i;<br>            printf_permutation(n,A,cur+1);<br>        }<br>    }<br>}<br>int main(){<br>    int A[5]={0};<br>    printf_permutation(3,A,0);</cstdio></p>
+<p>}</p>
+<p>测试输出如下：</p>
+<p>123<br>132<br>213<br>231<br>312<br>321</p>
+<p>这个递归的特点在于for循环里递归，可以结合输出理解。 <strong>2.生成可重复集的排列</strong> 目标：输入数组P,按字典序生成数组P各元素的全排列。 思路，把生成1到n全排列的代码进行修改，A[j]==i改为A[j]==P[i],A[cur]=i改为A[cur]=P[i],每次输入P后，将P进行升序排列，然后调用递归即可。 注意：当输入数组有重复时，要在递归中进行判断，如果递归中该元素已重复次数小于原始数组中重复数组，则可以选择将其添加。这儿可以简单的用两个循环分别遍历当前A和P计数实现。 同时应该注意排序后的P数组，第i个元素和上一个元素相同时，就不用再取了，因为我们只要不遗漏不重复的取出P中所有数值即可，重数的问题在取数循环的内部已经解决了。这里可以在取数循环后加一句 if(!i||P[i]!=P[i-1]) 实现，第一个!i保证i为0时直接短路为真，而不执行后面越界的代码。 测试代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<iostream></iostream></p>
+<p>#include<algorithm><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur,int *P){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!i||P[i]!=P[i-1]){<br>            int c1=0;<br>            int c2=0;<br>            for(int j=0;j&lt;cur;j++){<br>                if(A[j]==P[i]){<br>                    c1++;<br>                }<br>            }<br>            for(int j=0;j&lt;n;j++){<br>                if(P[i]==P[j]){<br>                    c2++;<br>                }<br>            }<br>            if(c1&lt;c2){<br>                A[cur]=P[i];<br>                printf_permutation(n,A,cur+1,P);<br>            }<br>        }<br>    }<br>}<br>int main(){<br>    int A[99]={0};<br>    int P[99]={0};<br>    int n;<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;P[i];<br>    }<br>    sort(P,P+n);<br>    printf_permutation(n,A,0,P);</algorithm></p>
+<p>}</p>
+<p><strong>3.使用C++的STL库函数生成全排列</strong> C++的stl中自带了一个next_permutation 可以实现成字典序最小开始，快速的求下一个排练，从而得到全排列，且适用于可重集合。 测试代码如下：</p>
+<p>#include<iostream></iostream></p>
+<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n,p[99];<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;p[i];<br>    }<br>    sort(p,p+n);<br>    do{<br>        for(int i=0;i&lt;n;i++){<br>            cout&lt;&lt;p[i];<br>        }<br>        cout&lt;&lt;endl;<br>    }while(next_permutation(p,p+n));<br>    return 0;<br>}</algorithm></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/generate-permutation/" data-id="cjkf4g9ub000pzp2ynj20f4le" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-generate-permutation-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/generate-permutation-1/" class="article-date">
+  <time datetime="2016-05-17T06:52:47.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/回溯/">回溯</a>►<a class="article-category-link" href="/categories/回溯/算法学习/">算法学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/generate-permutation-1/">生成全排列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1. <strong>按字典序生成1~n的全排列</strong> 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下：</p>
+<p>#include<cstdio><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=1;i&lt;=n;i++){<br>        int ok=1;<br>        for(int j=0;j&lt;cur;j++){<br>            if(A[j]==i) ok=0;<br>        }<br>        if(ok){<br>            A[cur]=i;<br>            printf_permutation(n,A,cur+1);<br>        }<br>    }<br>}<br>int main(){<br>    int A[5]={0};<br>    printf_permutation(3,A,0);</cstdio></p>
+<p>}</p>
+<p>测试输出如下：</p>
+<p>123<br>132<br>213<br>231<br>312<br>321</p>
+<p>这个递归的特点在于for循环里递归，可以结合输出理解。 <strong>2.生成可重复集的排列</strong> 目标：输入数组P,按字典序生成数组P各元素的全排列。 思路，把生成1到n全排列的代码进行修改，A[j]==i改为A[j]==P[i],A[cur]=i改为A[cur]=P[i],每次输入P后，将P进行升序排列，然后调用递归即可。 注意：当输入数组有重复时，要在递归中进行判断，如果递归中该元素已重复次数小于原始数组中重复数组，则可以选择将其添加。这儿可以简单的用两个循环分别遍历当前A和P计数实现。 同时应该注意排序后的P数组，第i个元素和上一个元素相同时，就不用再取了，因为我们只要不遗漏不重复的取出P中所有数值即可，重数的问题在取数循环的内部已经解决了。这里可以在取数循环后加一句 if(!i||P[i]!=P[i-1]) 实现，第一个!i保证i为0时直接短路为真，而不执行后面越界的代码。 测试代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<iostream></iostream></p>
+<p>#include<algorithm><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur,int *P){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!i||P[i]!=P[i-1]){<br>            int c1=0;<br>            int c2=0;<br>            for(int j=0;j&lt;cur;j++){<br>                if(A[j]==P[i]){<br>                    c1++;<br>                }<br>            }<br>            for(int j=0;j&lt;n;j++){<br>                if(P[i]==P[j]){<br>                    c2++;<br>                }<br>            }<br>            if(c1&lt;c2){<br>                A[cur]=P[i];<br>                printf_permutation(n,A,cur+1,P);<br>            }<br>        }<br>    }<br>}<br>int main(){<br>    int A[99]={0};<br>    int P[99]={0};<br>    int n;<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;P[i];<br>    }<br>    sort(P,P+n);<br>    printf_permutation(n,A,0,P);</algorithm></p>
+<p>}</p>
+<p><strong>3.使用C++的STL库函数生成全排列</strong> C++的stl中自带了一个next_permutation 可以实现成字典序最小开始，快速的求下一个排练，从而得到全排列，且适用于可重集合。 测试代码如下：</p>
+<p>#include<iostream></iostream></p>
+<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n,p[99];<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;p[i];<br>    }<br>    sort(p,p+n);<br>    do{<br>        for(int i=0;i&lt;n;i++){<br>            cout&lt;&lt;p[i];<br>        }<br>        cout&lt;&lt;endl;<br>    }while(next_permutation(p,p+n));<br>    return 0;<br>}</algorithm></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/generate-permutation-1/" data-id="cjkf4itxe000w272ykyafxoze" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-uva10976-fractions-again-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/uva10976-fractions-again-1/" class="article-date">
+  <time datetime="2016-05-17T05:58:44.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/uva10976-fractions-again-1/">Uva10976 Fractions Again?!</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva10976 Fractions Again?!</strong> It is easy to see that for every fraction in the form 1 k (k &gt; 0), we can always find two positive integers x and y, x ≥ y, such that: 1 k = 1 x + 1 y Now our question is: can you write a program that counts how many such pairs of x and y there are for any given k? <strong>Input</strong> Input contains no more than 100 lines, each giving a value of k (0 &lt; k ≤ 10000). <strong>Output</strong> For each k, output the number of corresponding (x, y) pairs, followed by a sorted list of the values of x and y, as shown in the sample output. <strong>Sample Input</strong> 2 12 <strong>Sample Output</strong> 2 1/2 = 1/6 + 1/3 1/2 = 1/4 + 1/4 8 1/12 = 1/156 + 1/13 1/12 = 1/84 + 1/14 1/12 = 1/60 + 1/15 1/12 = 1/48 + 1/16 1/12 = 1/36 + 1/18 1/12 = 1/30 + 1/20 1/12 = 1/28 + 1/21 1/12 = 1/24 + 1/24 这道题关键在于缩小枚举范围，因为x&gt;=y，又1/k=1/x+1/y,代入得y&lt;=2*k. 注意到x,y 均为正整数，则有y&gt;=k+1，这样只用枚举10000次y，即可在符合条件时通过y反解出x，得到答案。 在判断是否符合条件时，直接看是否整除即可，如果整除，则把商赋给x. 注意题目要求先输出解的数量，再按序输出解，所以这里用vector存了x,y的解，输出时先输出vector的size再对应输出x,y即可 ac代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<vector><br>using namespace std;<br>int main(){<br>    int k;<br>    vector<int> xx,yy;<br>    while(~scanf(“%d”,&amp;k)){<br>        for(int y=k+1;y&lt;=2<em>k;y++){<br>            if(k</em>y%(y-k)==0){<br>                xx.push_back(k*y/(y-k));<br>                yy.push_back(y);<br>            }<br>        }<br>        int cnt=xx.size();<br>        printf(“%d\n”,cnt);<br>        for(int i=0;i&lt;cnt;i++){<br>            printf(“1/%d = 1/%d + 1/%d\n”,k,xx[i],yy[i]);<br>        }<br>        xx.clear();<br>        yy.clear();<br>    }<br>    return 0;<br>}</int></vector></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/uva10976-fractions-again-1/" data-id="cjkf4ity30020272yhpiadi9h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-uva10976-fractions-again" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/uva10976-fractions-again/" class="article-date">
+  <time datetime="2016-05-17T05:58:44.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/uva10976-fractions-again/">Uva10976 Fractions Again?!</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva10976 Fractions Again?!</strong> It is easy to see that for every fraction in the form 1 k (k &gt; 0), we can always find two positive integers x and y, x ≥ y, such that: 1 k = 1 x + 1 y Now our question is: can you write a program that counts how many such pairs of x and y there are for any given k? <strong>Input</strong> Input contains no more than 100 lines, each giving a value of k (0 &lt; k ≤ 10000). <strong>Output</strong> For each k, output the number of corresponding (x, y) pairs, followed by a sorted list of the values of x and y, as shown in the sample output. <strong>Sample Input</strong> 2 12 <strong>Sample Output</strong> 2 1/2 = 1/6 + 1/3 1/2 = 1/4 + 1/4 8 1/12 = 1/156 + 1/13 1/12 = 1/84 + 1/14 1/12 = 1/60 + 1/15 1/12 = 1/48 + 1/16 1/12 = 1/36 + 1/18 1/12 = 1/30 + 1/20 1/12 = 1/28 + 1/21 1/12 = 1/24 + 1/24 这道题关键在于缩小枚举范围，因为x&gt;=y，又1/k=1/x+1/y,代入得y&lt;=2*k. 注意到x,y 均为正整数，则有y&gt;=k+1，这样只用枚举10000次y，即可在符合条件时通过y反解出x，得到答案。 在判断是否符合条件时，直接看是否整除即可，如果整除，则把商赋给x. 注意题目要求先输出解的数量，再按序输出解，所以这里用vector存了x,y的解，输出时先输出vector的size再对应输出x,y即可 ac代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<vector><br>using namespace std;<br>int main(){<br>    int k;<br>    vector<int> xx,yy;<br>    while(~scanf(“%d”,&amp;k)){<br>        for(int y=k+1;y&lt;=2<em>k;y++){<br>            if(k</em>y%(y-k)==0){<br>                xx.push_back(k*y/(y-k));<br>                yy.push_back(y);<br>            }<br>        }<br>        int cnt=xx.size();<br>        printf(“%d\n”,cnt);<br>        for(int i=0;i&lt;cnt;i++){<br>            printf(“1/%d = 1/%d + 1/%d\n”,k,xx[i],yy[i]);<br>        }<br>        xx.clear();<br>        yy.clear();<br>    }<br>    return 0;<br>}</int></vector></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/uva10976-fractions-again/" data-id="cjkf4g9vw0034zp2y72a7nbms" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-uva11059-maximum-product" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/uva11059-maximum-product/" class="article-date">
+  <time datetime="2016-05-17T05:20:48.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/uva11059-maximum-product/">Uva11059 Maximum Product</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva11059 Maximum Product</strong> Given a sequence of integers S = {S1, S2, . . . , Sn}, you should determine what is the value of the maximum positive product involving consecutive terms of S. If you cannot find a positive sequence, you should consider 0 as the value of the maximum product. <strong>Input</strong> Each test case starts with 1 ≤ N ≤ 18, the number of elements in a sequence. Each element Si is an integer such that ?10 ≤ Si ≤ 10. Next line will have N integers, representing the value of each element in the sequence. There is a blank line after each test case. The input is terminated by end of file (EOF). <strong>Output</strong> For each test case you must print the message: ‘Case #M: The maximum product is P.’, where M is the number of the test case, starting from 1, and P is the value of the maximum product. After each test case you must print a blank line. <strong>Sample Input</strong> 3 2 4 -3 5 2 5 -1 2 -1 <strong>Sample Output</strong> Case #1: The maximum product is 8. Case #2: The maximum product is 20. 题意：寻找乘积最大的连续子序列 由于只有18个整数，直接完全枚举即可。 注意输出的时候要%lld,因为绝对值不超过10且不超过18个数，则最大乘积不超过10^18，在long long 10^19的范围内，所以可用long long 储存答案并用lld输出 ac代码如下</p>
+<p>#include<cstdio><br>using namespace std;<br>int main(){<br>    int n;<br>    int s[20];<br>    int kase=0;<br>    while(~scanf(“%d”,&amp;n)){<br>        for(int i=0;i&lt;n;i++){<br>            scanf(“%d”,&amp;s[i]);<br>        }<br>        long long max=0;<br>        for(int i=0;i&lt;n;i++){<br>            long long ans=1;<br>            for(int j=i;j&lt;n;j++){<br>                ans*=s[j];<br>                if(ans&gt;max){<br>                    max=ans;<br>                }<br>            }<br>        }<br>        printf(“Case #%d: The maximum product is %lld.\n\n”,++kase,max);<br>    }<br>    return 0;<br>}</cstdio></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/uva11059-maximum-product/" data-id="cjkf4g9w7003dzp2yqlcuxjrz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

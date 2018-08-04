@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ong?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="fanyijie, technology" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hdu 4548 美素数 Problem Description 小明对数的研究比较热爱，一谈到数，脑子里就涌现出好多数的问题，今天，小明想考考你对素数的认识。 问题是这样的：一个十进制数，如果是素数，而且它的各位数字和也是素数，则称之为“美素数”，如29，本身是素数，而且2+9 = 11也是素数，所以它是美素数。 给定一个区间，你能计算出这个区间内有多少个美素数吗？ Input 第一行输入一个正">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hdu 4548 美素数">
+<meta property="og:url" content="https://fanyijie.net/2016/05/18/hdu-4548-beautiful-prime/index.html">
+<meta property="og:site_name" content="Fan&#39;s Home">
+<meta property="og:description" content="Hdu 4548 美素数 Problem Description 小明对数的研究比较热爱，一谈到数，脑子里就涌现出好多数的问题，今天，小明想考考你对素数的认识。 问题是这样的：一个十进制数，如果是素数，而且它的各位数字和也是素数，则称之为“美素数”，如29，本身是素数，而且2+9 = 11也是素数，所以它是美素数。 给定一个区间，你能计算出这个区间内有多少个美素数吗？ Input 第一行输入一个正">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T08:38:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hdu 4548 美素数">
+<meta name="twitter:description" content="Hdu 4548 美素数 Problem Description 小明对数的研究比较热爱，一谈到数，脑子里就涌现出好多数的问题，今天，小明想考考你对素数的认识。 问题是这样的：一个十进制数，如果是素数，而且它的各位数字和也是素数，则称之为“美素数”，如29，本身是素数，而且2+9 = 11也是素数，所以它是美素数。 给定一个区间，你能计算出这个区间内有多少个美素数吗？ Input 第一行输入一个正">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fanyijie.net/2016/05/18/hdu-4548-beautiful-prime/"/>
+
+
+
+
+
+  <title>Hdu 4548 美素数 | Fan's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fan's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/18/hdu-4548-beautiful-prime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Hdu 4548 美素数</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-18T13:10:14+08:00">
+                2016-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/A题/" itemprop="url" rel="index">
+                    <span itemprop="name">A题</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/A题/数论/" itemprop="url" rel="index">
+                    <span itemprop="name">数论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Hdu 4548 美素数</strong> <strong>Problem Description</strong> 小明对数的研究比较热爱，一谈到数，脑子里就涌现出好多数的问题，今天，小明想考考你对素数的认识。 问题是这样的：一个十进制数，如果是素数，而且它的各位数字和也是素数，则称之为“美素数”，如29，本身是素数，而且2+9 = 11也是素数，所以它是美素数。 给定一个区间，你能计算出这个区间内有多少个美素数吗？ <strong>Input</strong> 第一行输入一个正整数T，表示总共有T组数据(T &lt;= 10000)。 接下来共T行，每行输入两个整数L，R(1&lt;= L &lt;= R &lt;= 1000000)，表示区间的左值和右值。 <strong>Output</strong> 对于每组数据，先输出Case数，然后输出区间内美素数的个数（包括端点值L,R）。 每组数据占一行，具体输出格式参见样例。 <strong>Sample Input</strong> 3 1 100 2 2 3 19 <strong>Sample Output</strong> Case #1: 14 Case #2: 1 Case #3: 4 这道题我的做法是先将1~1000000的素数表打出来，用素数筛法得到，然后再遍历一遍1到1000000，得到从1到每个位置的美素数个数并将其存入arr数组中，这样每次询问只需要将arr[R]-arr[L-1]即可得到结果。素数筛法的时间复杂度是O(n*logn),遍历数组O(n),总时间复杂度近似为O(n*logn)，是有效算法。 素数筛法即对于不超过n的每个非负整数p, 删除2*p,3*p,….,当处理完所有数后，剩下的没被删的就是素数。由于每次对p进行处理时，时，(p-1)*p,(p-2)*p,…,2*p, 都已经在处理p-1,p-2,…,2时删除过了，所有就不用重复删了，直接从p*p开始删除即可，一直删到n. 由于从p*p开始，所以p也只用取到sqrt(n)就行了。由于sqrt返回double，而我们要取整，为了保险起见取到sqrt(n+0.5)。此外，由于每个数都有素因子，所以对于已经被判定是合数的数，就不用对其处理了，可以加上判断减少循环。 整个素数筛法代码如下：</p>
+<p>void get_prime(int n){<br>    int m = sqrt(n+0.5);<br>    memset(mark,0,sizeof(mark));<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!mark[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                mark[j] = 1;<br>            }<br>        }<br>    }<br>}</p>
+<p>mark[j]=1代表该数已被删除，处理完所有数后mark[j]==0的即是素数。 另外一个要用到的函数就是求数字各位和的函数，这个就很基础了，每次n%10得到当前n的个位，然后n/=10后再%10即可得到最低位被删除后的n的个位，即十位，这样循环即可得到数字各位的和。 函数代码如下：</p>
+<p>int get_sum(int n){<br>    int sum = 0;<br>    while(n){<br>        sum+=n%10;<br>        n/=10;<br>    }<br>    return sum;</p>
+<p>最后在main函数中进行简单的输入输出处理就可以了，ac代码如下：</p>
+<p>#include<iostream></iostream></p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cmath></cmath></p>
+<p>#include<cstring></cstring></p>
+<p>#define N 1000001<br>using namespace std;<br>bool mark[N];<br>int arr[N];<br>int get_sum(int n){<br>    int sum = 0;<br>    while(n){<br>        sum+=n%10;<br>        n/=10;<br>    }<br>    return sum;</p>
+<p>}<br>void get_prime(int n){<br>    int m = sqrt(n+0.5);<br>    memset(mark,0,sizeof(mark));<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!mark[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                mark[j] = 1;<br>            }<br>        }<br>    }<br>}<br>void get_arr(){<br>    int sum = 0;<br>    for(int i = 2; i &lt;= N; i++){<br>        if(!mark[i] &amp;&amp; !mark[get_sum(i)]){<br>            sum++;<br>        }<br>        arr[i] = sum;<br>    }<br>}<br>int main(){<br>    get_prime(N);<br>    get_arr();<br>    int n;<br>    cin&gt;&gt;n;<br>    int a, b, kase = 0;<br>    while(n–){<br>        scanf(“%d%d”, &amp;a, &amp;b);<br>        printf(“Case #%d: %d\n”,++kase,arr[b]-arr[a-1]);<br>    }<br>}</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/17/hdu2553-n-queen-problem/" rel="next" title="Hdu2553 N皇后问题">
+                <i class="fa fa-chevron-left"></i> Hdu2553 N皇后问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/18/uva-524-prime-ring-problem/" rel="prev" title="Uva 524 Prime Ring Problem">
+                Uva 524 Prime Ring Problem <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Fan Yijie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fan31415" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="fanyije@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fan Yijie</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

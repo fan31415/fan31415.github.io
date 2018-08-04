@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Uva 140 Bandwidth | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Uva 140 Bandwidth Given a graph (V,E) where V is a set of nodes and E is a set of arcs in VxV, and an ordering on the elements in V, then the bandwidth of a node v is defined as the maximum distance i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Uva 140 Bandwidth">
+<meta property="og:url" content="http://yoursite.com/2016/05/23/uva-140-bandwidth-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Uva 140 Bandwidth Given a graph (V,E) where V is a set of nodes and E is a set of arcs in VxV, and an ordering on the elements in V, then the bandwidth of a node v is defined as the maximum distance i">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://fanyijie.net/wp-content/uploads/2016/05/140img1.gif">
+<meta property="og:image" content="http://fanyijie.net/wp-content/uploads/2016/05/140img2-300x34.gif">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Uva 140 Bandwidth">
+<meta name="twitter:description" content="Uva 140 Bandwidth Given a graph (V,E) where V is a set of nodes and E is a set of arcs in VxV, and an ordering on the elements in V, then the bandwidth of a node v is defined as the maximum distance i">
+<meta name="twitter:image" content="http://fanyijie.net/wp-content/uploads/2016/05/140img1.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-uva-140-bandwidth-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/23/uva-140-bandwidth-1/" class="article-date">
+  <time datetime="2016-05-23T14:18:50.000Z" itemprop="datePublished">2016-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Uva 140 Bandwidth
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva 140 Bandwidth</strong> Given a graph (V,E) where V is a set of nodes and E is a set of arcs in VxV, and an ordering on the elements in V, then the bandwidth of a node v is defined as the maximum distance in the ordering between v and any node to which it is connected in the graph. The bandwidth of the ordering is then defined as the maximum of the individual bandwidths. For example, consider the following graph: <img src="http://fanyijie.net/wp-content/uploads/2016/05/140img1.gif" alt="140img1"> This can be ordered in many ways, two of which are illustrated below: <img src="http://fanyijie.net/wp-content/uploads/2016/05/140img2-300x34.gif" alt="140img2"> For these orderings, the bandwidths of the nodes (in order) are 6, 6, 1, 4, 1, 1, 6, 6 giving an ordering bandwidth of 6, and 5, 3, 1, 4, 3, 5, 1, 4 giving an ordering bandwidth of 5. Write a program that will find the ordering of a graph that minimises the bandwidth. <strong>Input</strong> Input will consist of a series of graphs. Each graph will appear on a line by itself. The entire file will be terminated by a line consisting of a single #. For each graph, the input will consist of a series of records separated by <code>;&#39;. Each record will consist of a node name (a single upper case character in the the range \</code>A’ to `Z’), followed by a `:’ and at least one of its neighbours. The graph will contain no more than 8 nodes. <strong>Output</strong> Output will consist of one line for each graph, listing the ordering of the nodes followed by an arrow (-&gt;) and the bandwidth for that ordering. All items must be separated from their neighbours by exactly one space. If more than one ordering produces the same bandwidth, then choose the smallest in lexicographic ordering, that is the one that would appear first in an alphabetic listing. <strong>Sample input</strong> A:FB;B:GC;D:GC;F:AGH;E:HD # <strong>Sample output</strong> A B C F G D H E -&gt; 3 题意：输入一个无向图G，定义一个由图的顶点构成的排列P. 定义任意一个顶点i的带宽b(i), 为i顶点与其相邻顶点在排列P中的最远距离。取所有顶点的b(i)的最大值为整个图G的bandwidth. 要求输出一个让bandwidth最小的顶点排列并输出其bandwidth值. 思路：因为图顶点数&lt;=8, 排列数小于100000, 所以这里直接用的暴力枚举。首先读入一行数据，然后用strchr函数(返回字符串str中第一次出现字符ch时的指针，如果没有出现则返回NULL)对本次输入出现的字母进行编号。通过mapc数组得到从编号到字母的映射，通过id数组得到字母到其编号的映射。 然后遍历输入，直接用向量u，v储存所有相邻的顶点，在循环中，u反复存储当前顶点，而对应的v则存入其相邻顶点，直到分号输入为止。这样就将所有会用来计算带宽的点对对应的存入了u，v中。 最后通过c++自带的next_permutation函数按字典序生成全排列。先初始化最小字典序全排列，然后循环生成。 这道题除了暴力的做法，还可以回溯剪枝，而且显然更快。这儿先留着下次有时间再写。 ac代码：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring></cstring></p>
+<p>#include<algorithm></algorithm></p>
+<p>#include<cmath></cmath></p>
+<p>#include<vector></vector></p>
+<p>#define N 10<br>using namespace std;<br>char in[100];<br>char mapc[30];<br>int id[30];<br>vector<int> u, v;<br>int main(){<br>    while(~scanf(“%s”,&amp;in) &amp;&amp; in[0] != ‘#’){<br>        int p = 0, num = 0, flag = 0;<br>        for(char a = ‘A’; a &lt;= ‘Z’; a++){<br>            if(strchr(in, a) != NULL){<br>                mapc[num] = a;<br>                id[a] = num;<br>                num++;<br>            }<br>        }<br>        char ch;<br>        int len = strlen(in);<br>        for(int i = 0; i &lt; len; i++){<br>            if(in[i] == ‘:’){<br>                flag = 1;<br>            }<br>            if(!flag){<br>                ch = in[i];<br>            }<br>            if(flag &amp;&amp; in[i] != ‘:’){<br>                if(in[i] != ‘;’){<br>                    u.push_back(id[ch]);<br>                    v.push_back(id[in[i]]);<br>                }<br>                else{<br>                    flag = 0;<br>                }<br>            }</int></p>
+<pre><code>    }
+    int pa\[N\], ans\[N\], pos\[N\], bw = 0x3f3f3f3f;
+    for(int i = 0; i &lt; num; i++){
+        pa\[i\] = i;
+    }
+    do{
+        for(int i = 0; i &lt; num; i++){
+            pos\[pa\[i\]\] = i;
+        } 
+        int b = 0;
+        for(int i = 0; i &lt; u.size(); i++){
+            b = max(b, abs(pos\[u\[i\]\]-pos\[v\[i\]\]));
+        }
+        if(b &lt; bw){
+            bw = b;
+            memcpy(ans, pa, sizeof(pa));
+        }
+    }while(next_permutation(pa, pa + num));
+    for(int i = 0; i &lt; num; i++){
+        printf(&quot;%c &quot;, mapc\[ans\[i\]\]);
+    }
+    printf(&quot;-&gt; %d\\n&quot;, bw);
+    u.clear();
+    v.clear();
+    memset(mapc, 0, sizeof(mapc));
+    memset(in, 0, sizeof(in));
+    memset(id, 0, sizeof(id));
+}
+return 0;
+</code></pre><p>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/23/uva-140-bandwidth-1/" data-id="cjkf4itxz001w272yrgk7q3o6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/24/subset-enumeration-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          枚举子集
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/23/uva-140-bandwidth/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Uva 140 Bandwidth</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

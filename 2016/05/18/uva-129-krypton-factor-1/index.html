@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Uva 129 Krypton Factor | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Uva 129 Krypton Factor You have been employed by the organisers of a Super Krypton Factor Contest in which contestants have very high mental and physical abilities. In one section of the contest the c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Uva 129 Krypton Factor">
+<meta property="og:url" content="http://yoursite.com/2016/05/18/uva-129-krypton-factor-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Uva 129 Krypton Factor You have been employed by the organisers of a Super Krypton Factor Contest in which contestants have very high mental and physical abilities. In one section of the contest the c">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Uva 129 Krypton Factor">
+<meta name="twitter:description" content="Uva 129 Krypton Factor You have been employed by the organisers of a Super Krypton Factor Contest in which contestants have very high mental and physical abilities. In one section of the contest the c">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-uva-129-krypton-factor-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/18/uva-129-krypton-factor-1/" class="article-date">
+  <time datetime="2016-05-18T07:58:52.000Z" itemprop="datePublished">2016-05-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Uva 129 Krypton Factor
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva 129 Krypton Factor</strong> You have been employed by the organisers of a Super Krypton Factor Contest in which contestants have very high mental and physical abilities. In one section of the contest the contestants are tested on their ability to recall a sequence of characters which has been read to them by the Quiz Master. Many of the contestants are very good at recognising patterns. Therefore, in order to add some difficulty to this test, the organisers have decided that sequences containing certain types of repeated subsequences should not be used. However, they do not wish to remove all subsequences that are repeated, since in that case no single character could be repeated. This in itself would make the problem too easy for the contestants. Instead it is decided to eliminate all sequences containing an occurrence of two adjoining identical subsequences. Sequences containing such an occurrence will be called ``easy’’. Other sequences will be called ``hard’’. For example, the sequence ABACBCBAD is easy, since it contains an adjoining repetition of the subsequence CB. Other examples of easy sequences are: BB ABCDACABCAB ABCDABCD Some examples of hard sequences are: D DC ABDAB CBABCBA <strong>Input and Output</strong> In order to provide the Quiz Master with a potentially unlimited source of questions you are asked to write a program that will read input lines that contain integers n and L (in that order), where n &gt; 0 and L is in the range 1 &lt;= L &lt;= 26 , and for each input line prints out the nth hard sequence (composed of letters drawn from the first L letters in the alphabet), in increasing alphabetical order (alphabetical ordering here corresponds to the normal ordering encountered in a dictionary), followed (on the next line) by the length of that sequence. The first sequence in this ordering is A. You may assume that for given n and L there do exist at least n hard sequences. For example, with L = 3, the first 7 hard sequences are: A AB ABA ABAC ABACA ABACAB ABACABA As each sequence is potentially very long, split it into groups of four (4) characters separated by a space. If there are more than 16 such groups, please start a new line for the 17th group. Therefore, if the integers 7 and 3 appear on an input line, the output lines produced should be ABAC ABA 7 Input is terminated by a line containing two zeroes. Your program may assume a maximum sequence length of 80. <strong>Sample Input</strong> 30 3 0 0 <strong>Sample Output</strong> ABAC ABCA CBAB CABA CABC ACBA CABA 28 题意：输入n和l,输出字典序第n小的hard串。 hard的定义是字符串中不包含相邻的重复子串。字符串由A, B, C,…,从A开始的l个字母构成。 思路：和生成全排列的方法类似，每次向当前位置尝试添加一个字母，如果该字母和之前已放置的字母冲突，则按字典序继续循环尝试放置下一个字母，直到不冲突的时候就放置进去并进入下一层（下一位置）的递归。 递归的边界条件在这里需要一个全局变量cnt来判断。由于每进一次递归，cnt都会++, 而一旦能进入一次递归，则说明已经又找到了一个hard串了，所以当cnt++ == n,即cnt == n时，正好是字典序第n小的hard串生成完成的时候。这时候也就是递归成功的边界条件了. 这里由于只要达到目标就不用继续搜索下去，所以在边界条件中有return 0,表示搜索成功，这样在上一层递归if(!dfs(cur+1)) return 0 中，就可以直接继续return 0跳过循环退出,然后一层层快速跳出递归，避免无用搜索。如果走到叶子节点也未找到解，就会执行最后的return 1返回父节点，然后继续循环遍历父节点剩下的儿子。如果儿子遍历完仍未找到解，则会继续返回上一层父节点，然后继续遍历深入，直到搜索完所有节点或者找到解为止。 这里取值i是否尝试成功的条件判断，是通过遍历了当前字符串长度cur+1范围内所有偶数长度的后缀，循环进行测试而得到的。 对于每一次的尝试取值i，检查所有偶数长度的后缀。每次检查当前2*j长度的后缀的前一半和后一半是否完全相同。如果有一个字符不同，则eq = 0并break，说明对于当前后缀是没有重复的，j++并对下一个后缀长度2*j再次测试。 如果测试完所有能取到的后缀长度后，均没有发现重复子串，则说明字符串是ok的，可以进入下一个位置的递归；而只要其中有一次发现了重复子串，则eq = 1，ok = 0，不是hard串，无法进入下一位置的递归，只能对当前位置的取值i继续按字典序进行循环尝试，直到将循环完毕返回父节点或找到解退出递归为止。 ac代码如下：</p>
+<p>#include<cstdio><br>using namespace std;<br>int n, l, cnt;<br>int S[82];<br>int dfs(int cur){    //return 0 means solution has found<br>    if(cnt++ == n){<br>        for(int i = 0; i &lt; cur; i++){<br>            if(i &amp;&amp; i % 64 == 0) printf(“\n”);<br>            else if(i &amp;&amp; i % 4 == 0) printf(“ “);<br>            printf(“%c”, ‘A’+S[i]);<br>        }<br>        printf(“\n%d\n”, cur);<br>        return 0;<br>    }<br>    for(int i = 0; i &lt; l; i++){<br>        S[cur] = i;<br>        bool ok = 1;<br>        for(int j = 1; j*2 &lt;= cur+1; j++){    //每添加一个数，就对所有后一半包含新数的后缀进行测试<br>            bool eq = 1;<br>            for(int k = 0; k &lt; j; k++){        //测试当前后缀长度下，后缀的前一半是否等于后一半<br>                if(S[cur-k] != S[cur-k-j]){    //对前一半和后一半的对应字符逐个比较<br>                    eq = 0;<br>                    break;<br>                }<br>            }<br>            if(eq){<br>                ok = 0;<br>                break;<br>            }<br>        }<br>        if(ok){<br>            if(!dfs(cur+1)){    // 如果已经找到解，则退出<br>                return 0;<br>            }<br>        }</cstdio></p>
+<pre><code>}
+return 1;
+</code></pre><p>}<br>int main(){<br>    while(scanf(“%d%d”, &amp;n, &amp;l) == 2 &amp;&amp; n){<br>        cnt = 0;<br>        dfs(0);<br>    }<br>    return 0;<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/18/uva-129-krypton-factor-1/" data-id="cjkf4itxx001u272yxawilrna" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/18/uva-129-krypton-factor/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Uva 129 Krypton Factor
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/18/uva-524-prime-ring-problem-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Uva 524 Prime Ring Problem</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

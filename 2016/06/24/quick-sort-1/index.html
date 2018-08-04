@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>快速排序 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="快排和归并排序一样，也是基于分治的算法。它的特点在于引入了基准数，在Θ(n)内将数组划分为3段，左段元素均小于中段(基准数），右端元素均大于中段(基准数），这样对左右段分别递归下去，直到每段长度为1为止。可以如下表示         \[4 3 5 2 6 7 1\]          以4为基准划分       \[2 3 1\]     \[4\]       \[6 7 5\]  以2为基准">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速排序">
+<meta property="og:url" content="http://yoursite.com/2016/06/24/quick-sort-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="快排和归并排序一样，也是基于分治的算法。它的特点在于引入了基准数，在Θ(n)内将数组划分为3段，左段元素均小于中段(基准数），右端元素均大于中段(基准数），这样对左右段分别递归下去，直到每段长度为1为止。可以如下表示         \[4 3 5 2 6 7 1\]          以4为基准划分       \[2 3 1\]     \[4\]       \[6 7 5\]  以2为基准">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="快速排序">
+<meta name="twitter:description" content="快排和归并排序一样，也是基于分治的算法。它的特点在于引入了基准数，在Θ(n)内将数组划分为3段，左段元素均小于中段(基准数），右端元素均大于中段(基准数），这样对左右段分别递归下去，直到每段长度为1为止。可以如下表示         \[4 3 5 2 6 7 1\]          以4为基准划分       \[2 3 1\]     \[4\]       \[6 7 5\]  以2为基准">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-quick-sort-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/24/quick-sort-1/" class="article-date">
+  <time datetime="2016-06-24T10:20:36.000Z" itemprop="datePublished">2016-06-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/分治/">分治</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      快速排序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>快排和归并排序一样，也是基于分治的算法。它的特点在于引入了基准数，在Θ(n)内将数组划分为3段，左段元素均小于中段(基准数），右端元素均大于中段(基准数），这样对左右段分别递归下去，直到每段长度为1为止。可以如下表示</p>
+<pre><code>        \[4 3 5 2 6 7 1\]
+         以4为基准划分    
+  \[2 3 1\]     \[4\]       \[6 7 5\]
+ 以2为基准             以6为基准 
+\[1\] \[2\] \[3\]   \[4\]     \[5\] \[6\] \[7\]
+</code></pre><p>可以看到每次划分后，基准数左边的都比基准数小，基准数右边的都比基准数大，划分到长度为1时，排序也就完成了。 具体的划分方法一般采用双游标法。为方便起见左侧游标命名为low，右侧命名为high。 如上面例子中，首先取左边第一个为基准数，然后两个游标的初始位置分布在数组最左边和最右边。我们将基准数存储到pivot变量中，这样left位置就可以被赋值了。我们先从右侧游标开始，让其向左移动，直到游标当前所在数比基准数小才停下，因为我们想让右侧数均大于基准数。然后就可以把这个数直接赋给low所在的left位置，这样就符合我们的期望了。接着我们让左侧游标向右移动，同理当比基准大时就把这个数赋给high所在位置，因为high在上一次中已经把自己的值放到合适的地方去了，所以不用担心覆盖的问题。这样又多一个数符合我们的期望了。就这样一直循环直到low == high时，说明已经把整个数组都处理完了，因为low和high要相等必定已经有一个指针走到了该位置并做了交换了，所以直接将pivot放到low或high的位置让其归位即可。为什么说是归位呢，因为左边都比你大，右边都比你小，所以这个位置就是基准数真正所在的位置。 用一段简略的图文说明一下刚刚所说的划分方法，这里i就是之前说的low游标，j就是high游标</p>
+<p> i       j<br>[4 7 5 2 3] 4<br>j所在3比4小</p>
+<p> i       j<br>[3 7 5 2  ] 4<br>3移到i处 </p>
+<p>   i     j<br>[3 7 5 2  ] 4<br>i++，i所在7比4大 </p>
+<p>   i     j<br>[3   5 2 7] 4<br>7移到j处 </p>
+<p>   i   j<br>[3   5 2 7] 4<br>j–,j所在2比4小</p>
+<p>   i   j<br>[3 2 5   7] 4<br>2移到i处</p>
+<pre><code>i j
+</code></pre><p>[3 2 5   7] 4<br>i++, i所在5比4大</p>
+<pre><code>i j
+</code></pre><p>[3 2   5 7] 4<br>5移到j处</p>
+<pre><code>ij
+</code></pre><p>[3 2   5 7] 4<br>j–,i == j, 循环终止</p>
+<p>[3 2 4 5 7]<br>将基准数4归位，然后对[3 2]和[5 7]进行下一次划分 </p>
+<p>这样应该就比较形象了。 实现代码如下</p>
+<p>#include<iostream><br>using namespace std;<br>void quick_sort(int a[], int left, int right){<br>    if(left &lt; right){<br>        int pivot = a[left];//这里取左侧第一个为基准<br>        int low = left;<br>        int high = right;<br>        while(low &lt; high){<br>            //从右往左走<br>            while(low &lt; high &amp;&amp; a[high] &gt;= pivot){//右侧游标小于基准时停下<br>                high–;<br>            }<br>            a[low]  = a[high];//将右侧游标放到左边，由于low处已被存储，所以直接赋值即可<br>            //从左往右走<br>            while(low &lt; high &amp;&amp; a[low] &lt;= pivot){//左侧游标大于基准时停下<br>                low ++;<br>            }<br>            a[high] = a[low];//将左侧游标放到右边，由于high处已被存储，所以直接赋值即可<br>        }<br>        a[low] = pivot;//基准数归位，基准数左边的都已经比基准小，右边都已经比基准大<br>        quick_sort(a, left, low - 1);    //继续递归处理左边的<br>        quick_sort(a, low + 1, right);    //继续递归处理右边的<br>    }<br>}<br>int main(){<br>    int a[10] = {3,1,2,7,8,9,5,6,4,12};<br>    quick_sort(a, 0, 9);<br>        for(int i = 0; i &lt; 10; i++){<br>        cout &lt;&lt; a[i];<br>    }<br>}</iostream></p>
+<p>快排最好的情况就是每次划分产生的区间大小都为n/2, 容易知道这时的时间复杂度T(n) = 2*T(n/2) + Θ(n)，由主定理知T(n) = O(n*logn).而最坏的情况就是原序列有序，这样每次需要比较n-1, n-2, …, 1次，这时的T(n) = n*(n-1)/2 = O(n^2). 对于长序列来说，快排的平均效率是很高的，也是应用最广泛的排序算法。针对快排基准数(轴)的选取，还有短序列的情况，还可以做一些优化和改进。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/24/quick-sort-1/" data-id="cjkf4itxo001e272yu8vvo70l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/25/matrix-chain/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          矩阵连乘
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/24/quick-sort/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">快速排序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-uva11059-maximum-product-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/uva11059-maximum-product-1/" class="article-date">
+  <time datetime="2016-05-17T05:20:48.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/uva11059-maximum-product-1/">Uva11059 Maximum Product</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Uva11059 Maximum Product</strong> Given a sequence of integers S = {S1, S2, . . . , Sn}, you should determine what is the value of the maximum positive product involving consecutive terms of S. If you cannot find a positive sequence, you should consider 0 as the value of the maximum product. <strong>Input</strong> Each test case starts with 1 ≤ N ≤ 18, the number of elements in a sequence. Each element Si is an integer such that ?10 ≤ Si ≤ 10. Next line will have N integers, representing the value of each element in the sequence. There is a blank line after each test case. The input is terminated by end of file (EOF). <strong>Output</strong> For each test case you must print the message: ‘Case #M: The maximum product is P.’, where M is the number of the test case, starting from 1, and P is the value of the maximum product. After each test case you must print a blank line. <strong>Sample Input</strong> 3 2 4 -3 5 2 5 -1 2 -1 <strong>Sample Output</strong> Case #1: The maximum product is 8. Case #2: The maximum product is 20. 题意：寻找乘积最大的连续子序列 由于只有18个整数，直接完全枚举即可。 注意输出的时候要%lld,因为绝对值不超过10且不超过18个数，则最大乘积不超过10^18，在long long 10^19的范围内，所以可用long long 储存答案并用lld输出 ac代码如下</p>
+<p>#include<cstdio><br>using namespace std;<br>int main(){<br>    int n;<br>    int s[20];<br>    int kase=0;<br>    while(~scanf(“%d”,&amp;n)){<br>        for(int i=0;i&lt;n;i++){<br>            scanf(“%d”,&amp;s[i]);<br>        }<br>        long long max=0;<br>        for(int i=0;i&lt;n;i++){<br>            long long ans=1;<br>            for(int j=i;j&lt;n;j++){<br>                ans*=s[j];<br>                if(ans&gt;max){<br>                    max=ans;<br>                }<br>            }<br>        }<br>        printf(“Case #%d: The maximum product is %lld.\n\n”,++kase,max);<br>    }<br>    return 0;<br>}</cstdio></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/uva11059-maximum-product-1/" data-id="cjkf4ity40022272y0rewrl5h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae/" class="article-date">
+  <time datetime="2016-05-17T04:18:20.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae/">常用数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>long long 9.2*10^19</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae/" data-id="cjkf4g9u3000ezp2yqalucjtt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae-1/" class="article-date">
+  <time datetime="2016-05-17T04:18:20.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae-1/">常用数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>long long 9.2*10^19</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae-1/" data-id="cjkf4itx8000m272yxhuudiuy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-uva725-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/uva725-1/" class="article-date">
+  <time datetime="2016-05-17T03:28:50.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/uva725-1/">Uva725 Division</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>uva725 division</strong> Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal to an integer N, where 2 ≤ N ≤ 79. That is, abcde fghij = N where each letter represents a different digit. The first digit of one of the numerals is allowed to be zero. <strong>Input</strong> Each line of the input file consists of a valid integer N. An input of zero is to terminate the program. <strong>Output</strong> Your program have to display ALL qualifying pairs of numerals, sorted by increasing numerator (and, of course, denominator). Your output should be in the following general form: xxxxx / xxxxx = N xxxxx / xxxxx = N . . In case there are no pairs of numerals satisfying the condition, you must write ‘There are no solutions for N.’. Separate the output for two different values of N by a blank line. <strong>Sample Input</strong> 61 62 0 <strong>Sample Output</strong> There are no solutions for 61. 79546 / 01283 = 62 94736 / 01528 = 62 思路：枚举即可，注意到abcde=n*fghij,可以只枚举abcde得到答案，当abcde和fghij合起来&gt;10位就可以break了，因为题目要求必须刚好是0~9的排列。 可用sprintf转换，和%05d补零 注意题目要求每个n输入后的结果，有一个空行，且0终止程序，也就是说最后一次输入0的时候，什么也不要输出。所以可以把每一次输出结束后的空行,放到下一个输入处理的开头来输出，就可以避免输入0时，上一次输出结束时多输出了空行而造成PE. ac代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring></cstring></p>
+<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n;<br>    int mcase=0;<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        int f;<br>        char buf[99];<br>        int cnt=0;<br>        if(mcase++){<br>            printf(“\n”);<br>        }<br>        for(int i=1234;i&lt;=99999;i++){<br>            f=i*n;<br>            sprintf(buf,”%05d%05d”,f,i);<br>            if(strlen(buf)&gt;10){<br>                break;<br>            }<br>            sort(buf,buf+10);<br>            bool ok=1;<br>            for(int j=0;j&lt;10;j++){<br>                if(buf[j]!=’0’+j){<br>                    ok=0;<br>                    break;<br>                }<br>            }<br>            if(ok){<br>                cnt++;<br>                printf(“%05d / %05d = %d\n”,f,i,n);<br>            }<br>        }<br>        if(!cnt){<br>            printf(“There are no solutions for %d.\n”,n);<br>        }<br>    }<br>    return 0;<br>}</algorithm></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/uva725-1/" data-id="cjkf4ity50024272yzjd6jobp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-uva725" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/uva725/" class="article-date">
+  <time datetime="2016-05-17T03:28:50.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Uva/">Uva</a>►<a class="article-category-link" href="/categories/Uva/回溯/">回溯</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/uva725/">Uva725 Division</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>uva725 division</strong> Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal to an integer N, where 2 ≤ N ≤ 79. That is, abcde fghij = N where each letter represents a different digit. The first digit of one of the numerals is allowed to be zero. <strong>Input</strong> Each line of the input file consists of a valid integer N. An input of zero is to terminate the program. <strong>Output</strong> Your program have to display ALL qualifying pairs of numerals, sorted by increasing numerator (and, of course, denominator). Your output should be in the following general form: xxxxx / xxxxx = N xxxxx / xxxxx = N . . In case there are no pairs of numerals satisfying the condition, you must write ‘There are no solutions for N.’. Separate the output for two different values of N by a blank line. <strong>Sample Input</strong> 61 62 0 <strong>Sample Output</strong> There are no solutions for 61. 79546 / 01283 = 62 94736 / 01528 = 62 思路：枚举即可，注意到abcde=n*fghij,可以只枚举abcde得到答案，当abcde和fghij合起来&gt;10位就可以break了，因为题目要求必须刚好是0~9的排列。 可用sprintf转换，和%05d补零 注意题目要求每个n输入后的结果，有一个空行，且0终止程序，也就是说最后一次输入0的时候，什么也不要输出。所以可以把每一次输出结束后的空行,放到下一个输入处理的开头来输出，就可以避免输入0时，上一次输出结束时多输出了空行而造成PE. ac代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring></cstring></p>
+<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n;<br>    int mcase=0;<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        int f;<br>        char buf[99];<br>        int cnt=0;<br>        if(mcase++){<br>            printf(“\n”);<br>        }<br>        for(int i=1234;i&lt;=99999;i++){<br>            f=i*n;<br>            sprintf(buf,”%05d%05d”,f,i);<br>            if(strlen(buf)&gt;10){<br>                break;<br>            }<br>            sort(buf,buf+10);<br>            bool ok=1;<br>            for(int j=0;j&lt;10;j++){<br>                if(buf[j]!=’0’+j){<br>                    ok=0;<br>                    break;<br>                }<br>            }<br>            if(ok){<br>                cnt++;<br>                printf(“%05d / %05d = %d\n”,f,i,n);<br>            }<br>        }<br>        if(!cnt){<br>            printf(“There are no solutions for %d.\n”,n);<br>        }<br>    }<br>    return 0;<br>}</algorithm></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/uva725/" data-id="cjkf4g9w00039zp2yrb85uf0l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af-1/" class="article-date">
+  <time datetime="2016-04-25T16:56:37.000Z" itemprop="datePublished">2016-04-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af-1/">学海无涯</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>既然学海无涯，而吾生有涯，那么我更该加倍努力去学习啊！学习即是快乐，还有什么比能够自由的学习知识更美的事呢！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af-1/" data-id="cjkf4itx7000k272y2xxezo69" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af/" class="article-date">
+  <time datetime="2016-04-25T16:56:37.000Z" itemprop="datePublished">2016-04-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af/">学海无涯</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>既然学海无涯，而吾生有涯，那么我更该加倍努力去学习啊！学习即是快乐，还有什么比能够自由的学习知识更美的事呢！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af/" data-id="cjkf4g9u2000bzp2y6eak691f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/23/e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be/" class="article-date">
+  <time datetime="2016-04-23T10:20:37.000Z" itemprop="datePublished">2016-04-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/23/e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be/">常用格式标签</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>//line=“1”表示显示行号,LANGUAGE改为语言类型，例如php、java 该格式为wp-syntax插件特有，支持语言有 abap, actionscript, actionscript3, ada, apache, applescript, apt_sources, asm, asp, autoit, avisynth, bash, bf, bibtex, blitzbasic, bnf, boo, c, c_mac, caddcl, cadlisp, cil, cfdg, cfm, cmake, cobol, cpp-qt, cpp, csharp, css, d, dcs, delphi, diff, div, dos, dot, eiffel, email, erlang, fo, fortran, freebasic, genero, gettext, glsl, gml, bnuplot, groovy, haskell, hq9plus, html4strict, idl, ini, inno, intercal, io, java, java5, javascript, kixtart, klonec, klonecpp, latex, lisp, locobasic, lolcode lotusformulas, lotusscript, lscript, lsl2, lua, m68k, make, matlab, mirc, modula3, mpasm, mxml, mysql, nsis, oberon2, objc, ocaml-brief, ocaml, oobas, oracle11, oracle8, pascal, per, pic16, pixelbender, perl, php-brief, php, plsql, povray, powershell, progress, prolog, properties, providex, python, qbasic, rails, rebol, reg, robots, ruby, sas, scala, scheme, scilab, sdlbasic, smalltalk, smarty, sql, tcl, teraterm, text, thinbasic, tsql, typoscript, vb, vbnet, verilog, vhdl, vim, visualfoxpro, visualprolog, whitespace, whois, winbatch, xml, xorg_conf, xpp, z80</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/23/e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be/" data-id="cjkf4g9u5000fzp2y2rpnolay" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/23/e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be-1/" class="article-date">
+  <time datetime="2016-04-23T10:20:37.000Z" itemprop="datePublished">2016-04-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/23/e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be-1/">常用格式标签</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>//line=“1”表示显示行号,LANGUAGE改为语言类型，例如php、java 该格式为wp-syntax插件特有，支持语言有 abap, actionscript, actionscript3, ada, apache, applescript, apt_sources, asm, asp, autoit, avisynth, bash, bf, bibtex, blitzbasic, bnf, boo, c, c_mac, caddcl, cadlisp, cil, cfdg, cfm, cmake, cobol, cpp-qt, cpp, csharp, css, d, dcs, delphi, diff, div, dos, dot, eiffel, email, erlang, fo, fortran, freebasic, genero, gettext, glsl, gml, bnuplot, groovy, haskell, hq9plus, html4strict, idl, ini, inno, intercal, io, java, java5, javascript, kixtart, klonec, klonecpp, latex, lisp, locobasic, lolcode lotusformulas, lotusscript, lscript, lsl2, lua, m68k, make, matlab, mirc, modula3, mpasm, mxml, mysql, nsis, oberon2, objc, ocaml-brief, ocaml, oobas, oracle11, oracle8, pascal, per, pic16, pixelbender, perl, php-brief, php, plsql, povray, powershell, progress, prolog, properties, providex, python, qbasic, rails, rebol, reg, robots, ruby, sas, scala, scheme, scilab, sdlbasic, smalltalk, smarty, sql, tcl, teraterm, text, thinbasic, tsql, typoscript, vb, vbnet, verilog, vhdl, vim, visualfoxpro, visualprolog, whitespace, whois, winbatch, xml, xorg_conf, xpp, z80</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/23/e5-b8-b8-e7-94-a8-e6-a0-bc-e5-bc-8f-e6-a0-87-e7-ad-be-1/" data-id="cjkf4itxa000o272ywotlpve5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-about-me-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/16/about-me-1/" class="article-date">
+  <time datetime="2016-04-16T11:13:35.000Z" itemprop="datePublished">2016-04-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/关于我/">关于我</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/16/about-me-1/">关于我</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一个积极向上的活泼青年..热爱技术~ 还在努力学习中..最近回归基础学习..</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/16/about-me-1/" data-id="cjkf4itwu0004272yyb288dlr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

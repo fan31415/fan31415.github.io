@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>归并排序 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="归并排序是经典的分治算法，我对它的理解就是将数组不断分成两半，分解到最后数组只剩一个元素后开始将相邻的数组两两合并，每次合并都在相邻有序数组的基础上进行，并得到新的有序数组，直到最终得到整个有序数组。可以如下表示 分解    [8 4 5 6 2 1 7 3]    [8 4 5 6] [2 1 7 3]    [8 4] [5 6] [2 1] [7 3]    [8] [4] [5] [6]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="归并排序">
+<meta property="og:url" content="http://yoursite.com/2016/06/24/merge-sort-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="归并排序是经典的分治算法，我对它的理解就是将数组不断分成两半，分解到最后数组只剩一个元素后开始将相邻的数组两两合并，每次合并都在相邻有序数组的基础上进行，并得到新的有序数组，直到最终得到整个有序数组。可以如下表示 分解    [8 4 5 6 2 1 7 3]    [8 4 5 6] [2 1 7 3]    [8 4] [5 6] [2 1] [7 3]    [8] [4] [5] [6]">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T07:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="归并排序">
+<meta name="twitter:description" content="归并排序是经典的分治算法，我对它的理解就是将数组不断分成两半，分解到最后数组只剩一个元素后开始将相邻的数组两两合并，每次合并都在相邻有序数组的基础上进行，并得到新的有序数组，直到最终得到整个有序数组。可以如下表示 分解    [8 4 5 6 2 1 7 3]    [8 4 5 6] [2 1 7 3]    [8 4] [5 6] [2 1] [7 3]    [8] [4] [5] [6]">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-merge-sort-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/24/merge-sort-1/" class="article-date">
+  <time datetime="2016-06-24T07:49:18.000Z" itemprop="datePublished">2016-06-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/分治/">分治</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      归并排序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>归并排序是经典的分治算法，我对它的理解就是将数组不断分成两半，分解到最后数组只剩一个元素后开始将相邻的数组两两合并，每次合并都在相邻有序数组的基础上进行，并得到新的有序数组，直到最终得到整个有序数组。可以如下表示</p>
+<p>分解<br>    [8 4 5 6 2 1 7 3]<br>    [8 4 5 6] [2 1 7 3]<br>    [8 4] [5 6] [2 1] [7 3]<br>    [8] [4] [5] [6] [2] [1] [7] [3]<br>合并<br>    [4 8] [5 6] [1 2] [3 7]<br>    [4 5 6 8] [1 2 3 7]<br>    [1 2 3 4 5 6 7 8]</p>
+<p>从上也可以看出过程分为两步，第一步不断分半，第二部用合成两个有序数组的方法进行两两合并。 实现代码如下，参考<a href="http://blog.csdn.net/morewindows/article/details/6678165/" target="_blank" rel="noopener">MoreWindows</a>的博客</p>
+<p>#include<iostream><br>using namespace std;<br>void merge(int a[], int first, int mid, int last, int temp[]){ //合成两个有序数组为一个有序数组<br>    int i = first, j = mid + 1;<br>    int m = mid, n = last;<br>    int k = 0;<br>    //这里相当于first到mid为一个有序数组，mid+1到last为另一个有序数组，然后将两个有序数组合并为一个有序数组<br>    while(i &lt;= m &amp;&amp; j &lt;= n){<br>        if (a[i] &lt;= a[j]) temp[k++] = a[i++];<br>        else temp[k++] = a[j++];<br>    }<br>    while(i &lt;= m){<br>        temp[k++] = a[i++];<br>    }<br>    while(j &lt;= n){<br>        temp[k++] = a[j++];<br>    }<br>    //把合并后的temp放回a中<br>    for(i = 0; i &lt; k; i++){<br>        a[first + i] = temp[i];<br>    }<br>}<br>void merge_sort(int a[], int first, int last, int temp[]){<br>    if(first &lt; last) {<br>        int mid = (first + last) / 2;<br>        merge_sort(a, first, mid ,temp); //处理mid以及mid左边的内容<br>        merge_sort(a, mid + 1, last, temp); //处理mid右边的内容<br>        merge(a, first, mid, last, temp);    //合并两个相邻的有序数列<br>    }<br>}<br>bool MergeSort(int a[], int n){//函数封装<br>    int *p = new int[n];<br>    if(p == NULL){<br>        return false;<br>    }<br>    merge_sort(a, 0, n-1, p);<br>    delete[] p;<br>    return true;<br>}<br>int main(){<br>    int a[10] = {3,1,2,7,8,9,5,6,4,0};<br>    MergeSort(a, 10);<br>    for(int i = 0; i &lt; 10; i++){<br>        cout &lt;&lt; a[i];<br>    }<br>}</iostream></p>
+<p>因为两个有序数组的排序以及复制是O(n)的，则算法复杂度T(n) = 2<em>T(n/2) + O(n)，由<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">主定理</a>可知，T(n) = Θ(n</em>logn) 相比快排与堆排，归并排序最大的好处应该是它的稳定性，不会改变相等元素之间的顺序。对于总体无序但是局部相对有序的数组排序，或者是要求稳定性的排序，都是可以使用的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/24/merge-sort-1/" data-id="cjkf4itxk0016272yiebw9dyu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/24/quick-sort/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          快速排序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/24/merge-sort/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">归并排序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/">A题</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/A题/回溯/">回溯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/A题/数论/">数论</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/">Uva</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Uva/回溯/数论/">数论</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/eos/">eos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/">Ethereum</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/eos/Ethereum/经验杂谈/">经验杂谈</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">ios</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ios/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/unity/">unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/">关于我</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/关于我/经验杂谈/">经验杂谈</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/分治/">分治</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/动态规划/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/">回溯</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/回溯/算法学习/">算法学习</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术分享/">技术分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验杂谈/">经验杂谈</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos-1/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/trouble-shooting-on-eos/">Trouble Shooting on EOS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect-1/">The difference of Ether and EOS token in code hierarchy aspect</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

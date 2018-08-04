@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.ong?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="fanyijie, technology" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 按字典序生成1~n的全排列 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下： #includeusing namespace std;void printf_permutati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成全排列">
+<meta property="og:url" content="https://fanyijie.net/2016/05/17/generate-permutation/index.html">
+<meta property="og:site_name" content="Fan&#39;s Home">
+<meta property="og:description" content="1. 按字典序生成1~n的全排列 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下： #includeusing namespace std;void printf_permutati">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-04T08:38:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="生成全排列">
+<meta name="twitter:description" content="1. 按字典序生成1~n的全排列 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下： #includeusing namespace std;void printf_permutati">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fanyijie.net/2016/05/17/generate-permutation/"/>
+
+
+
+
+
+  <title>生成全排列 | Fan's Home</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fan's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/generate-permutation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">生成全排列</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T14:52:47+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/回溯/" itemprop="url" rel="index">
+                    <span itemprop="name">回溯</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/回溯/算法学习/" itemprop="url" rel="index">
+                    <span itemprop="name">算法学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>1. <strong>按字典序生成1~n的全排列</strong> 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下：</p>
+<p>#include<cstdio><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=1;i&lt;=n;i++){<br>        int ok=1;<br>        for(int j=0;j&lt;cur;j++){<br>            if(A[j]==i) ok=0;<br>        }<br>        if(ok){<br>            A[cur]=i;<br>            printf_permutation(n,A,cur+1);<br>        }<br>    }<br>}<br>int main(){<br>    int A[5]={0};<br>    printf_permutation(3,A,0);</cstdio></p>
+<p>}</p>
+<p>测试输出如下：</p>
+<p>123<br>132<br>213<br>231<br>312<br>321</p>
+<p>这个递归的特点在于for循环里递归，可以结合输出理解。 <strong>2.生成可重复集的排列</strong> 目标：输入数组P,按字典序生成数组P各元素的全排列。 思路，把生成1到n全排列的代码进行修改，A[j]==i改为A[j]==P[i],A[cur]=i改为A[cur]=P[i],每次输入P后，将P进行升序排列，然后调用递归即可。 注意：当输入数组有重复时，要在递归中进行判断，如果递归中该元素已重复次数小于原始数组中重复数组，则可以选择将其添加。这儿可以简单的用两个循环分别遍历当前A和P计数实现。 同时应该注意排序后的P数组，第i个元素和上一个元素相同时，就不用再取了，因为我们只要不遗漏不重复的取出P中所有数值即可，重数的问题在取数循环的内部已经解决了。这里可以在取数循环后加一句 if(!i||P[i]!=P[i-1]) 实现，第一个!i保证i为0时直接短路为真，而不执行后面越界的代码。 测试代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<iostream></iostream></p>
+<p>#include<algorithm><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur,int *P){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!i||P[i]!=P[i-1]){<br>            int c1=0;<br>            int c2=0;<br>            for(int j=0;j&lt;cur;j++){<br>                if(A[j]==P[i]){<br>                    c1++;<br>                }<br>            }<br>            for(int j=0;j&lt;n;j++){<br>                if(P[i]==P[j]){<br>                    c2++;<br>                }<br>            }<br>            if(c1&lt;c2){<br>                A[cur]=P[i];<br>                printf_permutation(n,A,cur+1,P);<br>            }<br>        }<br>    }<br>}<br>int main(){<br>    int A[99]={0};<br>    int P[99]={0};<br>    int n;<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;P[i];<br>    }<br>    sort(P,P+n);<br>    printf_permutation(n,A,0,P);</algorithm></p>
+<p>}</p>
+<p><strong>3.使用C++的STL库函数生成全排列</strong> C++的stl中自带了一个next_permutation 可以实现成字典序最小开始，快速的求下一个排练，从而得到全排列，且适用于可重集合。 测试代码如下：</p>
+<p>#include<iostream></iostream></p>
+<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n,p[99];<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;p[i];<br>    }<br>    sort(p,p+n);<br>    do{<br>        for(int i=0;i&lt;n;i++){<br>            cout&lt;&lt;p[i];<br>        }<br>        cout&lt;&lt;endl;<br>    }while(next_permutation(p,p+n));<br>    return 0;<br>}</algorithm></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/17/uva10976-fractions-again/" rel="next" title="Uva10976 Fractions Again?!">
+                <i class="fa fa-chevron-left"></i> Uva10976 Fractions Again?!
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/17/hdu2553-n-queen-problem/" rel="prev" title="Hdu2553 N皇后问题">
+                Hdu2553 N皇后问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Fan Yijie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fan31415" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="fanyije@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fan Yijie</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
