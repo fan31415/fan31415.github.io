@@ -259,6 +259,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/24/quick-sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/24/quick-sort/" itemprop="url">快速排序</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-24T18:20:36+08:00">
+                2016-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/分治/" itemprop="url" rel="index">
+                    <span itemprop="name">分治</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>快排和归并排序一样，也是基于分治的算法。它的特点在于引入了基准数，在Θ(n)内将数组划分为3段，左段元素均小于中段(基准数），右端元素均大于中段(基准数），这样对左右段分别递归下去，直到每段长度为1为止。可以如下表示</p>
+<pre><code>        \[4 3 5 2 6 7 1\]
+         以4为基准划分    
+  \[2 3 1\]     \[4\]       \[6 7 5\]
+ 以2为基准             以6为基准 
+\[1\] \[2\] \[3\]   \[4\]     \[5\] \[6\] \[7\]
+</code></pre><p>可以看到每次划分后，基准数左边的都比基准数小，基准数右边的都比基准数大，划分到长度为1时，排序也就完成了。 具体的划分方法一般采用双游标法。为方便起见左侧游标命名为low，右侧命名为high。 如上面例子中，首先取左边第一个为基准数，然后两个游标的初始位置分布在数组最左边和最右边。我们将基准数存储到pivot变量中，这样left位置就可以被赋值了。我们先从右侧游标开始，让其向左移动，直到游标当前所在数比基准数小才停下，因为我们想让右侧数均大于基准数。然后就可以把这个数直接赋给low所在的left位置，这样就符合我们的期望了。接着我们让左侧游标向右移动，同理当比基准大时就把这个数赋给high所在位置，因为high在上一次中已经把自己的值放到合适的地方去了，所以不用担心覆盖的问题。这样又多一个数符合我们的期望了。就这样一直循环直到low == high时，说明已经把整个数组都处理完了，因为low和high要相等必定已经有一个指针走到了该位置并做了交换了，所以直接将pivot放到low或high的位置让其归位即可。为什么说是归位呢，因为左边都比你大，右边都比你小，所以这个位置就是基准数真正所在的位置。 用一段简略的图文说明一下刚刚所说的划分方法，这里i就是之前说的low游标，j就是high游标</p>
+<p> i       j<br>[4 7 5 2 3] 4<br>j所在3比4小</p>
+<p> i       j<br>[3 7 5 2  ] 4<br>3移到i处 </p>
+<p>   i     j<br>[3 7 5 2  ] 4<br>i++，i所在7比4大 </p>
+<p>   i     j<br>[3   5 2 7] 4<br>7移到j处 </p>
+<p>   i   j<br>[3   5 2 7] 4<br>j–,j所在2比4小</p>
+<p>   i   j<br>[3 2 5   7] 4<br>2移到i处</p>
+<pre><code>i j
+</code></pre><p>[3 2 5   7] 4<br>i++, i所在5比4大</p>
+<pre><code>i j
+</code></pre><p>[3 2   5 7] 4<br>5移到j处</p>
+<pre><code>ij
+</code></pre><p>[3 2   5 7] 4<br>j–,i == j, 循环终止</p>
+<p>[3 2 4 5 7]<br>将基准数4归位，然后对[3 2]和[5 7]进行下一次划分 </p>
+<p>这样应该就比较形象了。 实现代码如下</p>
+<p>#include<iostream><br>using namespace std;<br>void quick_sort(int a[], int left, int right){<br>    if(left &lt; right){<br>        int pivot = a[left];//这里取左侧第一个为基准<br>        int low = left;<br>        int high = right;<br>        while(low &lt; high){<br>            //从右往左走<br>            while(low &lt; high &amp;&amp; a[high] &gt;= pivot){//右侧游标小于基准时停下<br>                high–;<br>            }<br>            a[low]  = a[high];//将右侧游标放到左边，由于low处已被存储，所以直接赋值即可<br>            //从左往右走<br>            while(low &lt; high &amp;&amp; a[low] &lt;= pivot){//左侧游标大于基准时停下<br>                low ++;<br>            }<br>            a[high] = a[low];//将左侧游标放到右边，由于high处已被存储，所以直接赋值即可<br>        }<br>        a[low] = pivot;//基准数归位，基准数左边的都已经比基准小，右边都已经比基准大<br>        quick_sort(a, left, low - 1);    //继续递归处理左边的<br>        quick_sort(a, low + 1, right);    //继续递归处理右边的<br>    }<br>}<br>int main(){<br>    int a[10] = {3,1,2,7,8,9,5,6,4,12};<br>    quick_sort(a, 0, 9);<br>        for(int i = 0; i &lt; 10; i++){<br>        cout &lt;&lt; a[i];<br>    }<br>}</iostream></p>
+<p>快排最好的情况就是每次划分产生的区间大小都为n/2, 容易知道这时的时间复杂度T(n) = 2*T(n/2) + Θ(n)，由主定理知T(n) = O(n*logn).而最坏的情况就是原序列有序，这样每次需要比较n-1, n-2, …, 1次，这时的T(n) = n*(n-1)/2 = O(n^2). 对于长序列来说，快排的平均效率是很高的，也是应用最广泛的排序算法。针对快排基准数(轴)的选取，还有短序列的情况，还可以做一些优化和改进。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/24/merge-sort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1691,171 +1855,6 @@ return 1;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/generate-permutation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/17/generate-permutation/" itemprop="url">生成全排列</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T14:52:47+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/回溯/" itemprop="url" rel="index">
-                    <span itemprop="name">回溯</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/回溯/算法学习/" itemprop="url" rel="index">
-                    <span itemprop="name">算法学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1. <strong>按字典序生成1~n的全排列</strong> 思路：递归生成，建立一个数组A来存生成的全排列，然后在递归函数内部循环中，从小到大依次向A[cur]中填入一个之前未曾出现的整数i，然后当前位置cur+1并进入下一层递归。 递归边界是当前位置cur==n的时候，输出A数组，即为此种情况下的一个排列。 测试代码如下：</p>
-<p>#include<cstdio><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=1;i&lt;=n;i++){<br>        int ok=1;<br>        for(int j=0;j&lt;cur;j++){<br>            if(A[j]==i) ok=0;<br>        }<br>        if(ok){<br>            A[cur]=i;<br>            printf_permutation(n,A,cur+1);<br>        }<br>    }<br>}<br>int main(){<br>    int A[5]={0};<br>    printf_permutation(3,A,0);</cstdio></p>
-<p>}</p>
-<p>测试输出如下：</p>
-<p>123<br>132<br>213<br>231<br>312<br>321</p>
-<p>这个递归的特点在于for循环里递归，可以结合输出理解。 <strong>2.生成可重复集的排列</strong> 目标：输入数组P,按字典序生成数组P各元素的全排列。 思路，把生成1到n全排列的代码进行修改，A[j]==i改为A[j]==P[i],A[cur]=i改为A[cur]=P[i],每次输入P后，将P进行升序排列，然后调用递归即可。 注意：当输入数组有重复时，要在递归中进行判断，如果递归中该元素已重复次数小于原始数组中重复数组，则可以选择将其添加。这儿可以简单的用两个循环分别遍历当前A和P计数实现。 同时应该注意排序后的P数组，第i个元素和上一个元素相同时，就不用再取了，因为我们只要不遗漏不重复的取出P中所有数值即可，重数的问题在取数循环的内部已经解决了。这里可以在取数循环后加一句 if(!i||P[i]!=P[i-1]) 实现，第一个!i保证i为0时直接短路为真，而不执行后面越界的代码。 测试代码如下：</p>
-<p>#include<cstdio></cstdio></p>
-<p>#include<iostream></iostream></p>
-<p>#include<algorithm><br>using namespace std;<br>void printf_permutation(int n,int *A,int cur,int *P){<br>    if(cur==n){<br>        for(int i=0;i&lt;n;i++){<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!i||P[i]!=P[i-1]){<br>            int c1=0;<br>            int c2=0;<br>            for(int j=0;j&lt;cur;j++){<br>                if(A[j]==P[i]){<br>                    c1++;<br>                }<br>            }<br>            for(int j=0;j&lt;n;j++){<br>                if(P[i]==P[j]){<br>                    c2++;<br>                }<br>            }<br>            if(c1&lt;c2){<br>                A[cur]=P[i];<br>                printf_permutation(n,A,cur+1,P);<br>            }<br>        }<br>    }<br>}<br>int main(){<br>    int A[99]={0};<br>    int P[99]={0};<br>    int n;<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;P[i];<br>    }<br>    sort(P,P+n);<br>    printf_permutation(n,A,0,P);</algorithm></p>
-<p>}</p>
-<p><strong>3.使用C++的STL库函数生成全排列</strong> C++的stl中自带了一个next_permutation 可以实现成字典序最小开始，快速的求下一个排练，从而得到全排列，且适用于可重集合。 测试代码如下：</p>
-<p>#include<iostream></iostream></p>
-<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n,p[99];<br>    cin&gt;&gt;n;<br>    for(int i=0;i&lt;n;i++){<br>        cin&gt;&gt;p[i];<br>    }<br>    sort(p,p+n);<br>    do{<br>        for(int i=0;i&lt;n;i++){<br>            cout&lt;&lt;p[i];<br>        }<br>        cout&lt;&lt;endl;<br>    }while(next_permutation(p,p+n));<br>    return 0;<br>}</algorithm></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1906,7 +1905,7 @@ return 1;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1917,7 +1916,7 @@ return 1;
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1928,7 +1927,7 @@ return 1;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
