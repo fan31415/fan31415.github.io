@@ -259,6 +259,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/hdu2553-n-queen-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/17/hdu2553-n-queen-problem/" itemprop="url">Hdu2553 N皇后问题</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T22:28:09+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/A题/" itemprop="url" rel="index">
+                    <span itemprop="name">A题</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/A题/回溯/" itemprop="url" rel="index">
+                    <span itemprop="name">回溯</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>HDU 2553 N皇后问题</strong> <strong>Problem Description</strong> 在N*N的方格棋盘放置了N个皇后，使得它们不相互攻击（即任意2个皇后不允许处在同一排，同一列，也不允许处在与棋盘边框成45角的斜线上。 你的任务是，对于给定的N，求出有多少种合法的放置方法。 <strong>Input</strong> 共有若干行，每行一个正整数N≤10，表示棋盘和皇后的数量；如果N=0，表示结束。 <strong>Output</strong> 共有若干行，每行一个正整数，表示对应输入行的皇后的不同放置数量。 <strong>Sample Input</strong> 1 8 5 0 <strong>Sample Output</strong> 1 92 10 题目就是裸的N皇后问题，思路就是带剪枝的回溯。可以理解为对其解答树进行dfs。 首先将题目简化为每行放置一个皇后，具体皇后列位置用C数组储存。则其生成的解答树有N！个结点，与全排列的生成一样。 然后具体递归时，注意在尝试时加入对皇后是否能攻击之前以放置的皇后进行检查，和全排列时检查与已放入元素是否冲突是一致的。这里用白皮书上的方法来具体实现，即用一个二维数组vis来标记是否冲突从而避免冲突的计算。 可以观察到每个格子的x-y值标识了主对角线，y+x值标识了副对角线，又这里cur为当前行x，i为当前列y,则cur+i即标识副对角线，如果vis[1][cur+i]=1,则表明该条对角线已被占用。又因为x-y可能为负数，所以这里取cur-i+n,即可保证祝对角线的索引为正。那么当相应主对角线被占用时，有vis[2][cur-i+n]=1. 最后用vis[0][i]标识当前列被占用（因为是逐行向下递归，所以行不可能冲突)即可完成对是否冲突的判断。 另外注意dfs的时候，每次回溯记得将全局标记变量还原,以便遍历列i取值的循环下一次运行到这里时，能够继续进入相应i的子树继而再次搜索下去。 这道题还要注意数据量较大，且很多重复，所以需要将第一次算出的数据存储一下，下一次询问时直接将已算出的数据打表出来即可。好像有大神用位运算也可以过，大家有兴趣可以试一下~ ac代码：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring><br>using namespace std;<br>bool vis[3][22];<br>int C[12];<br>int n,cnt;<br>int ans[11];<br>void search(int cur){<br>    if(cur==n){<br>        cnt++;<br>    }<br>    else for(int i=0;i&lt;n;i++){<br>        if(!vis[0][i]&amp;&amp;!vis[1][cur+i]&amp;&amp;!vis[2][cur-i+n]){<br>            C[cur]=i;;<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=1;<br>            search(cur+1);<br>            vis[0][i]=vis[1][cur+i]=vis[2][cur-i+n]=0;<br>        }<br>    }<br>}<br>int main(){<br>    memset(ans,-1,sizeof(ans));<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        if(ans[n]!=-1){<br>            printf(“%d\n”,ans[n]);<br>        }<br>        else{<br>            memset(vis,0,sizeof(vis));<br>            cnt=0;<br>            search(0);<br>            ans[n]=cnt;<br>            printf(“%d\n”,cnt);<br>        }<br>    }<br>}</cstring></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/generate-permutation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1590,164 +1745,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/03/27/establish-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/03/27/establish-blog/" itemprop="url">关于blog</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-27T12:51:03+08:00">
-                2016-03-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/关于我/" itemprop="url" rel="index">
-                    <span itemprop="name">关于我</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/关于我/经验杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">经验杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>建立blog，原因有三。 <strong>1.记录学习的收获。</strong> 好记性不如烂笔头，有的东西当时明白，如果不及时记录下来，多日之后，又得花上一大番功夫来重温，而且有的当时的经验可能还会遗漏。如果可以及时记录，对自己复习知识应该是很有帮助的。 <strong>2.分享学习的喜悦。</strong> 学习应该是快乐的，而快乐是可以传递的。一份知识，一份经验，对于自己永远是一份，如果能分享出去，这个世界上就有了很多份知识。知识也是有生命力的，知识也是可以传递繁衍的，而这个传递的过程，无疑是充满喜悦的。 <strong>3.督促自己学习</strong> 古人云，学海无涯，而吾生有涯。既然知识是无限的，而生命是有限的，那我更应该更好的利用自己的时间，用有限去逼近无限。记录本身，也算是对自己的一种督促吧。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1793,7 +1795,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

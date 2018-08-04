@@ -259,6 +259,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/08/04/Best-Time-to-Buy-and-Sell-Stock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/04/Best-Time-to-Buy-and-Sell-Stock/" itemprop="url">Best Time to Buy and Sell Stock</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T22:43:50+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/动态规划/" itemprop="url" rel="index">
+                    <span itemprop="name">动态规划</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Descirption"><a href="#Descirption" class="headerlink" title="Descirption"></a>Descirption</h2><p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
+<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+<p>Note that you cannot sell a stock before you buy one.</p>
+<p>Example 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: [7,1,5,3,6,4]</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.</span><br><span class="line">             Not 7-1 = 6, as selling price needs to be larger than buying price.</span><br></pre></td></tr></table></figure>
+<p>Example 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: In this case, no transaction is done, i.e. max profit = 0.</span><br></pre></td></tr></table></figure>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>这里简单的取最低价格，然后记录基于该价格的最大利润。如果有更低价格则记录基于更低价格（将之前的最低价格直接替换掉）的最大利润，并与之前价格的最大利润相比较，取较大的利润。</p>
+<p>只所以可以这么做，是因为在遇到一个更低的minPrice后，只有两种情况。一是后面还有之前的minPrice所没有遇到过的更高价格，那么采用当前遇到的更低的买入价一定可以获得更高的利润，所以我们每次都会记录新的minPrice。二是如果之后的价格一直更低（更准确的说，与新的minPrice的差值比之前记录的最大差值，即利润低），那么就取前面已存的更大的差值（利润)即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxProfit(self, prices):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type prices: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        if(len(prices) == 0):</span><br><span class="line">            return 0</span><br><span class="line">        minPrice = prices[0]</span><br><span class="line">        maxProfit = 0</span><br><span class="line">        for price in prices:</span><br><span class="line">            if price &lt; minPrice:</span><br><span class="line">                minPrice = price</span><br><span class="line">            elif price - minPrice &gt; maxProfit:</span><br><span class="line">                maxProfit = price - minPrice</span><br><span class="line">        return maxProfit</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/08/04/Min-Cost-Climbing-Stairs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1659,158 +1821,11 @@ allTokensIndex\[lastId\] = tokenIndex;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/09/19/compile-theory-semantic-analysis-and-code-generation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/compile-theory-semantic-analysis-and-code-generation/" itemprop="url">编译原理总结-语义分析与代码生成</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T13:13:54+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术分享/" itemprop="url" rel="index">
-                    <span itemprop="name">技术分享</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="输入输出的具体处理"><a href="#输入输出的具体处理" class="headerlink" title="输入输出的具体处理"></a>输入输出的具体处理</h4><p><em>i 输入</em> 这里的输入的语法分析树是一颗不平衡的多叉树，和最终的汇编代码形式区别较大。所以还需要进一步转化为抽象语法树才方便后面进行最终的代码生产。这里就首先自己用jdom库将tree.xml读入到Document对象中，再从根节点开始递归的进行处理。读入的具体实现可以在input函数中查看。递归处理转化则在traverseNode函数中，后面也会重点阐述着一块。 <em>ii 输出</em> 这儿我们首先明确输出对象是一份完整的汇编代码，这里考虑到规则集复杂度不高，我用了一个字符串来直接存储这个输出结果，最后输出到指定file中。同时对于辅助生成的AST，我也采用了jdom库在output函数中进行了输出。</p>
-<h4 id="抽象语法树的生成"><a href="#抽象语法树的生成" class="headerlink" title="抽象语法树的生成"></a>抽象语法树的生成</h4><p>前面提到过语法分析树与最后的汇编代码形式差距较大，且冗余成分过多，不方便直接转化，所以首先我们要将语法分析树转化为抽象语法树。 对于抽象语法树，我是这么理解的：抽象语法树的设计事实上是具有一定自由度的，因为它是为了后面代码生成服务的，所以设计的目的是为了尽量方便后面的工作，同时让语法树尽量清晰简洁。因此不必拘泥于某种所谓的标准形式或者参考输出，只要方便简洁就好。 首先为了便于后面生成的时候对于并列语句进行循环生成，我转化的第一个目的就是把树变为平衡树。这一点我是通过traverseNode这个递归函数来实现的。这个递归函数有两个参数，一个是当前节点，另一个是准备作为父节点的节点。首先从根节点进入，然后根据当前节点类型，在switch语句中进入不同分支，通过在不同分支中选择性的创建新节点。因为可以把父节点通过该函数往下传递，就可以实现原本不同深度的节点被归并到同一层级的平衡效果。同时如果想增加节点，也可以通过调用makeNode函数得到指定的新节点，并将新节点作为新的父节点，作为traverseNode的parent参数，继续往下传递。这样在递归遍历分析树的同时，也就把新的抽象语法树由上到下的创建出来了。 通过这样parent的传递，树的平衡化就很好实现了，因为通常的语法结构只需要将下一层的结构提到上一层就可以了，比如分析树中并列的function会以下图形式体现 <img src="http://fanyijie.net/wp-content/uploads/2017/09/origin-format-1024x602.png" alt=""> 事实上我们只需要从根节点的functions进入，即调用traverseNode（functionsElement, parentElement）， 这里functionsElement即上图中树根处的functions节点，parentElement是树根处的functions节点之上没有画出来的父节点，它可能是Program节点或者其他任意可能作为funtions父节点的节点，比如另一个离树根更近的functions节点。 进入函数后，我们首先通过传入的第一个参数functionsElement来获取其function子节点，如果存在则用makeNode(functionElement, parentElement)将function节点和functions节点的父节点直接建立连接。这里注意makeNode的第一个参数只取输入节点本身，不包含输入节点下的子树。 然后我们再获取传入的参数——当前funcions节点——的functions子节点，并再次调用traverseNode(functionsElement, parentElement)，这里的fucntionsElement为树根处funtions节点的子节点中的functions节点，parentElement和之前第一次调用相同，为树根处中functions节点的父节点。这样就实现了把这个总的父节点传递下去，这样不断往下递归，就可以建立一颗以树根处functions的父节点为父节点，下方所有function节点为子节点的平衡多叉子树了。也就和function实际上在代码中的并列关系对应了起来。以根节点的父节点为Program为例，转化效果如下 <img src="http://fanyijie.net/wp-content/uploads/2017/09/dest-format-1024x309.png" alt=""> 这里要注意一个特殊的地方，那就是对于表达式的变换过程。根据pdf可以看到表达式的子树标准形式如下 <img src="http://fanyijie.net/wp-content/uploads/2017/09/balance-tree.png" alt=""> 而现有的形式如下 <img src="http://fanyijie.net/wp-content/uploads/2017/09/analysis-tree.png" alt=""> 这个转化和其他通常的语法结构的转化有一定区别， 因为不仅要转化为平衡树，还需要对操作符节点所处的位置进行变换，将操作符作为每一个子树的父节点，而变量标识符或者常量则作为子树的子女。我采取的办法是做两趟处理。第一趟处理和前面一样，将树转化为平衡树，第二趟处理则在平衡树的基础上将节点的位置进行变换。 这里处理的关键在于第二趟，对于term和expr两个类似但有有区别的语法结构，我分别写了transformTerm和transformExpr两个函数来处理。其中transformTerm是最下层的函数，负责将平衡的并列结构用循环的方式按照结合性依次形成上图中从下到上两两结合的标准AST子树。而transfromExpr由于还要其子树的子女不仅仅是操作符或者常量变量这三种情况，还有可能是之前形成的term结构，所以在构建新节点时，不能仅仅使用只拷贝当前节点的makeNode，而需要使用拷贝当前节点及其子树的makeCloneNode，这样才能将整个term子树和expr子树结合在一块来。 因为第一趟不是最终的形式，所以就不需要加入到AST子树中了，只需要将第一趟得到的平衡子树根节点传递给相应的transform函数，再将变形后子树的根节点用makeCloneNode结合到父节点就可以了。这一点可以在tranverseNode函数的相应case中看到。</p>
-<h4 id="符号表的设计"><a href="#符号表的设计" class="headerlink" title="符号表的设计"></a>符号表的设计</h4><p>虽然说课程要求中说可以不做语义分析。但是要生成代码，符号表还是必要的。这里由于设计的比较简单，就只用了一个大的函数表，以函数名作为key，存储有相应的函数类型，参数名称类型以及个数，以及函数内部变量表。 函数内部变量表是Dictionary类型的，以变量名为key，存储有变量类型，变量地址，以及变量值。 这里变量地址涉及到了寄存器。这里用枚举类RegType标记了寄存器类型，并建立了Reg类以生成寄存器对象，方便调用和存储。</p>
-<h4 id="寄存器分配"><a href="#寄存器分配" class="headerlink" title="寄存器分配"></a>寄存器分配</h4><p>因为要生成代码，所以寄存器分配是必须考虑的问题。这里我采用的策略如下： （1） 变量值已经在寄存器中，直接调用寄存器 （2） 变量尚未分配寄存器，此时有空的寄存器或者内容已经不需要的寄存器，就把变量分配给这个寄存器。 （3） 变量尚未分配寄存器，但是没有空寄存器，则暂时保存某个寄存器内容到内存，然后再把该变量存到指定寄存器。 其中将寄存器内容保存到内存时，应该采用下次使用位置离现行位置最远的变量所在寄存器。不过这样需要有一趟语义分析的过程，以获得该临时变量在何处引用的信息。这里暂时任意选取一个来保存的，还需要后面进行进一步完善分析。 除了通用的策略，还要注意mips自身的寄存器规则。比如v0, v1是返回值专用，t0-t9是函数调用时被调用者可以直接使用的临时寄存器， a0-a3是前四个参数传递的寄存器等。我在这里建立isTempRegFree以及TempReg等多个全局数组来对这些寄存器进行管理，然后用getTempReg（）等一系列方法来实现寄存器的分配。从而在调用时无需考虑过多的寄存器细节，只需要调用相应分配寄存器函数获得Reg寄存器对象即可，具体的分配细节都被隐藏在了getTempReg等一系列函数中。</p>
-<h4 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h4><p>这里是通过一趟遍历AST并根据不同语句调用不同的codeGen函数来生成代码的。遍历操作在traverseAST函数中。这里用循环对函数进行遍历，首先读入当前函数信息后，填充相应函数表，再对当前函数的语句调用traverseStmt函数进一步递归遍历。 在traverseStmt中，通过switch对不同类型的语句调用了不同的操作进行翻译。对于声明语句，只需要调用寄存器分配函数分配并加入到当前函数的临时变量表即可，无需生成实际代码。 对于返回语句和赋值语句，都涉及到了一个重要的部分，对表达式语句的翻译。 这里由于前面的步骤已经将表达式语句转化为了标准的AST，这里用一个traverseExpr（）函数对当前表达式的AST子树递归进行代码生成，并获取到每一步的结果寄存器即可。 这里对左右子树进行递归，只要子树节点为操作符的，就继续调用traverseExpr（）函数进行递归，并将递归返回的结果寄存器作为当前步的左操作符所在寄存器或者当前步的右操作符寄存器。对于操作符是常量的，则额外调用genLi函数将常量置于寄存器中，并得到常量所在寄存器；对于操作符是变量的，则用findReg函数在变量表中查找变量所在寄存器。获得左右操作符地址（所在寄存器）后，再根据操作符类型，调用相应的gen函（）数生成相应代码并获得结果所在寄存器。 其中要注意mips中的除法结果不能直接获取，还需要用mflo指令在特殊寄存器Lo中获取。 这样对于每次有表达式的地方，只需要调用traverseExpr（）函数即可获得表达式最终结果的寄存器，并已经按序生成了中间代码，然后再根据调用处的需要对结果所在寄存器进行处理即可。 处理了表达式，接着就要处理另外一类重要的语句处理，跳转语句。跳转语句在循环结构和分支结构中都会涉及。 跳转本身在mips语言里很简单，只需要根据条件语句的情况，调用相应的跳转语句就行了。关键在于跳转语句中的target，即要跳转到的位置。这里我用标号的形式来表示跳转位置。 这里考虑到可能有多个循环以及嵌套循环，或者多个分支以及嵌套分支，所以使用了两个计数器ifcount和whilecount分别为循环和分支计数，每次进入一个语句后马上增加相应计数器并生成该语句对应需要的所有标号，这样就保证了标号的一一对应和唯一性。 具体来说，比如对于ifelse语句，在else前会有一个专用于else前的标号，标号被当前if语句唯一确定，由于语句所需标号预先已经知道并全部生成，从而在分支跳转语句中可以直接前往这个标号，而不需要拉链反填。而在语句最后会有一个与ifcount结合的out标号，作为语句结束的标记。从而在if语句结束时可以直接挑转到这儿。 再比如对于while语句，进入后会先生成两个与当前语句相关联的唯一标号，分别对应循环开始和循环结束。这样分支跳转语句中可以直接在相应情况下跳转到循环结束位置，而循环末尾处也可以无条件跳转到循环开始的判断语句位置。 由于计数器是单增且标号是进入语句即确定的，所以即使有嵌套循环也不会产生标号混乱的情况。这样就把当前语言子集下的标号问题解决了。</p>
-<h4 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h4><p>根据上述思考的结果，我将语法分析器的函数分为了主函数，初始化函数，输入函数，AST生成函数，AST遍历函数，寄存器分配函数，符号表函数，代码生成函数，输出函数以及一些为了代码重用而实现的辅助类函数。 主函数中依次调用输入函数，初始化函数，输入函数（在输入函数中调用了AST生成函数），AST遍历函数（在AST遍历中调用了代码生成函数和寄存器分配函数以及符号表函数），输出函数。即为代码生成的整个流程。 输入函数则简单的完成自己基本的输入逻辑即可，其中没有业务逻辑。 AST生成函数则通过多个递归函数以及构造连接节点的辅助函数将原本输入的语法分析树转化为抽象语法树。 寄存器分配函数则通过一系列相关函数为代码生成做好准备，隐藏具体的分配细节。 符号表函数则是提供符号表的插入和查询等操作，为代码生成做好准备。 AST遍历函数则负责通过循环和递归结合，遍历之前生成的AST，在这个过程中调用相应的代码生成函数生成最终代码。 最后调用输出函数将得到的目标代码输出即可。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1856,7 +1871,7 @@ allTokensIndex\[lastId\] = tokenIndex;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
