@@ -259,6 +259,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/24/merge-sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/24/merge-sort/" itemprop="url">归并排序</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-24T15:49:18+08:00">
+                2016-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/分治/" itemprop="url" rel="index">
+                    <span itemprop="name">分治</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>归并排序是经典的分治算法，我对它的理解就是将数组不断分成两半，分解到最后数组只剩一个元素后开始将相邻的数组两两合并，每次合并都在相邻有序数组的基础上进行，并得到新的有序数组，直到最终得到整个有序数组。可以如下表示</p>
+<p>分解<br>    [8 4 5 6 2 1 7 3]<br>    [8 4 5 6] [2 1 7 3]<br>    [8 4] [5 6] [2 1] [7 3]<br>    [8] [4] [5] [6] [2] [1] [7] [3]<br>合并<br>    [4 8] [5 6] [1 2] [3 7]<br>    [4 5 6 8] [1 2 3 7]<br>    [1 2 3 4 5 6 7 8]</p>
+<p>从上也可以看出过程分为两步，第一步不断分半，第二部用合成两个有序数组的方法进行两两合并。 实现代码如下，参考<a href="http://blog.csdn.net/morewindows/article/details/6678165/" target="_blank" rel="noopener">MoreWindows</a>的博客</p>
+<p>#include<iostream><br>using namespace std;<br>void merge(int a[], int first, int mid, int last, int temp[]){ //合成两个有序数组为一个有序数组<br>    int i = first, j = mid + 1;<br>    int m = mid, n = last;<br>    int k = 0;<br>    //这里相当于first到mid为一个有序数组，mid+1到last为另一个有序数组，然后将两个有序数组合并为一个有序数组<br>    while(i &lt;= m &amp;&amp; j &lt;= n){<br>        if (a[i] &lt;= a[j]) temp[k++] = a[i++];<br>        else temp[k++] = a[j++];<br>    }<br>    while(i &lt;= m){<br>        temp[k++] = a[i++];<br>    }<br>    while(j &lt;= n){<br>        temp[k++] = a[j++];<br>    }<br>    //把合并后的temp放回a中<br>    for(i = 0; i &lt; k; i++){<br>        a[first + i] = temp[i];<br>    }<br>}<br>void merge_sort(int a[], int first, int last, int temp[]){<br>    if(first &lt; last) {<br>        int mid = (first + last) / 2;<br>        merge_sort(a, first, mid ,temp); //处理mid以及mid左边的内容<br>        merge_sort(a, mid + 1, last, temp); //处理mid右边的内容<br>        merge(a, first, mid, last, temp);    //合并两个相邻的有序数列<br>    }<br>}<br>bool MergeSort(int a[], int n){//函数封装<br>    int *p = new int[n];<br>    if(p == NULL){<br>        return false;<br>    }<br>    merge_sort(a, 0, n-1, p);<br>    delete[] p;<br>    return true;<br>}<br>int main(){<br>    int a[10] = {3,1,2,7,8,9,5,6,4,0};<br>    MergeSort(a, 10);<br>    for(int i = 0; i &lt; 10; i++){<br>        cout &lt;&lt; a[i];<br>    }<br>}</iostream></p>
+<p>因为两个有序数组的排序以及复制是O(n)的，则算法复杂度T(n) = 2<em>T(n/2) + O(n)，由<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">主定理</a>可知，T(n) = Θ(n</em>logn) 相比快排与堆排，归并排序最大的好处应该是它的稳定性，不会改变相等元素之间的顺序。对于总体无序但是局部相对有序的数组排序，或者是要求稳定性的排序，都是可以使用的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/15/poj-1455-crazy-tea-party/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1710,161 +1856,6 @@ return 1;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/uva10976-fractions-again/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/17/uva10976-fractions-again/" itemprop="url">Uva10976 Fractions Again?!</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T13:58:44+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/" itemprop="url" rel="index">
-                    <span itemprop="name">Uva</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
-                    <span itemprop="name">回溯</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Uva10976 Fractions Again?!</strong> It is easy to see that for every fraction in the form 1 k (k &gt; 0), we can always find two positive integers x and y, x ≥ y, such that: 1 k = 1 x + 1 y Now our question is: can you write a program that counts how many such pairs of x and y there are for any given k? <strong>Input</strong> Input contains no more than 100 lines, each giving a value of k (0 &lt; k ≤ 10000). <strong>Output</strong> For each k, output the number of corresponding (x, y) pairs, followed by a sorted list of the values of x and y, as shown in the sample output. <strong>Sample Input</strong> 2 12 <strong>Sample Output</strong> 2 1/2 = 1/6 + 1/3 1/2 = 1/4 + 1/4 8 1/12 = 1/156 + 1/13 1/12 = 1/84 + 1/14 1/12 = 1/60 + 1/15 1/12 = 1/48 + 1/16 1/12 = 1/36 + 1/18 1/12 = 1/30 + 1/20 1/12 = 1/28 + 1/21 1/12 = 1/24 + 1/24 这道题关键在于缩小枚举范围，因为x&gt;=y，又1/k=1/x+1/y,代入得y&lt;=2*k. 注意到x,y 均为正整数，则有y&gt;=k+1，这样只用枚举10000次y，即可在符合条件时通过y反解出x，得到答案。 在判断是否符合条件时，直接看是否整除即可，如果整除，则把商赋给x. 注意题目要求先输出解的数量，再按序输出解，所以这里用vector存了x,y的解，输出时先输出vector的size再对应输出x,y即可 ac代码如下：</p>
-<p>#include<cstdio></cstdio></p>
-<p>#include<vector><br>using namespace std;<br>int main(){<br>    int k;<br>    vector<int> xx,yy;<br>    while(~scanf(“%d”,&amp;k)){<br>        for(int y=k+1;y&lt;=2<em>k;y++){<br>            if(k</em>y%(y-k)==0){<br>                xx.push_back(k*y/(y-k));<br>                yy.push_back(y);<br>            }<br>        }<br>        int cnt=xx.size();<br>        printf(“%d\n”,cnt);<br>        for(int i=0;i&lt;cnt;i++){<br>            printf(“1/%d = 1/%d + 1/%d\n”,k,xx[i],yy[i]);<br>        }<br>        xx.clear();<br>        yy.clear();<br>    }<br>    return 0;<br>}</int></vector></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1915,7 +1906,7 @@ return 1;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1937,7 +1928,7 @@ return 1;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

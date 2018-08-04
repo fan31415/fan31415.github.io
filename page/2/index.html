@@ -259,6 +259,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/09/19/compile-theory-lexical-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/compile-theory-lexical-analysis/" itemprop="url">编译原理总结-词法分析</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T13:06:08+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="输入输出的具体处理"><a href="#输入输出的具体处理" class="headerlink" title="输入输出的具体处理"></a>输入输出的具体处理</h4><p><em>i 输入</em> 这里采用了双缓存来作为基本的输入模式。即先读入一定量的字符到某一缓存中，每当将要访问到这一缓存尽头时，就提前读入下一缓存，这样交替循环。其思想和计算机图像学中的双缓存是一致的，都是为了在内存有限的前提下，保证运行的连续性。支撑这种模式的根本原因应该是cpu处理和IO处理速度的不一致性。由于CPU速度远远大于IO，而这里处理单个字符的时间复杂度又是O（1）的一个小数量级，所以IO是这一类程序运行的主要瓶颈。这里通过double buffer的策略，就很好的平衡了IO与CPU速度的差距，同时保证了内存的消耗不会过大。但是这里要注意一点，就是单个缓存区不能开的过小，不然频繁的IO将对整个系统的运行产生灾难性的影响。查阅相关文献可以发现，如果缓冲区的大小设定有着较强的敏感性，过低或过高，都将对速度以及内存消耗产生剧烈的影响。 不过我们这儿由于测试过程中读入的程序文件都较小，且计算机的内存较大，所以影响还不够明显，暂时设定为一个文献参考值8000 char作为我们的基准。 在具体实现方面，由于采用了双缓存策略，每次都将从上一次读入结束的位置开始读入一个固定的量，所以这里采用了BufferReader和InputSteamReader结合的方式来实现这样的读取。通过BufferReader的skip函数即可实现我们想要的功能。 <em>ii 输出</em> 这里直接使用了jdom库作为xml输出，这里建立一个Token的java bean作为输出的对象。在ouput方法中遍历Token的Array即可实现，这个地方较为简单，就略过了。</p>
+<h4 id="具体实现策略的选择"><a href="#具体实现策略的选择" class="headerlink" title="具体实现策略的选择"></a>具体实现策略的选择</h4><p>词法分析器一般有三种实现方法，一是通过第三方库自动生成，比如lexAnalysis等已经比较成熟的三方库都可以，他们往往是表驱动的。当然也可以直接写一个转移表来实现。但是这样生成的词法分析器在性能上往往有所欠缺。更进一步就是直接编码，通过代码上的跳转来代替查表的开销。但是这样写出的代码往往可读性比较差，不利于后面的维护与修改。 这里我采用了基于while循环和switch语句的手工编码策略。在最大化性能与高灵活性的前提下，尽量提高了代码的可读性。当然也有缺点，那就是大量的case与if else，以及繁复的思考过程。要实现C11的标准，事实上还需要更多的考量，因为c语言编译器的各个步骤不是完全分开的，它还有很多的编译选项（CPP_OPTION），这个由于框架的局限性暂时无法完全实现。不过对于核心的语法部分，还是可以通过合理的安排case较好的实现的。 之所以选择switch作为主要分支而不是if else，主要是基于两方面的考虑。 一是从汇编的角度考虑，面对大量的分支，switch是优于if else的，因为在底层可以通过一个转移表来实现一次性转移，而节省了大量的cmp或者test的开销。 二是从可读性的角度考虑，面对大量分支，case往往比if’ else更加清晰。 除此之外，由于是手工编码，并且采用双缓存模式，所以可以不需要逐字的循环，每一次循环都表示一个单词处理的完成。这样整个效率也可以得到较大的提升。 另外为了降低耦合度，使整个代码更加清晰，参考了一些成熟开源编译器的做法，对于每一种类型具体的识别和处理，我分别采用了单独的函数进行更加细致和具体的处理，其中包括了Token的填充逻辑。</p>
+<h4 id="关键字的识别"><a href="#关键字的识别" class="headerlink" title="关键字的识别"></a>关键字的识别</h4><p>关键字的识别无疑也是一个重点。对于手动编码来说，如果要将关键字的识别与标识符的识别提到同等地位，这是有点难以接受的。因为即使你用switch为主导来实现，这也是基于背后隐含的自动机转移而实现的。如果加入了整体关键字，那整个状态数将会急剧的增长，而且如果你在日后想要更新关键字，不管是增加还是删除，都需要再一次的计算整个自动机。 所以基于状态数的控制以及可维护性这两方面，我决定将关键字作为标识符的二次判断来进行。即先识别是否是标识符，如果的确是标识符的话，再识别其是否是关键字。 这里对于最后的判断是否是关键字，处于性能上的考虑，我采取了hash的策略。即在程序设计之初，就把关键字全部储存为其hash值，而不需要存储关键字本身。在词法分析的时候，也只需要将当前单词的hash值与存储的hash值比较即可。这样做的原因是因为比较两个整数是否相等对于计算机只需要一个机器码即可，而比较字符串的相等的消耗就要大得多了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/09/19/compile-theory-summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1759,152 +1903,6 @@ public final ViewParent getParent() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/24/merge-sort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/24/merge-sort/" itemprop="url">归并排序</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-24T15:49:18+08:00">
-                2016-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/分治/" itemprop="url" rel="index">
-                    <span itemprop="name">分治</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>归并排序是经典的分治算法，我对它的理解就是将数组不断分成两半，分解到最后数组只剩一个元素后开始将相邻的数组两两合并，每次合并都在相邻有序数组的基础上进行，并得到新的有序数组，直到最终得到整个有序数组。可以如下表示</p>
-<p>分解<br>    [8 4 5 6 2 1 7 3]<br>    [8 4 5 6] [2 1 7 3]<br>    [8 4] [5 6] [2 1] [7 3]<br>    [8] [4] [5] [6] [2] [1] [7] [3]<br>合并<br>    [4 8] [5 6] [1 2] [3 7]<br>    [4 5 6 8] [1 2 3 7]<br>    [1 2 3 4 5 6 7 8]</p>
-<p>从上也可以看出过程分为两步，第一步不断分半，第二部用合成两个有序数组的方法进行两两合并。 实现代码如下，参考<a href="http://blog.csdn.net/morewindows/article/details/6678165/" target="_blank" rel="noopener">MoreWindows</a>的博客</p>
-<p>#include<iostream><br>using namespace std;<br>void merge(int a[], int first, int mid, int last, int temp[]){ //合成两个有序数组为一个有序数组<br>    int i = first, j = mid + 1;<br>    int m = mid, n = last;<br>    int k = 0;<br>    //这里相当于first到mid为一个有序数组，mid+1到last为另一个有序数组，然后将两个有序数组合并为一个有序数组<br>    while(i &lt;= m &amp;&amp; j &lt;= n){<br>        if (a[i] &lt;= a[j]) temp[k++] = a[i++];<br>        else temp[k++] = a[j++];<br>    }<br>    while(i &lt;= m){<br>        temp[k++] = a[i++];<br>    }<br>    while(j &lt;= n){<br>        temp[k++] = a[j++];<br>    }<br>    //把合并后的temp放回a中<br>    for(i = 0; i &lt; k; i++){<br>        a[first + i] = temp[i];<br>    }<br>}<br>void merge_sort(int a[], int first, int last, int temp[]){<br>    if(first &lt; last) {<br>        int mid = (first + last) / 2;<br>        merge_sort(a, first, mid ,temp); //处理mid以及mid左边的内容<br>        merge_sort(a, mid + 1, last, temp); //处理mid右边的内容<br>        merge(a, first, mid, last, temp);    //合并两个相邻的有序数列<br>    }<br>}<br>bool MergeSort(int a[], int n){//函数封装<br>    int *p = new int[n];<br>    if(p == NULL){<br>        return false;<br>    }<br>    merge_sort(a, 0, n-1, p);<br>    delete[] p;<br>    return true;<br>}<br>int main(){<br>    int a[10] = {3,1,2,7,8,9,5,6,4,0};<br>    MergeSort(a, 10);<br>    for(int i = 0; i &lt; 10; i++){<br>        cout &lt;&lt; a[i];<br>    }<br>}</iostream></p>
-<p>因为两个有序数组的排序以及复制是O(n)的，则算法复杂度T(n) = 2<em>T(n/2) + O(n)，由<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">主定理</a>可知，T(n) = Θ(n</em>logn) 相比快排与堆排，归并排序最大的好处应该是它的稳定性，不会改变相等元素之间的顺序。对于总体无序但是局部相对有序的数组排序，或者是要求稳定性的排序，都是可以使用的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1955,7 +1953,7 @@ public final ViewParent getParent() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1977,7 +1975,7 @@ public final ViewParent getParent() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
