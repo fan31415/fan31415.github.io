@@ -259,6 +259,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/12/01/unity-compile-error-unable-to-convert-classes-into-dex-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/01/unity-compile-error-unable-to-convert-classes-into-dex-format/" itemprop="url">Unity Compile Error: Unable to convert classes into dex format</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-01T08:32:56+08:00">
+                2017-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index">
+                    <span itemprop="name">unity</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>tl；dr 在项目assets中搜索jar和aar文件，去掉其中重复的即可。 之前做Unity导出Android包的时候，发现报了一个编译错误，错误提示的title是Unable to convert classes into dex format，然后点进去有一串error。具体读了一下error信息，刚开始被其中的modern format dex误导了，后来再仔细看了一下，发现可能是指的多重引用的问题。error里面提到了几个库的名字，这几个库正好是shareSDK里面的。于是前往../Assets/Plugin/ShareSDK，果然里面有很多同一个公司的分享组件的不同版本的jar文件。于是把老版本的jar都删除了，只留下了最新版本，这个error就消除了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/09/19/compile-theory-semantic-analysis-and-code-generation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1742,148 +1884,6 @@ public final ViewParent getParent() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/25/knapsack-problem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/25/knapsack-problem/" itemprop="url">背包问题</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-25T15:56:49+08:00">
-                2016-06-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/动态规划/" itemprop="url" rel="index">
-                    <span itemprop="name">动态规划</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>背包问题是在1978年由Merkel和Hellman提出的经典问题。它属于NP完全问题，在规模较小的时候可以用动态规划进行求解。 在说经典的背包问题前，我们先看一个简化的小数背包问题。已知一个容量大小为M重量的背包和n种物品，物品i的重量为[latex]w_i[/latex],假定物品i的一部分[latex]x_i[/latex]放入背包会得到[latex]v_i<em>x_i[/latex]这么大的收益，这里，[latex]0 &lt;= x_i &lt;= 1, v_i &gt; 0[/latex]。采用怎样的装包方法才会使装入背包的物品总效益最大？ 这里由于物品是可分的，所以我们直接贪心就可以求解。求出[latex]v_i/w_i[/latex]的值，然后优先放[latex]v_i/w_i[/latex]大的就行了。 现在加一个限制，如果物品不可分我们又应该采取怎样的策略呢？具体一点说，我们现在考虑这样的情况：对物品i只有两个选择，装入背包或者不装入背包，不能将i装入多次，也不能只装部分。这就是我们现在要说的0-1背包问题。 0-1背包问题是一个特殊的整数规划，用反证容易得到其最优子结构的特性。我们定义m(i, j)为背包容量为j, 前i件物品可选的最优值，则可得其转移方程为 $$ m(i, j)=\left\{ \begin{array}{lcl} max(m(i-1, j), m(i-1, j-w_i)+v_i) &amp; &amp; {j \ge w_i}\\ m(i-1, j) &amp; &amp; {0 \leq j \leq w_i} \end{array} \right. $$ 因为对于每一个物品i，若当前背包容量大于[latex]w_i[/latex]，那么就有两种选择：装入或者不装入，装入时即为[latex]m(i-1, j-w_i)+v_i)[/latex]，可选物品减少，背包容量也减少，背包价值增加；不装入时即为[latex]m(i-1, j)[/latex]，可选物品同样减少，由于未选所以背包价值不变，容量不变。我们取这两种选择中的最大值，即可保证该选择是当前最优的。若背包容量小于[latex]w_i[/latex]，那么就只能不选i物品了，和没选该物品的情况是一样的。只要我们保证每一次选择是当前最优的，根据最优子结构的性质，最后的最终结果m[n][c]即为问题最优解。 根据m(i, j)定义可知边界值如下 $$ m(1, j) = \left\{\begin{array} vv_1 &amp; &amp; {j \ge w_1}\\ 0 &amp; &amp; {0 \le j &lt; w_1} \end{array} \right. $$ 根据转移方程，我们可以看出算法的时间复杂度[latex] T(n) = O(n\</em>c)[/latex],空间复杂度为同样为[latex]T(n) = O(n*c)[/latex].但是如果仔细观察递归表的话，可以发现这个算法在空间上还可以进行优化。可以巧妙的利用循环的顺序，使得第i次循环结束后的m(j)就就是之前的m(i, j)，这样最后只要输出m[c]就可以了，将空间复杂度优化到了[latex] O(C)[/latex]. 则此时的转移方程为 $$ m(j) =\left\{ \begin{array}{lcl} max(m(j), m((j - w_i) + v_i) &amp; &amp; {j \ge w_i}\\ m(j) &amp; &amp; {0 \leq j \leq w_i} \end{array} \right. $$ 注意此时的循环应该是外循环i从1到n，然后内循环j从c到wi逆序遍历。 未完待续</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1934,7 +1934,7 @@ public final ViewParent getParent() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
