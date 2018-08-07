@@ -259,6 +259,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/18/uva-524-prime-ring-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/18/uva-524-prime-ring-problem/" itemprop="url">Uva 524 Prime Ring Problem</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-18T14:10:44+08:00">
+                2016-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/" itemprop="url" rel="index">
+                    <span itemprop="name">Uva</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
+                    <span itemprop="name">回溯</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/回溯/数论/" itemprop="url" rel="index">
+                    <span itemprop="name">数论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Uva 524 Prime Ring Problem</strong> A ring is composed of n (even number) circles as shown in diagram. Put natural numbers 1, 2, . . . , n into each circle separately, and the sum of numbers in two adjacent circles should be a prime. Note: the number of first circle should always be 1. <strong>Input</strong> n (0 &lt; n ≤ 16) <strong>Output</strong> The output format is shown as sample below. Each row represents a series of circle numbers in the ring beginning from 1 clockwisely and anticlockwisely. The order of numbers must satisfy the above requirements. You are to write a program that completes above process. <strong>Sample Input</strong> 6 8 <strong>Sample Output</strong> Case 1: 1 4 3 2 5 6 1 6 5 2 3 4 Case 2: 1 2 3 8 5 6 7 4 1 2 5 8 3 4 7 6 1 4 7 6 5 8 3 2 1 6 7 4 3 8 5 2 题意：生成一个素数环，使得相邻两个整数之和为素数，包括首尾。素数环由1~n组成，输出从1开始逆时针排列。 思路：和生成全排列的模型类似，直接递归深度优先遍历解答树，递归边界条件为cur == n且第一个数和最后一个数之和为素数，尝试取值的循环直接从2到n即可，因为要求从1开始输出，所以1每次直接加到输出数组第一个就行了。 尝试是否成功的判断条件就很简单了，一个通用的!vis[i] 和 !icp[i + A[cur-1]]，即i这个数没有被用到过且i和前一个放置的数之和为素数即可。这里素数的判定用的是先素数筛法生成素数表，然后直接用素数表判断的。 注意一下输出排列时，有一个if(i) printf(“ “)，以防止在一个排列最后同时输出空格与换行而PE. ac代码如下：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cmath></cmath></p>
+<p>#include<cstring><br>using namespace std;<br>int n,A[99];<br>bool vis[99];<br>bool isc[101];<br>void get_prime(int n){<br>    int m=sqrt(n+0.5);<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!isc[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                isc[j] = 1;<br>            }<br>        }<br>    }<br>}<br>void dfs(int cur){<br>    if(cur == n &amp;&amp; !isc[A[0] + A[n-1]]){<br>        for(int i = 0; i &lt; n; i++){<br>            if(i) printf(“ “);<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i = 2; i &lt;= n; i++){<br>        if(!vis[i] &amp;&amp; !isc[i+A[cur-1]]){<br>            A[cur] = i;<br>            vis[i] = 1;<br>            dfs(cur+1);<br>            vis[i] = 0;<br>        }<br>    }<br>}<br>int main(){<br>    get_prime(100);<br>    isc[0]=isc[1]=1;<br>    int kase = 0;<br>    while(~scanf(“%d”, &amp;n)){<br>        if(kase &gt; 0) printf(“\n”);<br>        printf(“Case %d:\n”, ++kase);<br>        memset(vis, 0, sizeof(vis));<br>        A[0] = 1;<br>        dfs(1);<br>    }<br>    return 0;<br>}</cstring></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/18/hdu-4548-beautiful-prime/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1620,148 +1787,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/04/16/about-me/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/16/about-me/" itemprop="url">关于我</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-16T19:13:35+08:00">
-                2016-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/关于我/" itemprop="url" rel="index">
-                    <span itemprop="name">关于我</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一个积极向上的活泼青年..热爱技术~ 还在努力学习中..最近回归基础学习..</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1812,7 +1837,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1834,7 +1859,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

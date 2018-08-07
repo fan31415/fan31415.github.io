@@ -259,6 +259,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/25/the-longest-common-subsequence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/25/the-longest-common-subsequence/" itemprop="url">最长公共子序列(LCS)</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-25T18:37:24+08:00">
+                2016-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/动态规划/" itemprop="url" rel="index">
+                    <span itemprop="name">动态规划</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先说子序列的定义，在一个序列中删去若干元素后得到的序列即为其子序列。 最长公共子序列问题的描述：给定两个序列X = {x1, x2, …, xm}, Y = {y1, y2, …, yn}, 求X和Y的最长公共子序列。 下面举个例子说明一下，X = {A,B,C,B,D,A,B},Y = {B,D,C,A,B,A}，那么他们的最长公共子序列为{B,C,B,A}. 最长公共子序列具有最优子结构的性质。设序列X和Y的最长公共子序列为Z={z1,z2,…,zk} ，则有 (1)若[latex]x_m=y_n，则z_k=x_m=y_n[/latex]，且[latex]Z_{k-1}[/latex]是[latex]X_{m-1}和Y_{n-1}[/latex]的最长公共子序列。 (2)若[latex]x_m≠y_n且z_k≠x_m[/latex]，则[latex]Z[/latex]是[latex]X_{m-1}[/latex]和[latex]Y[/latex]的最长公共子序列。 同理既然 (3)若[latex]x_m≠y_n且zk≠yn[/latex]，则[latex]Z[/latex]是[latex]X[/latex]和[latex]Y_{n-1}[/latex]的最长公共子序列。 对于(1),因为既然是最长公共子序列，若[latex]z_k不取x_m[/latex],那就不是最长了，形成矛盾。而当X,Y均去掉这个相等的元素后，明显[latex]Z_{k-1}[/latex]，即去掉该元素的Z，为剩下的X,Y的LCS. 对于(2)，既然[latex]z_k≠x_m[/latex]，那么X去掉[latex]x_m[/latex]也不会影响LCS.对于(3)同理。 这三条合起来，说明了两个序列的LCS包含了这个两个序列前缀的LCS，即LCS问题有最优子结构。具体在这里就是Z里一定包含有X,Y前缀的LCS。(若X为{A,B,C},X的所有前缀为{A},{A,B},{A,B,C}) 因为已经知道其最优子结构的特点，定义c[i][j]为[latex]X_i, Y_j[/latex]的LCS的长度，我们可以设计以下递归关系来求解 $$ c[i][j]=\left\{ \begin{array}{lcl} 0 &amp; &amp; {i = 0, j = 0}\\ c[i-1][j-1]+1 &amp; &amp; {i,j &gt; 0; x_i = x_j}\\ max(c[i][j-1], c[i-1][j]) &amp; &amp; {i,j &gt; 0; x_i \not= x_j} \end{array} \right. $$ 当i = 0, j = 0 时，X,Y为空串，LCS长度为0；当[latex]x_i = x_j[/latex]时，由上述的性质(1)可得当前LCS为[latex]X_{m-1}[/latex]和[latex]Y_{n-1}[/latex]的LCS末尾添上一个x_m；当[latex]x_i \not= x_j[/latex]时，说明当前x和y不等，那么LCS一定和[latex]X_{m-1}，Y[/latex]所得到的LCS或者和[latex]Y_{n-1}，X[/latex]所得到的LCS相等。可以结合下面这张图来理解 <img src="http://fanyijie.net/wp-content/uploads/2016/06/lcs-300x283.png" alt="lcs"> 因为每进行一次递归都有i-1或j-1，所以算法复杂度为O(m + n).</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/06/25/knapsack-problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1661,173 +1803,6 @@ return 1;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/18/uva-524-prime-ring-problem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/18/uva-524-prime-ring-problem/" itemprop="url">Uva 524 Prime Ring Problem</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-18T14:10:44+08:00">
-                2016-05-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/" itemprop="url" rel="index">
-                    <span itemprop="name">Uva</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
-                    <span itemprop="name">回溯</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/回溯/数论/" itemprop="url" rel="index">
-                    <span itemprop="name">数论</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Uva 524 Prime Ring Problem</strong> A ring is composed of n (even number) circles as shown in diagram. Put natural numbers 1, 2, . . . , n into each circle separately, and the sum of numbers in two adjacent circles should be a prime. Note: the number of first circle should always be 1. <strong>Input</strong> n (0 &lt; n ≤ 16) <strong>Output</strong> The output format is shown as sample below. Each row represents a series of circle numbers in the ring beginning from 1 clockwisely and anticlockwisely. The order of numbers must satisfy the above requirements. You are to write a program that completes above process. <strong>Sample Input</strong> 6 8 <strong>Sample Output</strong> Case 1: 1 4 3 2 5 6 1 6 5 2 3 4 Case 2: 1 2 3 8 5 6 7 4 1 2 5 8 3 4 7 6 1 4 7 6 5 8 3 2 1 6 7 4 3 8 5 2 题意：生成一个素数环，使得相邻两个整数之和为素数，包括首尾。素数环由1~n组成，输出从1开始逆时针排列。 思路：和生成全排列的模型类似，直接递归深度优先遍历解答树，递归边界条件为cur == n且第一个数和最后一个数之和为素数，尝试取值的循环直接从2到n即可，因为要求从1开始输出，所以1每次直接加到输出数组第一个就行了。 尝试是否成功的判断条件就很简单了，一个通用的!vis[i] 和 !icp[i + A[cur-1]]，即i这个数没有被用到过且i和前一个放置的数之和为素数即可。这里素数的判定用的是先素数筛法生成素数表，然后直接用素数表判断的。 注意一下输出排列时，有一个if(i) printf(“ “)，以防止在一个排列最后同时输出空格与换行而PE. ac代码如下：</p>
-<p>#include<cstdio></cstdio></p>
-<p>#include<cmath></cmath></p>
-<p>#include<cstring><br>using namespace std;<br>int n,A[99];<br>bool vis[99];<br>bool isc[101];<br>void get_prime(int n){<br>    int m=sqrt(n+0.5);<br>    for(int i = 2; i &lt;= m; i++){<br>        if(!isc[i]){<br>            for(int j = i*i; j &lt;= n; j+=i){<br>                isc[j] = 1;<br>            }<br>        }<br>    }<br>}<br>void dfs(int cur){<br>    if(cur == n &amp;&amp; !isc[A[0] + A[n-1]]){<br>        for(int i = 0; i &lt; n; i++){<br>            if(i) printf(“ “);<br>            printf(“%d”,A[i]);<br>        }<br>        printf(“\n”);<br>    }<br>    else for(int i = 2; i &lt;= n; i++){<br>        if(!vis[i] &amp;&amp; !isc[i+A[cur-1]]){<br>            A[cur] = i;<br>            vis[i] = 1;<br>            dfs(cur+1);<br>            vis[i] = 0;<br>        }<br>    }<br>}<br>int main(){<br>    get_prime(100);<br>    isc[0]=isc[1]=1;<br>    int kase = 0;<br>    while(~scanf(“%d”, &amp;n)){<br>        if(kase &gt; 0) printf(“\n”);<br>        printf(“Case %d:\n”, ++kase);<br>        memset(vis, 0, sizeof(vis));<br>        A[0] = 1;<br>        dfs(1);<br>    }<br>    return 0;<br>}</cstring></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1878,7 +1853,7 @@ return 1;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1900,7 +1875,7 @@ return 1;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
