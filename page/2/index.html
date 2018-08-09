@@ -259,6 +259,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/04/11/error-vm-exception-while-processing-transaction-invalid-opcode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/11/error-vm-exception-while-processing-transaction-invalid-opcode/" itemprop="url">Error: VM Exception while processing transaction: invalid opcode</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T22:34:51+08:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ethereum/" itemprop="url" rel="index">
+                    <span itemprop="name">Ethereum</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天在<code>truffle test</code>时报了这个error，仔细检查后发现是在实现<code>_burn</code>函数时出错了。 其中的关键代码如下(Error code):</p>
+<p>function _burn(address _owner, uint256 _tokenId) internal {</p>
+<pre><code>...
+
+uint256 tokenIndex = allTokensIndex\[_tokenId\];
+uint256 lastTokenIndex = allTokens.length.sub(1);
+Ware storage lastToken = allTokens\[lastTokenIndex\];
+
+allTokens\[tokenIndex\] = lastToken;
+delete allTokens\[lastTokenIndex\];
+
+allTokens.length--;
+allTokensIndex\[_tokenId\] = 0;
+allTokensIndex\[lastToken.id\] = tokenIndex;
+
+...
+</code></pre><p>}</p>
+<p>这里代码的预期功能是销毁一个指定所有者的特定ID的token，结果在测试时报了<code>invalid opcode</code>的错误。 为什么这里会报错呢，是因为写代码的时候忘记了Solidity的一个重要特性，对于storage类型的变量，在相互赋值时都是以引用的形式进行的。也就是说虽然<code>lastToken</code>是一个新建的变量，但是由于显式的声明为<code>stroage</code>，<code>lastToken</code>事实上只是一个引用reference，所以在执行<code>delete allTokens[lastTokenIndex];</code>时，lastToken也失效了，导致最后一句引用<code>lastToken.id</code>事实上是无效的。 然而代码仍然能够执行，是因为Solidity的另一个特性，<code>delete</code>的行为并不像通常的oop语言那样会删除这个对象，而是reset了这个对象，即把对象所有成员置0. 所以这段代码的<code>lastToken.id</code>永远为0. 下面给出正确代码 (Correct code):</p>
+<p>function _burn(address _owner, uint256 _tokenId) internal {</p>
+<pre><code>...
+
+uint256 tokenIndex = allTokensIndex\[_tokenId\];
+uint256 lastTokenIndex = allTokens.length.sub(1);
+Ware storage lastToken = allTokens\[lastTokenIndex\];
+uint256 lastId = lastToken.id;
+
+allTokens\[tokenIndex\] = lastToken;
+delete allTokens\[lastTokenIndex\];
+
+allTokens.length--;
+allTokensIndex\[_tokenId\] = 0;
+allTokensIndex\[lastId\] = tokenIndex;
+
+...
+</code></pre><p>}</p>
+<p>添加了<code>uint256 lastId = lastToken.id;</code>后，虽然<code>lastToken</code>的引用被<code>delete</code>了，但是<code>lastId</code>却被保留了下来，这样函数就可以得到正确执行了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/03/17/docker-crash-on-macos-10-12-when-add-registry-mirrors/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1742,148 +1919,6 @@ public final ViewParent getParent() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/08/08/android-bug-fix-exprience/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/08/android-bug-fix-exprience/" itemprop="url">Android bug fix笔记（未完待续...）</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-08T21:36:17+08:00">
-                2016-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Careless篇</strong> 1.当你把RelativeLayout改成LinearLayout时，永远不要忘记加上orientation ! 2.如果你往代码里直接加入了一些测试语句，比如删除某一个数据库，一定要记得加上log.e(“database has deleted!”)来提醒自己！不然以后测试时可能会忘记</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1934,7 +1969,7 @@ public final ViewParent getParent() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1945,7 +1980,7 @@ public final ViewParent getParent() {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1956,7 +1991,7 @@ public final ViewParent getParent() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

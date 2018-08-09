@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="fanyijie, technology" />
+  <meta name="keywords" content="贪心,greedy," />
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="uva725 division Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal t">
+<meta name="description" content="DescriptionSay you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.">
+<meta name="keywords" content="贪心,greedy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Uva725 Division">
-<meta property="og:url" content="https://fanyijie.net/2016/05/17/uva725/index.html">
+<meta property="og:title" content="Best Time to Buy and Sell Stock II">
+<meta property="og:url" content="https://fanyijie.net/2018/08/09/Best-Time-to-Buy-and-Sell-Stock-II/index.html">
 <meta property="og:site_name" content="Fan&#39;s Home">
-<meta property="og:description" content="uva725 division Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal t">
+<meta property="og:description" content="DescriptionSay you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-04T08:38:54.000Z">
+<meta property="og:image" content="https://leetcode.com/media/original_images/122_maxprofit_2.PNG">
+<meta property="og:updated_time" content="2018-08-09T15:04:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Uva725 Division">
-<meta name="twitter:description" content="uva725 division Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal t">
+<meta name="twitter:title" content="Best Time to Buy and Sell Stock II">
+<meta name="twitter:description" content="DescriptionSay you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.">
+<meta name="twitter:image" content="https://leetcode.com/media/original_images/122_maxprofit_2.PNG">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://fanyijie.net/2016/05/17/uva725/"/>
+  <link rel="canonical" href="https://fanyijie.net/2018/08/09/Best-Time-to-Buy-and-Sell-Stock-II/"/>
 
 
 
 
 
-  <title>Uva725 Division | Fan's Home</title>
+  <title>Best Time to Buy and Sell Stock II | Fan's Home</title>
   
 
 
@@ -262,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/uva725/">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/08/09/Best-Time-to-Buy-and-Sell-Stock-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Fan Yijie">
@@ -279,7 +282,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Uva725 Division</h2>
+          <h2 class="post-title" itemprop="name headline">Best Time to Buy and Sell Stock II</h2>
         
 
         <div class="post-meta">
@@ -291,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T11:28:50+08:00">
-                2016-05-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T22:35:03+08:00">
+                2018-08-09
               </time>
             
 
@@ -314,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/" itemprop="url" rel="index">
-                    <span itemprop="name">Uva</span>
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -325,8 +328,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
-                    <span itemprop="name">回溯</span>
+                  <a href="/categories/算法/贪心/" itemprop="url" rel="index">
+                    <span itemprop="name">贪心</span>
                   </a>
                 </span>
 
@@ -362,11 +365,37 @@
       
 
       
-        <p><strong>uva725 division</strong> Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal to an integer N, where 2 ≤ N ≤ 79. That is, abcde fghij = N where each letter represents a different digit. The first digit of one of the numerals is allowed to be zero. <strong>Input</strong> Each line of the input file consists of a valid integer N. An input of zero is to terminate the program. <strong>Output</strong> Your program have to display ALL qualifying pairs of numerals, sorted by increasing numerator (and, of course, denominator). Your output should be in the following general form: xxxxx / xxxxx = N xxxxx / xxxxx = N . . In case there are no pairs of numerals satisfying the condition, you must write ‘There are no solutions for N.’. Separate the output for two different values of N by a blank line. <strong>Sample Input</strong> 61 62 0 <strong>Sample Output</strong> There are no solutions for 61. 79546 / 01283 = 62 94736 / 01528 = 62 思路：枚举即可，注意到abcde=n*fghij,可以只枚举abcde得到答案，当abcde和fghij合起来&gt;10位就可以break了，因为题目要求必须刚好是0~9的排列。 可用sprintf转换，和%05d补零 注意题目要求每个n输入后的结果，有一个空行，且0终止程序，也就是说最后一次输入0的时候，什么也不要输出。所以可以把每一次输出结束后的空行,放到下一个输入处理的开头来输出，就可以避免输入0时，上一次输出结束时多输出了空行而造成PE. ac代码如下：</p>
-<p>#include<cstdio></cstdio></p>
-<p>#include<cstring></cstring></p>
-<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n;<br>    int mcase=0;<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        int f;<br>        char buf[99];<br>        int cnt=0;<br>        if(mcase++){<br>            printf(“\n”);<br>        }<br>        for(int i=1234;i&lt;=99999;i++){<br>            f=i*n;<br>            sprintf(buf,”%05d%05d”,f,i);<br>            if(strlen(buf)&gt;10){<br>                break;<br>            }<br>            sort(buf,buf+10);<br>            bool ok=1;<br>            for(int j=0;j&lt;10;j++){<br>                if(buf[j]!=’0’+j){<br>                    ok=0;<br>                    break;<br>                }<br>            }<br>            if(ok){<br>                cnt++;<br>                printf(“%05d / %05d = %d\n”,f,i,n);<br>            }<br>        }<br>        if(!cnt){<br>            printf(“There are no solutions for %d.\n”,n);<br>        }<br>    }<br>    return 0;<br>}</algorithm></p>
-
+        <h1 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h1><p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
+<p>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).</p>
+<p>Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).</p>
+<p>Example 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: [7,1,5,3,6,4]</span><br><span class="line">Output: 7</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.</span><br><span class="line">             Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.</span><br></pre></td></tr></table></figure>
+<p>Example 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,2,3,4,5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.</span><br><span class="line">             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are</span><br><span class="line">             engaging multiple transactions at the same time. You must sell before buying again.</span><br></pre></td></tr></table></figure>
+<p>Example 3:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: In this case, no transaction is done, i.e. max profit = 0.</span><br></pre></td></tr></table></figure>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>My basic thought is that I use two cursors to record buy index and sell index. We traverse the entire prices array, every time when the j + 1 one bigger than the j one, which means the sequential is increased, we increase j cursor. When the j + 1 one is less or equal than the j one, we calculate the profit we make in this period and add it to the toal profit, then assign i to j + 1 so that we can move on to next peroid. One edge case is that the sequence has no decline period. To sovle this case we should do an extra judge that if until the last one the sequence is keep increasing, we calculate the last period’s profit and add into total profit. (This logical maybe can be simplified by we add a 0 in the tail of prices array in advance so that we can make the whole judge process uniform.)</p>
+<p>The implement of this thought is given below:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxProfit(self, prices):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type prices: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        i = 0</span><br><span class="line">        j = 0</span><br><span class="line">        isIncreased = False</span><br><span class="line">        ans = 0</span><br><span class="line">        while 1:</span><br><span class="line">            if j + 1 &gt;= len(prices):</span><br><span class="line">                if isIncreased == True:</span><br><span class="line">                    ans += (prices[j] - prices[i])</span><br><span class="line">                return ans</span><br><span class="line">            if prices[j] &lt; prices[j + 1]:</span><br><span class="line">                j += 1</span><br><span class="line">                isIncreased = True</span><br><span class="line">            else:</span><br><span class="line">                if isIncreased == True:</span><br><span class="line">                    ans += (prices[j] - prices[i])</span><br><span class="line">                    isIncreased = False</span><br><span class="line">                i = j + 1</span><br><span class="line">                j += 1</span><br></pre></td></tr></table></figure>
+<p>One simpler and more brilliant solution can be illustrated by the pic below:</p>
+<p><img src="https://leetcode.com/media/original_images/122_maxprofit_2.PNG" alt="Simple one pass">            </p>
+<p>From the picture, we can see that</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">profit D = proft A + proft B + profit C</span><br></pre></td></tr></table></figure>
+<p>Which means if you want to get profit D because it is the max proft we can get between day 3 and day 7, there is no difference from summing up every positive differential in that period.</p>
+<p>So, we can find that everytime when the j + 1 is one bigger than the j one, we simply get the differential between them and add it to the total profit, after traversing the entire array we can get a decent total profit.</p>
+<p>The code is given below:</p>
+<pre><code>class Solution:
+    def maxProfit(self, prices):
+        &quot;&quot;&quot;
+        :type prices: List[int]
+        :rtype: int
+        &quot;&quot;&quot;
+        ans = 0
+        for i in range(1, len(prices)):
+            if prices[i - 1] &lt; prices[i]:
+                ans += (prices[i] - prices[i-1])
+        return ans
+</code></pre>
       
     </div>
     
@@ -381,6 +410,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/贪心/" rel="tag"># 贪心</a>
+          
+            <a href="/tags/greedy/" rel="tag"># greedy</a>
+          
+        </div>
+      
 
       
       
@@ -390,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/26/e5-ad-a6-e6-b5-b7-e6-97-a0-e6-b6-af/" rel="next" title="学海无涯">
-                <i class="fa fa-chevron-left"></i> 学海无涯
+              <a href="/2018/08/07/0x0-Transaction-mined-but-execution-failed/" rel="next" title="0x0 Transaction mined but execution failed">
+                <i class="fa fa-chevron-left"></i> 0x0 Transaction mined but execution failed
               </a>
             
           </div>
@@ -399,10 +436,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/17/e5-b8-b8-e7-94-a8-e6-95-b0-e6-8d-ae/" rel="prev" title="常用数据">
-                常用数据 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -454,8 +487,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -531,6 +573,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
