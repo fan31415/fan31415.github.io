@@ -259,162 +259,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/04/16/pitfalls-in-using-gasestimategas-and-getgasprice-function/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/16/pitfalls-in-using-gasestimategas-and-getgasprice-function/" itemprop="url">Pitfalls in using gasEstimateGas and getGasPrice function</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-16T19:11:01+08:00">
-                2018-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ethereum/" itemprop="url" rel="index">
-                    <span itemprop="name">Ethereum</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Pitfalls-in-getEstimateGas"><a href="#Pitfalls-in-getEstimateGas" class="headerlink" title="Pitfalls in getEstimateGas"></a>Pitfalls in getEstimateGas</h2><p>First let’s have a look at the offical doc about estimateGas function:</p>
-<blockquote>
-<p><strong>methods.myMethod.estimateGas</strong></p>
-<p>myContract.methods.myMethod([param1[, param2[, …]]])<br>.estimateGas(options[, callback])</p>
-<p>Will call estimate the gas a method execution will take when executed in the EVM without. The estimation can differ from the actual gas used when later sending a transaction, as the state of the smart contract can be different at that time.</p>
-</blockquote>
-<p>The description is not very clear here. In fact, estimateGas works by pretending the transaction was actually being included in the blockchain, and then returning the exact gas amount that would have been charged if that pretend operation was real. In other words, it uses the exact same procedure a miner would use to calculate the actual fee. It also means that estimateGas will not actually send a transaction. So someone would say if it works like that way, why we call it estimateGas rather than calculateGasNeeded. The reason is that if there is any way for the consequences of your transaction to change depending on when or to whom it is submitted, there is a potential for estimateGas to be wrong by arbitrarily large amounts. Detialed example can refer to reference[3], in these cases the estimation is unreliable.</p>
-<h2 id="Pitfalls-in-getGasPrice"><a href="#Pitfalls-in-getGasPrice" class="headerlink" title="Pitfalls in getGasPrice"></a>Pitfalls in getGasPrice</h2><p>Now we move on to getGasPrice function. As we know, miners determine what gasPrice they are willing to accept. If the gasPrice is too small, the miner will ignore the transaction. And the offical doc about getGasPrice function is below:</p>
-<blockquote>
-<p><strong>getGasPrice</strong></p>
-<p>web3.eth.getGasPrice([callback])</p>
-<p>Returns the current gas price oracle. The gas price is determined by the last few blocks median gas price.</p>
-</blockquote>
-<p>Read carefully about this function, we can know it is just return the median gas price of last few blocks. And For I use ganache to test, the default gas Price should be 100000000000 wei. However the <code>web3.eth.getGasPrice()</code>function always return 20000000000 wei. This is where makes me confused. I solved this by assign a specific gas price for every transaction. Or you can simply ignore the <code>getGasPrice()</code> function and use the default value on ganache 100000000000 instead.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a href="http://web3js.readthedocs.io/en/1.0/web3-eth-contract.html?highlight=estimateGas#contract-estimategas" target="_blank" rel="noopener">estimateGas</a> [2] <a href="https://web3js.readthedocs.io/en/1.0/web3-eth.html#getgasprice" target="_blank" rel="noopener">getGasPrice</a> [3] <a href="https://ethereum.stackexchange.com/questions/266/what-are-the-limitations-to-estimategas-and-when-would-its-estimate-be-considera" target="_blank" rel="noopener">estimate Gas stackoverflow</a> [4] <a href="https://ethereum.stackexchange.com/questions/39173/what-is-the-actual-gasprice-used-in-a-truffle-ganache-environment?rq=1" target="_blank" rel="noopener">ganache gas price issue</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/04/11/error-vm-exception-while-processing-transaction-invalid-opcode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1910,6 +1754,171 @@ allTokensIndex\[lastId\] = tokenIndex;
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/11/09/the-experiment-of-adroid-getparent-in-fragments/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/09/the-experiment-of-adroid-getparent-in-fragments/" itemprop="url">Android getParent() 在嵌套fragment中的实验</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-09T22:16:44+08:00">
+                2016-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在使用requestDisallowInterceptTouchEvent()方法时，常会用到getParent()方法，那么就有一个问题，在复杂的fragment嵌套的时候，getparent的效果是怎样的呢。 源码里面是这么给的</p>
+<pre><code>/\*\*
+ \* Gets the parent of this view. Note that the parent is a
+ \* ViewParent and not necessarily a View.
+ \*
+ \* @return Parent of this view.
+ */
+public final ViewParent getParent() {
+    return mParent;
+}
+</code></pre><p>好像也不是很清楚，再去看api文档，也只说了一句getParent() Gets the parent of this view. 既然这样，那就做一个简单的实验吧。 这儿有一个比较复杂的嵌套例子，首先是一个main activity，layout如下</p>
+<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout\_width="match\_parent" android:id="@+id/container" android:background="@color/white" android:layout\_height="match\_parent"><br><br>    <framelayout android:id="@+id/main_fl" android:layout\_width="match\_parent" android:layout_height="0dp" android:layout_weight="1"><br>        <fragment android:id="@+id/fragment" android:name=".MainFragment" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br>    </fragment></framelayout><br></linearlayout>
+
+<p>其中的Mainfragment的layout如下</p>
+<relativelayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br>    <viewpager android:id="@+id/viewpager" android:layout\_below="@id/horizontal\_bar" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br></viewpager></relativelayout>
+
+<p>viewpager中装载的fragment的layout如下</p>
+<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br><webview android:id="@+id/webview" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br></webview></linearlayout>
+
+<p>现在，我们在这个被装载在viewpager中的frament中插入以下代码</p>
+<p>  Clog.d(“parent tree “ + webView + webView.getParent() + “ “<br>                            + webView.getParent().getParent() + “ “+ webView.getParent().getParent().getParent() + “ “ +<br>                            webView.getParent().getParent().getParent().getParent());</p>
+<p>查看其parent，可以整理结果可以看到依次为</p>
+<p>android.webkit.WebView<br>android.widget.LinearLayout<br>android.support.v4.view.ViewPager<br>android.widget.RelativeLayout<br>android.widget.FrameLayout</p>
+<p>所以我们得出结论，parent与fragment本身无关，不管是动态还是静态的fragment标签都不算是parent，在考虑parent的时候，只需要忽略掉framgent的存在，按照获取时整个屏幕真实的嵌套关系考虑即可。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1960,7 +1969,7 @@ allTokensIndex\[lastId\] = tokenIndex;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1982,7 +1991,7 @@ allTokensIndex\[lastId\] = tokenIndex;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

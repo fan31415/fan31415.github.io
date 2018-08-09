@@ -259,171 +259,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/11/09/the-experiment-of-adroid-getparent-in-fragments/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/09/the-experiment-of-adroid-getparent-in-fragments/" itemprop="url">Android getParent() 在嵌套fragment中的实验</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-09T22:16:44+08:00">
-                2016-11-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在使用requestDisallowInterceptTouchEvent()方法时，常会用到getParent()方法，那么就有一个问题，在复杂的fragment嵌套的时候，getparent的效果是怎样的呢。 源码里面是这么给的</p>
-<pre><code>/\*\*
- \* Gets the parent of this view. Note that the parent is a
- \* ViewParent and not necessarily a View.
- \*
- \* @return Parent of this view.
- */
-public final ViewParent getParent() {
-    return mParent;
-}
-</code></pre><p>好像也不是很清楚，再去看api文档，也只说了一句getParent() Gets the parent of this view. 既然这样，那就做一个简单的实验吧。 这儿有一个比较复杂的嵌套例子，首先是一个main activity，layout如下</p>
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout\_width="match\_parent" android:id="@+id/container" android:background="@color/white" android:layout\_height="match\_parent"><br><br>    <framelayout android:id="@+id/main_fl" android:layout\_width="match\_parent" android:layout_height="0dp" android:layout_weight="1"><br>        <fragment android:id="@+id/fragment" android:name=".MainFragment" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br>    </fragment></framelayout><br></linearlayout>
-
-<p>其中的Mainfragment的layout如下</p>
-<relativelayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br>    <viewpager android:id="@+id/viewpager" android:layout\_below="@id/horizontal\_bar" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br></viewpager></relativelayout>
-
-<p>viewpager中装载的fragment的layout如下</p>
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br><webview android:id="@+id/webview" android:layout\_width="match\_parent" android:layout\_height="match\_parent"><br></webview></linearlayout>
-
-<p>现在，我们在这个被装载在viewpager中的frament中插入以下代码</p>
-<p>  Clog.d(“parent tree “ + webView + webView.getParent() + “ “<br>                            + webView.getParent().getParent() + “ “+ webView.getParent().getParent().getParent() + “ “ +<br>                            webView.getParent().getParent().getParent().getParent());</p>
-<p>查看其parent，可以整理结果可以看到依次为</p>
-<p>android.webkit.WebView<br>android.widget.LinearLayout<br>android.support.v4.view.ViewPager<br>android.widget.RelativeLayout<br>android.widget.FrameLayout</p>
-<p>所以我们得出结论，parent与fragment本身无关，不管是动态还是静态的fragment标签都不算是parent，在考虑parent的时候，只需要忽略掉framgent的存在，按照获取时整个屏幕真实的嵌套关系考虑即可。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/08/08/android-bug-fix-exprience/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1764,6 +1599,195 @@ public final ViewParent getParent() {
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/23/uva-140-bandwidth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/23/uva-140-bandwidth/" itemprop="url">Uva 140 Bandwidth</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-23T22:18:50+08:00">
+                2016-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/" itemprop="url" rel="index">
+                    <span itemprop="name">Uva</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
+                    <span itemprop="name">回溯</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Uva 140 Bandwidth</strong> Given a graph (V,E) where V is a set of nodes and E is a set of arcs in VxV, and an ordering on the elements in V, then the bandwidth of a node v is defined as the maximum distance in the ordering between v and any node to which it is connected in the graph. The bandwidth of the ordering is then defined as the maximum of the individual bandwidths. For example, consider the following graph: <img src="http://fanyijie.net/wp-content/uploads/2016/05/140img1.gif" alt="140img1"> This can be ordered in many ways, two of which are illustrated below: <img src="http://fanyijie.net/wp-content/uploads/2016/05/140img2-300x34.gif" alt="140img2"> For these orderings, the bandwidths of the nodes (in order) are 6, 6, 1, 4, 1, 1, 6, 6 giving an ordering bandwidth of 6, and 5, 3, 1, 4, 3, 5, 1, 4 giving an ordering bandwidth of 5. Write a program that will find the ordering of a graph that minimises the bandwidth. <strong>Input</strong> Input will consist of a series of graphs. Each graph will appear on a line by itself. The entire file will be terminated by a line consisting of a single #. For each graph, the input will consist of a series of records separated by <code>;&#39;. Each record will consist of a node name (a single upper case character in the the range \</code>A’ to `Z’), followed by a `:’ and at least one of its neighbours. The graph will contain no more than 8 nodes. <strong>Output</strong> Output will consist of one line for each graph, listing the ordering of the nodes followed by an arrow (-&gt;) and the bandwidth for that ordering. All items must be separated from their neighbours by exactly one space. If more than one ordering produces the same bandwidth, then choose the smallest in lexicographic ordering, that is the one that would appear first in an alphabetic listing. <strong>Sample input</strong> A:FB;B:GC;D:GC;F:AGH;E:HD # <strong>Sample output</strong> A B C F G D H E -&gt; 3 题意：输入一个无向图G，定义一个由图的顶点构成的排列P. 定义任意一个顶点i的带宽b(i), 为i顶点与其相邻顶点在排列P中的最远距离。取所有顶点的b(i)的最大值为整个图G的bandwidth. 要求输出一个让bandwidth最小的顶点排列并输出其bandwidth值. 思路：因为图顶点数&lt;=8, 排列数小于100000, 所以这里直接用的暴力枚举。首先读入一行数据，然后用strchr函数(返回字符串str中第一次出现字符ch时的指针，如果没有出现则返回NULL)对本次输入出现的字母进行编号。通过mapc数组得到从编号到字母的映射，通过id数组得到字母到其编号的映射。 然后遍历输入，直接用向量u，v储存所有相邻的顶点，在循环中，u反复存储当前顶点，而对应的v则存入其相邻顶点，直到分号输入为止。这样就将所有会用来计算带宽的点对对应的存入了u，v中。 最后通过c++自带的next_permutation函数按字典序生成全排列。先初始化最小字典序全排列，然后循环生成。 这道题除了暴力的做法，还可以回溯剪枝，而且显然更快。这儿先留着下次有时间再写。 ac代码：</p>
+<p>#include<cstdio></cstdio></p>
+<p>#include<cstring></cstring></p>
+<p>#include<algorithm></algorithm></p>
+<p>#include<cmath></cmath></p>
+<p>#include<vector></vector></p>
+<p>#define N 10<br>using namespace std;<br>char in[100];<br>char mapc[30];<br>int id[30];<br>vector<int> u, v;<br>int main(){<br>    while(~scanf(“%s”,&amp;in) &amp;&amp; in[0] != ‘#’){<br>        int p = 0, num = 0, flag = 0;<br>        for(char a = ‘A’; a &lt;= ‘Z’; a++){<br>            if(strchr(in, a) != NULL){<br>                mapc[num] = a;<br>                id[a] = num;<br>                num++;<br>            }<br>        }<br>        char ch;<br>        int len = strlen(in);<br>        for(int i = 0; i &lt; len; i++){<br>            if(in[i] == ‘:’){<br>                flag = 1;<br>            }<br>            if(!flag){<br>                ch = in[i];<br>            }<br>            if(flag &amp;&amp; in[i] != ‘:’){<br>                if(in[i] != ‘;’){<br>                    u.push_back(id[ch]);<br>                    v.push_back(id[in[i]]);<br>                }<br>                else{<br>                    flag = 0;<br>                }<br>            }</int></p>
+<pre><code>    }
+    int pa\[N\], ans\[N\], pos\[N\], bw = 0x3f3f3f3f;
+    for(int i = 0; i &lt; num; i++){
+        pa\[i\] = i;
+    }
+    do{
+        for(int i = 0; i &lt; num; i++){
+            pos\[pa\[i\]\] = i;
+        } 
+        int b = 0;
+        for(int i = 0; i &lt; u.size(); i++){
+            b = max(b, abs(pos\[u\[i\]\]-pos\[v\[i\]\]));
+        }
+        if(b &lt; bw){
+            bw = b;
+            memcpy(ans, pa, sizeof(pa));
+        }
+    }while(next_permutation(pa, pa + num));
+    for(int i = 0; i &lt; num; i++){
+        printf(&quot;%c &quot;, mapc\[ans\[i\]\]);
+    }
+    printf(&quot;-&gt; %d\\n&quot;, bw);
+    u.clear();
+    v.clear();
+    memset(mapc, 0, sizeof(mapc));
+    memset(in, 0, sizeof(in));
+    memset(id, 0, sizeof(id));
+}
+return 0;
+</code></pre><p>}</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1814,7 +1838,7 @@ public final ViewParent getParent() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1836,7 +1860,7 @@ public final ViewParent getParent() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
