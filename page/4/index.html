@@ -259,6 +259,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/24/subset-enumeration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/24/subset-enumeration/" itemprop="url">枚举子集</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-24T15:31:03+08:00">
+                2016-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/回溯/" itemprop="url" rel="index">
+                    <span itemprop="name">回溯</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/回溯/算法学习/" itemprop="url" rel="index">
+                    <span itemprop="name">算法学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里我们讨论没有重复元素集合的非空子集枚举方法。 <strong>1.增量构造</strong> 最基本的想法就是像构造全排列那样，每次遍历所有当前可能向集合中添加的值，添加进去然后递归。 示例代码如下：</p>
+<p>#include<iostream><br>using namespace std;<br>void add_subset(int n, int *A, int cur){<br>    for(int i = 0; i &lt; cur; i++){    //打印当前枚举到的集合<br>        cout&lt;&lt;A[i]&lt;&lt;” “;<br>    }<br>    cout&lt;&lt;endl;<br>    int s;<br>    if(cur){    //确定当前可向集合中添加的元素的最小可能值<br>        s = A[cur-1] + 1;<br>    }else{<br>        s = 0;<br>    }<br>    for(int i = s; i &lt; n; i++){    //遍历当前所有可能取值，从当前最小可能值到集合最大值<br>        A[cur] = i;<br>        add_subset(n, A, cur+1);    //递归构造<br>    }<br>}<br>int main(){<br>    int A[99] = {0};<br>    int n;<br>    cin&gt;&gt;n;<br>    add_subset(n, A, 0);<br>}</iostream></p>
+<p>测试输入： 3 测试输出：</p>
+<p>0<br>0 1<br>0 1 2<br>0 2<br>1<br>1 2<br>2</p>
+<p>这里我们把集合元素从0到n-1进行编号，输出中的一行代表其中一个子集中的各元素编号。 这个算法的解答树共有2^n个节点。 <strong>2.位向量构造</strong> 这里我们构造一个位向量A[i], A[i] = 1代表i出现在了子集中。这个算法很好理解，从cur = 0时开始构造子集，每一次递归只用考虑选第i个元素和不选第i个元素两种情况，递归n次即可包括2^n个子集的情况，当cur == n时则说明已经构造出了当前选择下的子集，打印输出即可。不过这个算法的解答树有2^(n+1) - 1个节点，因为每一个未完成的解也会占用一个节点。 示例代码如下：</p>
+<p>#include<iostream><br>using namespace std;<br>void pos_subset(int n,int *A,int cur){<br>    if(cur == n){<br>        for(int i = 0; i &lt; cur; i++){<br>            if(A[i]){<br>                cout&lt;&lt;i&lt;&lt;” “;<br>            }<br>        }<br>        cout&lt;&lt;endl;<br>        return;<br>    }<br>    A[cur] = 1;<br>    pos_subset(n, A, cur + 1);<br>    A[cur] = 0;<br>    pos_subset(n, A, cur +1);<br>}<br>int main(){<br>    int A[99]={0};<br>    int n;<br>    cin&gt;&gt;n;<br>    pos_subset(n, A, 0);<br>}</iostream></p>
+<p>测试输入： 3 测试输出：</p>
+<p>0 1 2<br>0 1<br>0 2<br>0<br>1 2<br>1<br>2</p>
+<p>输出的定义同上。 <strong>3.二进制法</strong> 这里我们用一个二进制数来表示子集S，比如10111，即表示0,1,2,4号元素均在子集S中。也就是说，二进制数从右往左数第i位如果是1，那么该二进制数代表的集合中有元素i，0则没有。 按照这个定义，我们可以写出下面的代码来枚举子集：</p>
+<p>#include<iostream><br>using namespace std;<br>void binary_subset(int n, int s){<br>    for(int i = 0; i &lt; n; i++){<br>        if(s &amp; (1 &lt;&lt; i)){<br>            cout&lt;&lt;i&lt;&lt;” “;<br>        }<br>    }<br>    cout&lt;&lt;endl;<br>}<br>int main(){<br>    int n, s;<br>    cin&gt;&gt;n;<br>    for(int i = 0; i &lt; (1 &lt;&lt; n); i++){<br>        binary_subset(n, i);<br>    } </iostream></p>
+<p>}</p>
+<p>测试输入：3 测试输出：</p>
+<p>0<br>1<br>0 1<br>2<br>0 2<br>1 2<br>0 1 2</p>
+<p>在main函数中我们枚举了子集对应的编码0到2^n-1,而binary_subset函数则负责打印编码的二进制形式所对应的子集。binary_subset函数其实就是将从右往左看子集编码的每一位是否是1，是1就打印出当前位代表的元素,和位向量法的打印是一个方法。 输出分析：输入3，然后main函数从0开始循环到2^3-1，首先是i=0，进入子集函数，s=0，无输出。main函数循环到1,子集函数1&amp;1为真，输出i=0。继续子集函数进来2=10(2)，仅第二位为1，说明该集合只取了元素1（我们从0开始编码)，于是输出该集合包含的元素1,。接着进来3=11(2)，该集合取了元素0和1，则输出0,1.以此类推直到最后循环到7=111（2),输出该集合0,1,2,至此就将含有三个元素的集合的2^n-1个非空子集枚举完了。 这里注意一下，二进制法用int存i的话，最多只能输出n=30时的集合的子集。因为int最大只有2^31-1. <strong>二进制法的一个更简洁的写法</strong> 这里先贴代码：</p>
+<p>#include<iostream><br>using namespace std;<br>void print_subset(int i,int n){    //打印i的二进制形式所对应的集合的所有元素<br>    for(int j = 0; j &lt; n; j++){<br>            if(i &amp; 1&lt;&lt;j){<br>                cout &lt;&lt; j &lt;&lt;” “;<br>            }<br>        }<br>        cout &lt;&lt; endl;<br>}<br>void binary_subset(int n){    //枚举n的二进制形式所代表集合的所有子集<br>    for(int i = n; i; i = (i - 1) &amp; n){<br>        cout&lt;&lt;i&lt;&lt;” :”;    //每一个i的二进制形式代表一个子集<br>        print_subset(i,n);    //输出该子集中的元素<br>    }<br>}<br>int main(){<br>    int n;<br>    cin&gt;&gt;n;    //输入一个数n，对应其二进制形式所代表的集合<br>    binary_subset(n);    //输出n对应集合的所有子集的编码以及每个子集中的元素 </iostream></p>
+<p>}</p>
+<p>其中的关键语句就只有一句</p>
+<p>for(int i = n; i; i = (i - 1) &amp; n)</p>
+<p>就是这句话完成了对n所代表集合的子集的枚举。而print_subset函数只是用来打印出枚举出的子集i的元素的。 这句话的关键在于i = (i - 1) &amp; n这儿，其实就是多了一个&amp;n来把n中为0的数位在自减中过滤掉了。举个栗子，输入11，即1011(2),那么这个集合含有元素0,1,3，我们做这个循环的更新，会依次得到如下的i ：</p>
+<p>1011    //n的初始值，二进制形式 </p>
+<p>1010    //第一次循环<br>1001    //第二次循环<br>1000    //…<br>0011<br>0010<br>0001    //当i为0000时集合为空</p>
+<p>可以看出对应111,110,101,100,011,010,001. 下面可以看一下测试运行的结果，测试输入：11 测试输出：</p>
+<p>11 :0 1 3<br>10 :1 3<br>9 :0 3<br>8 :3<br>3 :0 1<br>2 :1<br>1 :0</p>
+<p>和我们之前分析的是一致的。 附上写法的<strong>正序版本</strong></p>
+<p>void binary_subset(int n){    //枚举n的二进制形式所代表集合的所有子集<br>    for(int i = 0; ; i = (i - n) &amp; n){    //正序<br>        cout&lt;&lt;i&lt;&lt;” :”;    //每一个i的二进制形式代表一个子集<br>        print_subset(i,n);    //输出该子集中的元素<br>        if( i == n) break;<br>    }<br>}</p>
+<p>输入：11 输出：</p>
+<p>0 :<br>1 :0<br>2 :1<br>3 :0 1<br>8 :3<br>9 :0 3<br>10 :1 3<br>11 :0 1 3</p>
+<p>另外注意当被枚举的集合n固定为2^n-1时，这样的写法就失去了意义，而退化到二进制法的情况，这时直接写</p>
+<p>for(int i = 0; i &lt; (1&lt;&lt;n); i++)</p>
+<p>从1到2^n-1遍历即可。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/23/uva-140-bandwidth/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1693,162 +1875,6 @@ return 1;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2016/05/17/uva725/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/17/uva725/" itemprop="url">Uva725 Division</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-17T11:28:50+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/" itemprop="url" rel="index">
-                    <span itemprop="name">Uva</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Uva/回溯/" itemprop="url" rel="index">
-                    <span itemprop="name">回溯</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>uva725 division</strong> Write a program that finds and displays all pairs of 5-digit numbers that between them use the digits 0 through 9 once each, such that the first number divided by the second is equal to an integer N, where 2 ≤ N ≤ 79. That is, abcde fghij = N where each letter represents a different digit. The first digit of one of the numerals is allowed to be zero. <strong>Input</strong> Each line of the input file consists of a valid integer N. An input of zero is to terminate the program. <strong>Output</strong> Your program have to display ALL qualifying pairs of numerals, sorted by increasing numerator (and, of course, denominator). Your output should be in the following general form: xxxxx / xxxxx = N xxxxx / xxxxx = N . . In case there are no pairs of numerals satisfying the condition, you must write ‘There are no solutions for N.’. Separate the output for two different values of N by a blank line. <strong>Sample Input</strong> 61 62 0 <strong>Sample Output</strong> There are no solutions for 61. 79546 / 01283 = 62 94736 / 01528 = 62 思路：枚举即可，注意到abcde=n*fghij,可以只枚举abcde得到答案，当abcde和fghij合起来&gt;10位就可以break了，因为题目要求必须刚好是0~9的排列。 可用sprintf转换，和%05d补零 注意题目要求每个n输入后的结果，有一个空行，且0终止程序，也就是说最后一次输入0的时候，什么也不要输出。所以可以把每一次输出结束后的空行,放到下一个输入处理的开头来输出，就可以避免输入0时，上一次输出结束时多输出了空行而造成PE. ac代码如下：</p>
-<p>#include<cstdio></cstdio></p>
-<p>#include<cstring></cstring></p>
-<p>#include<algorithm><br>using namespace std;<br>int main(){<br>    int n;<br>    int mcase=0;<br>    while(~scanf(“%d”,&amp;n)&amp;&amp;n){<br>        int f;<br>        char buf[99];<br>        int cnt=0;<br>        if(mcase++){<br>            printf(“\n”);<br>        }<br>        for(int i=1234;i&lt;=99999;i++){<br>            f=i*n;<br>            sprintf(buf,”%05d%05d”,f,i);<br>            if(strlen(buf)&gt;10){<br>                break;<br>            }<br>            sort(buf,buf+10);<br>            bool ok=1;<br>            for(int j=0;j&lt;10;j++){<br>                if(buf[j]!=’0’+j){<br>                    ok=0;<br>                    break;<br>                }<br>            }<br>            if(ok){<br>                cnt++;<br>                printf(“%05d / %05d = %d\n”,f,i,n);<br>            }<br>        }<br>        if(!cnt){<br>            printf(“There are no solutions for %d.\n”,n);<br>        }<br>    }<br>    return 0;<br>}</algorithm></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1899,7 +1925,7 @@ return 1;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1921,7 +1947,7 @@ return 1;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
