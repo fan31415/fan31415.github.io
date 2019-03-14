@@ -259,6 +259,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/05/14/trouble-shooting-on-eos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fan Yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fan's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/14/trouble-shooting-on-eos/" itemprop="url">Trouble Shooting on EOS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T11:45:01+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/eos/" itemprop="url" rel="index">
+                    <span itemprop="name">eos</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>Error: <code>last block ID does not match current chain state</code> Workaround: <code>./nodeos --resync</code></p>
+</li>
+<li><p>Error: <code>Error 3040002: Invalid Action Arguments</code></p>
+</li>
+</ul>
+<ol>
+<li>Type wrong method name, check the spelling.</li>
+<li>Did not include the action method in <code>EOS_ABI</code> macro.</li>
+<li>If not reasons above, check the .abi file.</li>
+</ol>
+<ul>
+<li><p>Error: compile error and show <code>normalization:</code> after your <code>action</code> name Usually you use Capital or underscore in your action name. Replace it with lowercase version.</p>
+</li>
+<li><p>Error: <code>key is undefined</code> when push action. usually you invoke some key not exist in your table (multi_Index), check the codes near the table.</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2018/05/08/the-difference-of-ether-and-eos-token-in-code-hierarchy-aspect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1646,281 +1804,6 @@ allTokensIndex\[lastId\] = tokenIndex;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fanyijie.net/2017/05/09/experience-of-a-full-android-project/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fan Yijie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fan's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/09/experience-of-a-full-android-project/" itemprop="url">Android项目总结</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-09T14:00:42+08:00">
-                2017-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><em>前言：这篇文章写于2016年11月，这次分享在博客上希望能得到一些指正（ps：人呐就都不知道，自己就不可以预料，当初说好的继续研习java，怎么就去写swift了呢 … 另：wordpress上的markdown显示为什么这么难看啊= =)</em></p>
-<h2 id="项目综述"><a href="#项目综述" class="headerlink" title="项目综述"></a>项目综述</h2><p>该项目是一个小型商业app项目，app目标受众为大学生，目前已在应用商店上架android，ios的测试版。笔者负责android版的独立开发，本文是对开发中经验与教训的总结，如果有什么问题和想要指出或者想和笔者探讨的，欢迎发送邮件到<a href="mailto:fan12356789@gmail.com" target="_blank" rel="noopener">fan12356789@gmail.com</a>。 项目主要采用java语言编写，代码量接近两万行，大概有70个左右的activity页面，采用了mvp框架开发，选用了okhttp，eventbus等主流开源类库，开发周期为两个月（业余时间开发），测试周期一个月。 团队配置为产品经理一人，UI设计师一人，测试一人，ios一人，android一人，后端开发一人，html开发一人。</p>
-<h2 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h2><h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><p>一个项目的架构选择对于整个项目代码的设计都有很大的影响。android开常见等架构有mvc，mvp，mvvm。最初移动端开发还是沿用的之前最普遍的MVC架构，但是这样做一个弊端，就是由于android有一个activity类作为视图的展现类，绝大多数类也都围绕activity类展开，所以使用mvc很容易让activity类变得无比庞大（activity往往既充当view层又充当control层），从而不利于类的功能解耦，也对维护和进行单元测试造成了麻烦。所以引入了mvp这一概念，也就是将以前model层，view层，control层变为了model层，view 层，presenter层。这里的view是一个单独的接口，里面涵盖了一个acitivity所具体要进行的视图上的交互操作。而presenter层则类似于之前的control层的功能，将model层的数据在这儿进行转换处理，你可以将它看作一个model与view之间的adpter。presenter层最终将转换好的最终数据交给view层去具体显示在ui上。 大略来说，view层负责处理用户事件和视图部分的展示，他的具体实现在一个acitivity或者fragment里，但是应该将其操作抽象成接口以便修改和解除耦合。 model层负责访问数据，数据可能来自服务器api，也可能来自本地数据库，文件或者SharedPreference。 presenter层负责将低层的数据转换并提交给view层，是低层数据连接ui层的桥梁。 此外还可以加上一个业务逻辑层，位于model层和presenter层之间，以便进一步根据具体业务逻辑处理model层的原始数据。 具体数据流如下图 <img src="http://fanyijie.net/wp-content/uploads/2017/05/c81e728d9d4c2f636f067f89cc14862c2-300x226.png" alt="c81e728d9d4c2f636f067f89cc14862c2">enter层中mock数据分发给view层，来测试各种ui。而且acivity层也变得轻量化，职责也很明确，更不会出现业务逻辑和ui显示全部挤在acitivty中的情况。以及还可以进一步用fragment作为view层的载体，而acitivty仅仅作为创建view层（framgent）和presenter层的控制器。 而mvvm架构则不再有presenter层，取而代之的是一个viewmodel层，而且view和viewmodel之间是databinding的关系，也就是说当你改变viewmodel层的数据时，也会直接影响到view层的ui。</p>
-<h3 id="架构总结"><a href="#架构总结" class="headerlink" title="架构总结"></a>架构总结</h3><p>总结起来，事实上各个架构都有自己的优缺点。</p>
-<h4 id="mvc"><a href="#mvc" class="headerlink" title="mvc"></a>mvc</h4><p>每次view收到事件后，发送消息给control，control发送消息到model要求更新数据，model更新了直接发送给view显示 优点：</p>
-<ul>
-<li>开发较快，不需要维护较多的接口</li>
-<li>思路直观，便于快速修改</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>view层和model层直接耦合，不便于测试和维护</li>
-<li>activity任务过于繁重，不利于代码review</li>
-</ul>
-<h4 id="mvp"><a href="#mvp" class="headerlink" title="mvp"></a>mvp</h4><p>view收到事件后，发送消息到presenter层，presenter层通知model层要求处理，model层处理后将数据返回给presenter，presenter再将数据返回给view层。 优点：</p>
-<ul>
-<li>利于测试</li>
-<li>实现了view和model层的完全解耦</li>
-<li>利于维护</li>
-<li>减轻了activity的负担</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>由于需要维护较多的类和接口，对于小型app可能过于冗余，影响开发速度</li>
-<li>修改时需要修改较多的类和接口，因为可能同时涉及到多个层次</li>
-</ul>
-<h4 id="mvvm"><a href="#mvvm" class="headerlink" title="mvvm"></a>mvvm</h4><p>优点：类似于mvp 缺点：view层还是过重，并且有时仍然需要将一些操作写到view 层里。</p>
-<h3 id="架构选择"><a href="#架构选择" class="headerlink" title="架构选择"></a>架构选择</h3><p>综合考虑，由于开发阶段为单人开发，项目规模不太大，而且时间要求较紧，采用了mvp和mvc结合的方式进行架构设计。 具体就是对于典型的主要activity采用mvp架构进行开发，而大量的小页面activity则直接采用mvc模式开发，以达到速度和可测试可review性兼具。 此外，根据项目实际情况和便于管理的考虑，项目分为了以下的模块。api是项目中所用到api的集合管理，db是数据库的相关封装类，adpter为主要复用的各个adpter的集合，bean为项目通用实体类的包，event是evnentbus通信所可以公用的event以及一些event基类，model为业务层和数据获取层，调用数据库和api从中获取数据,utils包下封装了各个工具类和app级的常量类，module包下面时app组装实现app功能的各个模块。在各个模块内部继续划分到每个页面的小模块，对于小页面采用mvc结构，主要大页面采用mvp架构，行成一个包含presenter层，view接口的页面包。总体如下图所示 <img src="http://fanyijie.net/wp-content/uploads/2017/05/app_struct-300x69.png" alt="app_struct"> 考虑到方便模块化开发，页面ui对应，和总体组件复用和代码管理，最后采用了这样的程序架构。 优点在于根据ui所属模块，可以很容易在module中找到对应的小模块进行测试和修改，而通过小模块中的依赖关系又可以在各个app级的复用包中，很快找到相应的可能需要修改或者阅读的地方。对于小页面，代码量少，只需要将io与ui解耦即可，就没有做过多的处理。而大页面由于代码众多，所以使用mvp进行了适当的解耦，方便之后阅读和修改。 缺点在于，整个架构不如标准的mvp清晰，层次清楚。部分代码的层次比较混乱，而且只将io部分与activity进行了完全的解耦，对于其他的业务逻辑大量的混在ui展示中，尽管设计了总的activity接口和函数，以便每个activity借此将业务逻辑与业务逻辑，ui与ui，业务逻辑与ui相分开，但还是不够清晰，特别是在追求速度的过程中，很多地方的实现不够优雅。总之在这方面还有很多需要学习借鉴的地方。</p>
-<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><h3 id="图片加载"><a href="#图片加载" class="headerlink" title="图片加载"></a>图片加载</h3><p>图片加载的主流类库有picasso, universal image loader, fresco, glide，volley等。下面首先对他们做一个简单的对比</p>
-<h5 id="Picasso"><a href="#Picasso" class="headerlink" title="Picasso"></a>Picasso</h5><p>Picasso 是 square 出品的类库，它只缓存一个全尺寸的图片，默认为ARGB_8888格式，根据需求大小再压缩转换，因此它有着图片质量高的特点，加载速度一般。如果已经用了okhttp或者retrofit等square的库，再用picasso，picasso可以直接调用okhttp作为网络部分，体积很小。 优点：</p>
-<ul>
-<li>图片质量高</li>
-<li>体积小</li>
-<li>可以和square全家桶整合</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>加载速度一般</li>
-</ul>
-<h5 id="Fresco"><a href="#Fresco" class="headerlink" title="Fresco"></a>Fresco</h5><p>Fresco 是 facebook出品，Fresco 将图片放到一个特别的内存区域叫 Ashmem 区，就是属于 Native 堆，图片将不再占用 App 的内存，Java 层对此无能为力，这里是属于 C++ 的地盘，所以能大大的减少 OOM。所以此库很强大，还支持图像渐进式呈现，不过用起来也更复杂一些，包也比较大，大概3M，底层涉及到的 C++ 领域，想读源码也比较困难。 优点：</p>
-<ul>
-<li>支持图像渐进式呈现</li>
-<li>有自己特别的内存区域来处理缓存，避免oom</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>框架比较大，大概有3m，增加apk体积</li>
-<li>不支持gif动态图</li>
-<li>操作较为复杂，有一定学习成本</li>
-</ul>
-<h5 id="Glide"><a href="#Glide" class="headerlink" title="Glide"></a>Glide</h5><ul>
-<li><em>Glide</em> 是 google员工出品，也是google推荐的图片加载库，它是完全基于 Picasso 的，沿袭了 Picasso 的简洁风格，但是在此做了大量优化与改进。Glide 默认的 Bitmap 格式是 RGB_565 格式，而 Picasso 默认的是 ARGB_8888 格式，这个内存开销要小一半。 在磁盘缓存方面，Picasso 只会缓存原始尺寸的图片，而 Glide 缓存的是多种规格，也就意味着 Glide 会根据你 ImageView 的大小来缓存相应大小的图片尺寸。</li>
-</ul>
-<p>优点：</p>
-<ul>
-<li>加载速度快</li>
-<li>支持gif动态图</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>图片质量相对fresco低</li>
-</ul>
-<h5 id="UniversalImageLoader"><a href="#UniversalImageLoader" class="headerlink" title="UniversalImageLoader"></a>UniversalImageLoader</h5><p><em>Universal Image Loader</em>应该是图片加载方面最老牌也是最火的库了，项目从2011年一直维护到15年底，至今仍是github上star最多的库，无数的成熟项目采用了这个库来进行图片加载。 优点：</p>
-<ul>
-<li>成熟稳定</li>
-<li>灵活高自定义</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>开发者宣布于15年9月开始不再维护</li>
-</ul>
-<p>本项目由于笔者写项目时使用了一些以前项目用过的模块化代码，同时考虑到初期成熟稳定的需求，就暂时沿用了UniversalImageLoader库作为图片加载库。考虑到之后可能会替换图片库， 所以项目中采用的都是经过笔者二次封装的代码，这样之后如果需要修改图片加载库也相对容易。</p>
-<h3 id="网络请求"><a href="#网络请求" class="headerlink" title="网络请求"></a>网络请求</h3><p>目前主流的网络请求库有okhttp, retrofit, volley等。其中okhttp和retrofit都是square出品等，volley是google出品的。volley更适用于数据量小，通信频繁的情况，对于大数据量情况表现较差，而且现在google官方也认可了okhttp，并在android中使用，并且可以和square的各个库相配合，所以这儿选择了业界主流的okhttp作为主要网络请求框架。 因为项目api没有设计成resetful风格，所以在这儿没有使用retrofit。同时为了稳定快捷，直接使用了二次封装好的okhttputils，就没有用自己造的轮子了。</p>
-<h3 id="网络解析"><a href="#网络解析" class="headerlink" title="网络解析"></a>网络解析</h3><h5 id="json解析"><a href="#json解析" class="headerlink" title="json解析"></a>json解析</h5><p>常用的有Gson，fastjson，这里因为数据定制性较强，而且api数量不太大，直接封装了一个具体的数据解析操作来手动解析了。</p>
-<h5 id="html解析"><a href="#html解析" class="headerlink" title="html解析"></a>html解析</h5><p>常用的有HtmlParser，jsoup等，项目中很少用到且领域性强，所以写了一个项目针对性的强的手动解析类。</p>
-<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>常用的数据库框架有OrmLite, Sugar, GreenDAO, Realm等，考虑到该项目数据库内容较轻，该项目没有使用数据库框架，直接简单的将数据库对象和项目具体的一些操作封装为一个单例来使用。</p>
-<h3 id="事件总线"><a href="#事件总线" class="headerlink" title="事件总线"></a>事件总线</h3><p>常用的事件总线库有Eventbus, otto等， 还有Rxjava（这儿应该是RxAndroid）其实也可以实现，这儿考虑到EventBus 3.0已经不再使用反射来实现，提高了速度，而Rxjava在该项目中由于没有使用retrofit，考虑再三还是没有在该项目中引入。所以综上这儿使用Eventbus作为事件总线库来传递消息。</p>
-<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p>常用的依赖注入有ButterKnife，Dagger2等，这儿因为项目规模还不是特别大，而且是独立快速开发，就使用的更加轻便的Butterknife作为依赖注入工具。</p>
-<h3 id="Log-框架"><a href="#Log-框架" class="headerlink" title="Log 框架"></a>Log 框架</h3><p>常用的log框架有Logger，Hugo，Timeber等，这儿考虑到项目等规模不是很大，就自己手写了一个带有log级别调控，以及出错位置显示，可以自动将tag换成出错的具体类名，从而可以不用写tag的基本log库，目前已经可以满足现有的log需求。</p>
-<h3 id="测试框架"><a href="#测试框架" class="headerlink" title="测试框架"></a>测试框架</h3><p>常用测试框架有Mockito，Robotium, Robolectric等，项目引入了Mockito作为基本的单元测试框架。</p>
-<h3 id="内存检测"><a href="#内存检测" class="headerlink" title="内存检测"></a>内存检测</h3><p>项目使用了LeakCanary和Mat两个工具，结合Android stuido进行内存泄漏的检测，消除了部分内存泄漏隐患。</p>
-<h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>由于是商业项目，所以这里选用了免费私有库的Bitbucket结合Git作为版本控制工具。</p>
-<h2 id="项目中遇到的技术难点"><a href="#项目中遇到的技术难点" class="headerlink" title="项目中遇到的技术难点"></a>项目中遇到的技术难点</h2><h3 id="复杂滑动冲突的解决方案"><a href="#复杂滑动冲突的解决方案" class="headerlink" title="复杂滑动冲突的解决方案"></a>复杂滑动冲突的解决方案</h3><h5 id="webview中banner与外部viewpager的滑动冲突的解决方案"><a href="#webview中banner与外部viewpager的滑动冲突的解决方案" class="headerlink" title="webview中banner与外部viewpager的滑动冲突的解决方案"></a><em>webview中banner与外部viewpager的滑动冲突的解决方案</em></h5><p>这个情况是这样的，webview的html中用js写了一个可以左右滑动的banner和多个可以左右滑动的scroll条，而整个webview又被嵌套在一个左右滑动viewpager里，因此这个viewpager就和webview中的内容产生了滑动冲突。 一开始想到的是对固定高度的banner进行特判的方法，但是马上想到还有多个scroll条需要滚动，而且对像素进行特判在丰富的android系统类型和手机型号上并不是一个好想法，所以就放弃了这个方案。 经过多方搜索，包括在stackoverflow上也没有找到一个好的解决方案。于是不得已就想到了利用js联合native方法来进行判断的方法。 具体就是通过javainterface写一个本地的js交互类，这个js交互类中写有控制这一时刻viewpager是否拦截aciton的方法，每当手触碰（ontouch)到相应被绑定了js的dom对象，就会触发这个方法。经过android端js注入测试成功后，再让html端将js代码写到网页中，即可成功部署。 这个方法的优点在于可以根据对象来判断是否触碰，不再需要关心具体的高度，ontouch的函数的反应很快，即使快速滑动也能准确的快速反应出来，而且适合于任何html对象。缺点在于，在重新显示网页时，js载入稍有延迟，在性能较低的手机上重新显示网页时，如果同时很快的进行滑动，可能会一下反应不过来从而拦截这次action失败，不过目前暂时也没有找到更好的方法解决这个问题，也希望大家能给出更好的方法。</p>
-<h5 id="多层嵌套的纵向滑动冲突的解决方案"><a href="#多层嵌套的纵向滑动冲突的解决方案" class="headerlink" title="多层嵌套的纵向滑动冲突的解决方案"></a><em>多层嵌套的纵向滑动冲突的解决方案</em></h5><p>这个情况是有一个可以左右滑动的viewpager中有两个可以上下滑动并带有上拉刷新下拉加载功能的recyclerview，而在这个viewpager上方又有较为复杂的界面。现在需要在滑动时先将上方复杂界面滑动，当上方复杂界面滑动到看不见时，则开始滑动下方的recyclerview。 这个需求我首先理解的是一个可以上下滑动的外部的scrollview嵌套了一个可以上下滑动的recyclerview。由于recyclerview位于viewpager内部，所以不能直接将上方界面作为head放于头部。而且这里的recylerview也不能在viewpager中设置viewport = true来解决滑动冲突， 因为这样将丧失recylcerview复用的特性，因此必须要考虑一个内外滑动的问题。 对于这种嵌套，可以使用外部拦截或者内部拦截。因为外部的scrollview和内部的recyclerview相距层数很远，而且业务逻辑比较复杂，所以我先选取了外部拦截法进行实现。但是具体实现的时候，发现了几个问题。 一是对于上方的界面与recyclerview交界位置的确定比较繁杂，因为涉及到具体像素位置，调用了多个android系统库以及多个界面对象的测量函数才最终确定成功。 二是由于逻辑较为复杂，需要的接口太多，而且由于层级过深，每一个接口需要多次传递，较为繁杂。 三是由于下拉加载的存在，reclcerview应该是一个动态扩展的长度，所以对recyclerview的测量（measure）需要注意，以免出现recyclerview不能展开的情况。 四是一个未能解决的问题，而这个问题是android本身事件分发的机制引起的。首先放一张图来整体说明一下事件分发的过程，以便对后面的说明又一个清晰的理解，图来源于简书上<a href="http://www.jianshu.com/p/e99b5e8bd67b" target="_blank" rel="noopener">Kelin的博客</a> <img src="http://upload-images.jianshu.io/upload_images/966283-d01a5845f7426097.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="android事件分发"> 如图可以看到整个分发过程呈现一个u型，从顶级activity分发到viewgroup再到view，然后再回到每一层的onTouchEvnet，而android的默认设计（return super.xxxx())就是走完这个u型的调用路线. 其中viewgroup和view都有的dispathTouchEvent方法，如果return true, 就表明消费掉了这个touch事件，事件停止传递，也没有人包括它自己再收到或者处理这个事件了。如果dispathTouchEvent事件return false，则直接往上一层viewgroup的onTouchEvent传递，即向父view回溯，不再向下分发。 这个函数的默认（super调用）形式，在viewgroup中是调用onIntercepteTouchEvent进行处理。而对于view，由于没有onInterceptTouchEvent这一拦截器，所以默认实现就是调用自己的onTouchEvnet处理，不需要拦截了。 而ViewGroup特有的onInterceptTouchEvent函数如果return true，就会直接交给自己的onTouchEvent处理，如果return false，就和默认的super实现一样，不拦截继续向下分发，进入子view的dispachEvent。 至于viewgroup和view都有的onTouchEvent,则是return true就直接消费掉，不再传递也不再处理。如过return false，则和默认实现一样，也和dispathEvnet的fasle一样，直接回溯到父view的onTouchEvent进行处理。 以上是对于action down的事件分发，而对于后续的action move 和up，则是如果你最终在某一个view的onTouchEvent处消费了action down，那么action move和up在从上到下分发时，只传到这个控件的onTouchEvent为止，不再继续分发。 现在再来说一下这个具体的问题。首先重现一个这个情况，就是当我点下上方的界面时，会触发一个aciton down事件，这时候上方的scrollview（被重写过onInterceptTouchEvent函数）会返回false（为了之后的拦截，不需要拦截down事件，因为如果拦截了down事件那么之后的所有事件都将直接分发给该scrollview的onTouchEvent事件，而不经过onInterceptTouchEvent函数和子view了，那样就无法根据业务逻辑处理move事件的分发了），这时down事件会继续分发到下方的子view，由于下方的recyclerview并没有位于这个位置，所以没有人消费这个事件，最后这个事件将一直逐层向上传，直到scrollview的onTouchEvent将其消费掉。之后接着的move事件，符合scrollview拦截的要求，scrollview将拦截这个事件，即onInterceptTouchEvent返回true，调用scrollview的onTouchEvent将move事件进行消费。到目前为止还很正常。 但是当继续快速滑动时，很快屏幕顶部和recyclerview顶部已经对齐，而手指还没有到屏幕顶部，这时就会发现不能滑动了，因为recycelerview没有获得action down事件，所以后续的事件也无法获得，因此一次完整的滑动事件（一个action down加一连串的action move）无法实现先滑动外部scrollview，再滑动内部recyclerview。这样每次从页面顶部滑动就就会这样在这儿卡一下，等再一次用手从recyclerview开始滑动时才会继续滑动，不能流畅的一体滑动，也可以理解为需要第一步把头部收起，第二步才可以滑动，虽然还能够接受，但是对体验还是有一定影响。 既然这种方案有这么多瑕疵，那么不如换一个方案吧。不久在design library中我就发现了一个完美的解决方案，那就是CoordinatorLayout加AppBarLayout的实现方法。 这个方法不仅完美实现了一次滑动可以滑动头部以及recyclerview，而且还十分简洁。主要就是在xml中引入CoordinatorLayout作为最高层布局，然后将viewpager上方复杂的界面全部放在一个LinearLayout中，再将这个LinearLayout放在AppBarLayout中，这个AppBarLayout就放在最高层的CoordinatorLayout中，然后再将viewpager也放在CoordinatorLayout中，并在viewpaer中加上一句 <code>app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior</code> 即可。于是就这样将这个纵向的滑动冲突以官方的形式解决了。</p>
-<h3 id="首页预加载"><a href="#首页预加载" class="headerlink" title="首页预加载"></a>首页预加载</h3><p>这个具体的情形是在开发后期，测试觉得每次启动后需要等待首页中的webview的网页加载的时间，想避免这个不好的体验，于是提出了一个出现首页网页就已经加载好的需求。 由于这个时候首页和启动页都已经有了很复杂的逻辑，于是笔者在这里用了一个比较trick的方法，就是将启动页和首页合为一个大activity，其xml的最顶层布局改写为一个FrameLayout，在其中加上app启动页的图片盖在首页的所有界面之上。然后先进行启动页的逻辑，在启动页完成好必要的业务和相应的检查初始化后，利用启动页展示广告的2到3秒，提前加载首页中各个fragment，当首页中最先出现在眼前的那个webview中的网页load finish时，就发送一个回调消息给启动页逻辑，将盖在首页界面上的图片remove掉，则实现了这一需求。 主要是要注意启动页最大显示时间，和最短显示时间，以及有无网络连接，等等情况对启动逻辑的影响，也因为较为复杂的逻辑使得这个activty更为复杂。如果时间充裕可以考虑解耦性更好的方法。</p>
-<h3 id="html5与native的通信方案"><a href="#html5与native的通信方案" class="headerlink" title="html5与native的通信方案"></a>html5与native的通信方案</h3><ul>
-<li><em>html与native间的通信协议</em></li>
-</ul>
-<p>这里主要是点击html中的地址，或者加载其中的地址，将根据提前和html端协商好的协议在本地进行重定向，并通过地址中的参数获取相应的信息。比如 <code>review://app.com/?itemid=1000060</code> 则表示打开对id为1000060的商品的native评论页面。这样就可以简单的实现html与native页面的控制。 这儿有一点就是要注意，重加载函数shouldOverrideUrl()的调用时机问题。shouldOverrideUrl只有在你点击网页中的超链接时才会调用，也就是说如果你用一个webview直接载入url，这个函数是不会被调用的，所以不能仅仅依靠这个函数来实现协议封装。我的处理方式是在webview加载url之前，先调用处理函数对封装的url进行处理，再传入webview, 这样就可以应对任意形式的url传递方法了。</p>
-<ul>
-<li><em>js注入以及js interface的处理</em></li>
-</ul>
-<p>对于较为复杂的html行为，则可以通过定义@JavascriptInterface的方式，定义js交互函数，进行处理。还可以通过web.load(“javascript”+”function xxxxxx xxxx”)的方法进行js注入来快速调试和验证。</p>
-<h3 id="可以左右滑动自动获取项目长度的顶部tabIndicator"><a href="#可以左右滑动自动获取项目长度的顶部tabIndicator" class="headerlink" title="可以左右滑动自动获取项目长度的顶部tabIndicator"></a>可以左右滑动自动获取项目长度的顶部tabIndicator</h3><p>这个主要是ui的需求，要求tab的下划线和文字宽度一样，而且宽度随之动态变化，而且加上颜色改变等一系列自定义的需求，发现网上没有能完全满足的开源库，于是就自己模仿HorizontalScrollView，结合view的measure和animation实现了一个，也算又造了一回轮子吧。</p>
-<h3 id="webview和本地的cookie同步"><a href="#webview和本地的cookie同步" class="headerlink" title="webview和本地的cookie同步"></a>webview和本地的cookie同步</h3><p>项目中通过api获得的cookie需要同步到webview，以免需要反复登陆。这个最后采用了android自带的CookieManager来进行，原生的兼容性更好。而通过api获得Cookie的管理和持久化，则通过自己封装的一个类来实现的。</p>
-<h3 id="喜欢按钮的实现"><a href="#喜欢按钮的实现" class="headerlink" title="喜欢按钮的实现"></a>喜欢按钮的实现</h3><p>这个是指app各个地方的小红心按钮，这个主要是实现比较繁杂，点击任意一个喜欢按钮，首先需要发送请求并等待相应回调，回调成后，除了改变自己颜色，还将会更新“热门页面”三个排行的相应显示，以及“主题”页面的相应显示，还将在“我”页面的收藏中增删条目，这里是用了handler传递和观察者模式实现的，但觉得还是有很多可以优化的地方。</p>
-<h3 id="特定页面的启动方式"><a href="#特定页面的启动方式" class="headerlink" title="特定页面的启动方式"></a>特定页面的启动方式</h3><p>android中有四种启动方式，分别是standard, singleTop, singleTask, singleInstance.而如何选用这些启动方式也很重要。 比如app的主页，就应该采用SingleTask的启动模式，这样不管当前回退栈的栈顶在哪儿，只要一句 <code>startActivity(intent);</code>就可以直接回到之前的主页，不会出现多个主页的情况。</p>
-<h2 id="项目中可复用的经验"><a href="#项目中可复用的经验" class="headerlink" title="项目中可复用的经验"></a>项目中可复用的经验</h2><h3 id="第三方sdk原生接入"><a href="#第三方sdk原生接入" class="headerlink" title="第三方sdk原生接入"></a>第三方sdk原生接入</h3><h5 id="原生三方登陆实现"><a href="#原生三方登陆实现" class="headerlink" title="原生三方登陆实现"></a><em>原生三方登陆实现</em></h5><p>项目中使用了微博，微信，以及qq的sdk来实现三方登陆，出于定制性的考虑没有使用友盟和shareSDK。</p>
-<h5 id="原生三方分享实现"><a href="#原生三方分享实现" class="headerlink" title="原生三方分享实现"></a><em>原生三方分享实现</em></h5><p>项目中的分享也是直接使用的三方sdk的原生方式实现，并将分享的模块进行了一定的封装，以便从内容中获取的分享标题，图片等内容可以方便的分发给任意一个选择的社交平台。但是还未加入统计等功能，如果有这方面的需求还需要继续研究一下。</p>
-<h2 id="项目中的典型bug解决"><a href="#项目中的典型bug解决" class="headerlink" title="项目中的典型bug解决"></a>项目中的典型bug解决</h2><h3 id="Toast被部分安全软件或系统禁用的处理"><a href="#Toast被部分安全软件或系统禁用的处理" class="headerlink" title="Toast被部分安全软件或系统禁用的处理"></a>Toast被部分安全软件或系统禁用的处理</h3><p>由于各种禁止通知的安全软件的存在，以及有的定制系统中不显示通知的默认设定，所以在部分手机上系统自带的toast无法显示出来，对app的使用造成了困扰，于是笔者使用AlertDialog，并结合android系统中的toast资源，模仿写出了一套完全自定义的仿原生toast，从而绕开了通知的限制。 之后发现在有的手机的有的系统，比如小米最新的系统中，默认禁止了alertdialog的显示，所以之后又在封装的Toast单例的帮助类中加了一些对机型和系统的特判，来达到兼容的目的。</p>
-<h3 id="部分机型系统上拍照或者从相册获取图片失败"><a href="#部分机型系统上拍照或者从相册获取图片失败" class="headerlink" title="部分机型系统上拍照或者从相册获取图片失败"></a>部分机型系统上拍照或者从相册获取图片失败</h3><p>这个也是一个android上很麻烦的问题，本来已经根据系统api等级作了判断，来调取不同的获取方式，但是在部分机型的系统（国产机丰富的定制系统真的让人头疼）上仍然失效，最后无奈使用了github上的一个兼容性很好的开源库TakePhoto暂时解决了这个问题。</p>
-<h3 id="部分机型系统上popupWindow失效"><a href="#部分机型系统上popupWindow失效" class="headerlink" title="部分机型系统上popupWindow失效"></a>部分机型系统上popupWindow失效</h3><p>在部分机型系统上不能正常调用系统原生自带的popupWindow，使用开源库替换也不行，最后自己实现了一个。怀疑是系统通知权限之类的问题。</p>
-<h2 id="项目使用的开源库"><a href="#项目使用的开源库" class="headerlink" title="项目使用的开源库"></a>项目使用的开源库</h2><p>come.pkmmte.view:circularimageview 圆形头像 com.squareup.okhttp3:okhttp 网络通信 com.nostra13.universalimageloader:universal-image-loader 图片加载 com.zhy:okhttputils 网络封装 com.bigkoo:pickerview 满足ui设计的生日选取ui库 org.greenrobot:eventbus 事件总线 in.srain.cube:ultra-ptr 下拉刷新框架 com.github.hotchemi:permissionsdispatcher 权限管理 com.jakewharton:butterknife 依赖注入 com.jph.takephoto:takephoto_library 照片获取 cundong/HeaderAndFooterRecyclerView recylerview扩展</p>
-<h2 id="需要进一步探讨的地方"><a href="#需要进一步探讨的地方" class="headerlink" title="需要进一步探讨的地方"></a>需要进一步探讨的地方</h2><h3 id="app启动逻辑的改进"><a href="#app启动逻辑的改进" class="headerlink" title="app启动逻辑的改进"></a>app启动逻辑的改进</h3><p>由于启动时首先需要快速显示启动页，然后在显示中需要进行一系列判定，包括</p>
-<ul>
-<li>是否第一次打开app</li>
-<li>是否有网络连接</li>
-<li>是否获取了相应权限（针对android M动态获取权限的特性）</li>
-<li>是否已经完成必要的信息填写</li>
-<li>是否在线获取到数据库的各个表的资源</li>
-<li>是否需要在线更新数据库</li>
-<li>是否已经在线更新完商品类目</li>
-<li>是否已经在线更新下载完类目图（为了尽量加快之后访问类目页的速度）</li>
-<li>用户是否已经登陆过而且尚未注销</li>
-<li>是否已经预加载完成首页</li>
-<li>是否已经显示启动页达到最短显示时间</li>
-<li>是否已经超过最长显示时间</li>
-</ul>
-<p>以及在主页和启动页合并后，还需要考虑</p>
-<ul>
-<li>当前页是主页还是启动页</li>
-<li>当前页后退时应该直接finish所有activity还是回到某一个页面</li>
-<li>当前页被销毁后应该如何恢复</li>
-</ul>
-<p>可以看到需要考虑的问题很多，因此很容易写出混乱的代码。这里暂时是利用模块化的函数设计，尽量提高代码复用来避免混乱的逻辑的，如果要重构可以考虑引入一些解耦度更高的设计模式来实现，具体的重构方式还需要进一步思考。</p>
-<h3 id="消息传递的改进"><a href="#消息传递的改进" class="headerlink" title="消息传递的改进"></a>消息传递的改进</h3><p>项目中需要消息传递的地方比较多，而该项目的消息传递主要使用了EventBus和Handler。Handler是系统原生自带的，使用还是比较方便，但是传输实体等需要序列化传输等数据时略显麻烦。EventBus虽然可以比较方便的传递消息和实体，但是如果在项目中过多使用的话，很容易引起程序消息传递的时序和目标混乱，不利于review和测试。而且EventBus每一组Observer和其观察的subject之间都需要一个Event类，很容易在项目中引入过多的Event类，影响项目等管理。这一点的改进还需要进一步思考，感觉从程序的架构和设计模式入手会有一些办法。</p>
-<h2 id="收获与展望"><a href="#收获与展望" class="headerlink" title="收获与展望"></a>收获与展望</h2><p>总的来说，这次项目也是对自己的一个很好的锻炼，对Android各个方面的知识都有了进一步的提高。具体体现在：</p>
-<ul>
-<li>学习研究了android系统的优秀源码，包括activity生命周期中各部分的源码探究，IPC机制的源码学习，以及反复研读了view的事件分发体系以及view的测量绘制相关的一些列源码。通过这些阅读和学习，对android系统以及很多设计模式都有了更深的理解。</li>
-<li>对各个主流开源库更加熟悉和了解，并自己根据业务需要修改了一些开源库，将其用在了项目当中，也提交了一些关于bug的issue，作者也回应并更改，也算对开源社区做了一点微小的贡献。</li>
-<li>自己累积了更多更成熟的app设计方法，封装了更多的工具库，以后再开发类似的产品将会更快更成熟。</li>
-</ul>
-<p>而之后一段时间应该暂时不会写完整的android项目了，在技术方面主要还是多刷一下算法题，练习一下基础，语言上应该就继续深入学习java，有机会也练习一下Scala和Js，一步一步向全栈之路进发。</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>写下这篇项目总结时，因为时间匆促，可能有不少遗漏或者疏忽，在开发过程中的思想，也可能有很多错误，如果您有什么批评和意见，都欢迎和我联系，谢谢！我的邮箱<a href="mailto:fan12356789@gmail.com" target="_blank" rel="noopener">fan12356789@gmail.com</a>.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1971,7 +1854,7 @@ allTokensIndex\[lastId\] = tokenIndex;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1993,7 +1876,7 @@ allTokensIndex\[lastId\] = tokenIndex;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -2046,7 +1929,7 @@ allTokensIndex\[lastId\] = tokenIndex;
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
