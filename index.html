@@ -278,7 +278,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/14/pitfall_in_python_lists/" itemprop="url">pitfall in python lists</a></h2>
+                <a class="post-title-link" href="/2019/03/14/pitfall_in_python_lists/" itemprop="url">Pitfall In Python Lists</a></h2>
         
 
         <div class="post-meta">
@@ -330,7 +330,8 @@
       
         
           
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">books = [[<span class="keyword">False</span>] * <span class="number">3</span>] * <span class="number">5</span></span><br><span class="line">books[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">True</span>`</span><br></pre></td></tr></table></figure>
+            <p>For persons who are familar with C language, there are so many pitfalls hidden in python. Let’s see the example below:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">books = [[<span class="keyword">False</span>] * <span class="number">3</span>] * <span class="number">5</span></span><br><span class="line">books[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">True</span>`</span><br></pre></td></tr></table></figure>
 <p>It is somehow unintuitive the result of the code above<br>is </p>
 <p><code>[[True, False, False], [True, False, False], [True, False, False], [True, False, False], [True, False, False]]</code></p>
 <p>rather than</p>
